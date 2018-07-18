@@ -22,8 +22,9 @@
             android:hint="@string/id"
             android:textSize="13.33dp"
             android:paddingLeft="18.33dp"
-            android:textColor="#cacaca"
-            android:fontFamily="@font/notosans"/>
+            android:textColorHint="#cacaca"
+            android:fontFamily="@font/notosans"
+            android:inputType="textEmailAddress"/>
 
         <EditText
             android:id="@+id/edit_login_password"
@@ -35,8 +36,9 @@
             android:hint="@string/password"
             android:textSize="13.33dp"
             android:paddingLeft="18.33dp"
-            android:textColor="#cacaca"
-            android:fontFamily="@font/notosans"/>
+            android:textColorHint="#cacaca"
+            android:fontFamily="@font/notosans"
+            android:inputType="textPassword"/>
 
         <LinearLayout
             android:layout_marginTop="17.67dp"
