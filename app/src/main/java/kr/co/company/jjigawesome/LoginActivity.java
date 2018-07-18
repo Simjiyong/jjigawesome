@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         newUiOptions |= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         newUiOptions |= View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
         newUiOptions |= View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-        //newUiOptions |= View.SYSTEM_UI_FLAG_FULLSCREEN;
+        newUiOptions |= View.SYSTEM_UI_FLAG_FULLSCREEN;
         newUiOptions |= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
         newUiOptions |= View.SYSTEM_UI_FLAG_IMMERSIVE;
         view.setSystemUiVisibility(newUiOptions);
@@ -53,8 +53,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        linearLayout = (LinearLayout) findViewById(R.id.linear_login);
-        linearLayout.setPadding(0,getStatusBarHeight(),0,0);
+        //linearLayout = (LinearLayout) findViewById(R.id.linear_login);
+        //linearLayout.setPadding(0,getStatusBarHeight(),0,0);
 
 
 

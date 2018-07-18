@@ -53,7 +53,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        linearLayout = (LinearLayout) findViewById(R.id.linear_signup);
+        //linearLayout = (LinearLayout) findViewById(R.id.linear_signup);
         //linearLayout.setPadding(0,getStatusBarHeight(),0,0);
         Log.d("status" ,"status : " + getStatusBarHeight());
 
