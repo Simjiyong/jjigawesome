@@ -1,6 +1,15 @@
 <resources>
     <string name="app_name">찍어썸</string>
-    <string name="id">이메일 주소 또는 아이디</string>
+    <string name="id">이메일 또는 아이디</string>
     <string name="password">비밀번호</string>
     <string name="login">로그인</string>
+    <string name="signup">회원가입</string>
+    <string name="name">성명</string>
+    <string name="checkpassword">비밀번호 확인</string>
+    <string name="phone">핸드폰 번호</string>
+    <string name="confirm_num">인증번호</string>
+    <string name="keeplogin">로그인 상태 유지</string>
+    <string name="member">일반회원</string>
+    <string name="manager">매니저회원</string>
+
 </resources>

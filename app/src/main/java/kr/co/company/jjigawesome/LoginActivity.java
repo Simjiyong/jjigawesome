@@ -1,14 +1,19 @@
 package kr.co.company.jjigawesome;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 public class LoginActivity extends AppCompatActivity {
 
     int newUiOptions;
     View view;
+    Button button_signup;
+    LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +32,8 @@ public class LoginActivity extends AppCompatActivity {
 // 몰입 모드를 꼭 적용해야 한다면 아래의 3가지 속성을 모두 적용시켜야 합니다
         newUiOptions |= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         newUiOptions |= View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
-        newUiOptions |= View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
         newUiOptions |= View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-        //newUiOptions ^= View.SYSTEM_UI_FLAG_FULLSCREEN;
+        //newUiOptions |= View.SYSTEM_UI_FLAG_FULLSCREEN;
         newUiOptions |= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
         newUiOptions |= View.SYSTEM_UI_FLAG_IMMERSIVE;
         view.setSystemUiVisibility(newUiOptions);
@@ -40,6 +44,30 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        button_signup = (Button) findViewById(R.id.button_login_signup);
+        button_signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        linearLayout = (LinearLayout) findViewById(R.id.linear_login);
+        linearLayout.setPadding(0,getStatusBarHeight(),0,0);
+
+
+
+    }
+
+    public int getStatusBarHeight()
+    {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0)
+            result = getResources().getDimensionPixelSize(resourceId);
+
+        return result;
     }
 
 }
