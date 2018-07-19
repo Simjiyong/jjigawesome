@@ -1,11 +1,10 @@
 package kr.co.company.jjigawesome;
 
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
 
 public class SignUpActivity extends AppCompatActivity {
 
