@@ -1,19 +1,15 @@
 package kr.co.company.jjigawesome;
 
 import android.content.Context;
-import android.graphics.Point;
-import android.support.constraint.ConstraintLayout;
-import android.support.constraint.Guideline;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -53,7 +49,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        //linearLayout = (LinearLayout) findViewById(R.id.linear_signup);
+        linearLayout = (LinearLayout) findViewById(R.id.linear_signup);
         //linearLayout.setPadding(0,getStatusBarHeight(),0,0);
         Log.d("status" ,"status : " + getStatusBarHeight());
 
@@ -70,9 +66,10 @@ public class SignUpActivity extends AppCompatActivity {
 
         editText = (EditText) findViewById(R.id.edit_signup_name);
 
-        LinearLayout.MarginLayoutParams marginLayoutParams = new LinearLayout.MarginLayoutParams(0,0);
-        marginLayoutParams.setMargins(0,(int)((113*((metrics.densityDpi/160))*((float)height/1920))),0,0);
-        editText.setLayoutParams(new LinearLayout.LayoutParams(marginLayoutParams));
+        //linearLayout.setMinimumHeight(width/1080*1920);
+        //RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,(int)(((float)width/1080)*1920));
+        //layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
+        //linearLayout.setLayoutParams(layoutParams);
 
         Log.d("ddd", ""+(int)((113*((metrics.densityDpi/160))*(float)height/1920)));
 
