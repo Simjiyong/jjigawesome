@@ -1,6 +1,7 @@
 package kr.co.company.jjigawesome;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -73,8 +74,8 @@ public class SignUpActivity extends AppCompatActivity {
 
         Log.d("ddd", ""+(int)((113*((metrics.densityDpi/160))*(float)height/1920)));
 
-
-
+        Intent intent = new Intent(SignUpActivity.this, CompleteQrcodeActivity.class);
+        startActivity(intent);
     }
 
     public int getStatusBarHeight()

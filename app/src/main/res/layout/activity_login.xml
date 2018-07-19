@@ -8,10 +8,14 @@
     android:orientation="vertical"
     tools:context="kr.co.company.jjigawesome.LoginActivity">
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="210.67dp"
+        android:layout_weight="1"/>
+    
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="210.67dp"
         android:layout_gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -47,7 +51,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-
             <CheckBox
                 android:id="@+id/checkbox_login"
                 android:layout_width="17dp"
@@ -66,7 +69,6 @@
 
         </LinearLayout>
 
-    </LinearLayout>
 
     
     <Button
@@ -107,8 +109,13 @@
             android:background="@drawable/btn_signup"/>
     </LinearLayout>
 
+    </LinearLayout>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="74.67dp"
+        android:layout_weight="1"/>
+
     <LinearLayout
-        android:layout_marginTop="74.67dp"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -129,4 +136,8 @@
     </LinearLayout>
 
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="58.33dp"
+        android:layout_weight="1"/>
 </LinearLayout>
