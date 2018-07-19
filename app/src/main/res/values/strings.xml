@@ -11,5 +11,7 @@
     <string name="keeplogin">로그인 상태 유지</string>
     <string name="member">일반회원</string>
     <string name="manager">매니저회원</string>
+    <string name="qrcode">QR코드 인증</string>
+    <string name="completeqr">스탬프 찍기 완료</string>
 
 </resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_qrcode_02"
+    android:orientation="horizontal"
+    tools:context="kr.co.company.jjigawesome.CompleteQrcodeActivity">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="68.33dp"
+        android:background="#ffffff">
+
+        <TextView
+            android:id="@+id/textview_qrcode_qr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/notosans"
+            android:text="@string/completeqr"
+            android:textColor="#000000"
+            android:textSize="15.33dp" />
+
+        <Button
+            android:layout_width="21.33dp"
+            android:layout_height="21.33dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="22.00dp"
+            android:background="@drawable/btn_del" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="0.67dp"
+        android:background="#b2b2b2" />
+</LinearLayout>
