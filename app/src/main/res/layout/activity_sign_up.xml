@@ -6,9 +6,9 @@
         android:id="@+id/linear_signup"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_signup"
         android:layout_centerInParent="true"
         android:orientation="vertical"
+        android:background="@drawable/bg_signup"
         tools:context="kr.co.company.jjigawesome.SignUpActivity">
 
         <RelativeLayout
@@ -28,9 +28,10 @@
                 android:fontFamily="@font/notosans"
                 android:text="@string/signup"
                 android:textColor="#000000"
-                android:textSize="15.33dp" />
+                android:textSize="15.33sp" />
 
             <Button
+                android:id="@+id/button_signup_finish"
                 android:layout_width="21.33dp"
                 android:layout_height="21.33dp"
                 android:layout_alignParentEnd="true"
@@ -49,7 +50,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
-        
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="113dp"
@@ -71,27 +72,42 @@
                 android:inputType="textPersonName"
                 android:paddingLeft="18.33dp"
                 android:textColorHint="#cacaca"
-                android:textSize="13.33dp"
+                android:textSize="13.33sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/guideline" />
 
-            <EditText
-                android:id="@+id/edit_signup_id"
+            <LinearLayout
                 android:layout_width="290.33dp"
                 android:layout_height="46.33dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/btn_line_nor"
-                android:fontFamily="@font/notosans"
-                android:hint="@string/id"
-                android:inputType="textEmailAddress"
-                android:paddingLeft="18.33dp"
-                android:textColorHint="#cacaca"
-                android:textSize="13.33dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_signup_name" />
+                android:orientation="horizontal"
+                android:background="@drawable/btn_line_nor">
+
+                <EditText
+                    android:id="@+id/edit_signup_id"
+                    android:layout_width="204.33dp"
+                    android:layout_height="46.33dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@null"
+                    android:fontFamily="@font/notosans"
+                    android:hint="@string/id"
+                    android:inputType="textEmailAddress"
+                    android:paddingLeft="18.33dp"
+                    android:textColorHint="#cacaca"
+                    android:textSize="13.33sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_signup_name" />
+
+                <Button
+                    android:id="@+id/button_signup_sendnumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_sendnumber"/>
+            </LinearLayout>
+
 
             <EditText
                 android:id="@+id/edit_signup_password"
@@ -105,7 +121,7 @@
                 android:inputType="textPassword"
                 android:paddingLeft="18.33dp"
                 android:textColorHint="#cacaca"
-                android:textSize="13.33dp"
+                android:textSize="13.33sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_signup_id" />
@@ -122,10 +138,29 @@
                 android:inputType="textPassword"
                 android:paddingLeft="18.33dp"
                 android:textColorHint="#cacaca"
-                android:textSize="13.33dp"
+                android:textSize="13.33sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_signup_password" />
+
+
+
+            <EditText
+                android:id="@+id/edit_signup_phone"
+                android:layout_width="290.33dp"
+                android:layout_height="46.33dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/notosans"
+                android:hint="@string/phone"
+                android:inputType="phone"
+                android:paddingLeft="18.33dp"
+                android:textColorHint="#cacaca"
+                android:textSize="13.33sp"
+                android:background="@drawable/btn_line_nor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_signup_passwordcheck" />
 
             <LinearLayout
                 android:layout_width="290.33dp"
@@ -134,44 +169,31 @@
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal"
                 android:background="@drawable/btn_line_nor">
-                
+
                 <EditText
-                    android:id="@+id/edit_signup_phone"
-                    android:layout_width="204.33dp"
+                    android:id="@+id/edit_signup_confirm"
+                    android:layout_width="222.33dp"
                     android:layout_height="46.33dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@null"
                     android:fontFamily="@font/notosans"
-                    android:hint="@string/phone"
-                    android:inputType="phone"
+                    android:hint="@string/confirm_num"
+                    android:inputType="numberPassword"
                     android:paddingLeft="18.33dp"
                     android:textColorHint="#cacaca"
-                    android:textSize="13.33dp"
-                    android:background="@null"
+                    android:textSize="13.33sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/edit_signup_passwordcheck" />
+                    app:layout_constraintTop_toBottomOf="@+id/edit_signup_phone" />
 
                 <Button
+                    android:id="@+id/button_signup_confirm"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/btn_sendnumber"/>
+                    android:background="@drawable/btn_phone_nor"/>
+
             </LinearLayout>
 
-            <EditText
-                android:id="@+id/edit_signup_confirm"
-                android:layout_width="290.33dp"
-                android:layout_height="46.33dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/btn_line_nor"
-                android:fontFamily="@font/notosans"
-                android:hint="@string/confirm_num"
-                android:inputType="numberPassword"
-                android:paddingLeft="18.33dp"
-                android:textColorHint="#cacaca"
-                android:textSize="13.33dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_signup_phone" />
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -183,18 +205,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_signup_confirm">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <RadioGroup
+                    android:id="@+id/radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="1">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                    <CheckBox
-                        android:id="@+id/checkbox_signup_member"
+                    <RadioButton
+                        android:id="@+id/radio_signup_member"
                         android:layout_width="17dp"
                         android:layout_height="17dp"
-                        android:background="@drawable/check_box"
-                        android:button="@null" />
+                        android:background="@drawable/radio"
+                        android:button="@null"
+                        android:checked="true"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -202,20 +227,14 @@
                         android:fontFamily="@font/notosans"
                         android:text="@string/member"
                         android:textColor="#000000"
-                        android:textSize="13.33dp" />
-                </LinearLayout>
+                        android:textSize="13.33sp"
+                        android:layout_weight="1"/>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1">
-
-                    <CheckBox
-                        android:id="@+id/checkbox_signup_manager"
+                    <RadioButton
+                        android:id="@+id/radio_signup_manager"
                         android:layout_width="17dp"
                         android:layout_height="17dp"
-                        android:background="@drawable/check_box"
+                        android:background="@drawable/radio"
                         android:button="@null" />
 
                     <TextView
@@ -224,8 +243,11 @@
                         android:fontFamily="@font/notosans"
                         android:text="@string/manager"
                         android:textColor="#000000"
-                        android:textSize="13.33dp" />
-                </LinearLayout>
+                        android:textSize="13.33sp"
+                        android:layout_weight="1"/>
+
+                </RadioGroup>
+
 
             </LinearLayout>
 
@@ -239,7 +261,7 @@
                 android:gravity="center"
                 android:text="@string/signup"
                 android:textColor="#ffffff"
-                android:textSize="13.33dp"
+                android:textSize="13.33sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
@@ -253,4 +275,6 @@
             android:layout_weight="1"/>
 
     </LinearLayout>
+
+
 

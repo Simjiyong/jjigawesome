@@ -2,18 +2,29 @@ package kr.co.company.jjigawesome;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.lang.reflect.Method;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -21,8 +32,25 @@ public class SignUpActivity extends AppCompatActivity {
     int newUiOptions;
     View view;
 
+    Gson gson = new Gson();
+    String url;
+    String json;
+
     LinearLayout linearLayout;
-    EditText editText;
+    EditText editText_name;
+    EditText editText_id;
+    EditText editText_password;
+    EditText editText_repassword;
+    EditText editText_phone;
+    EditText editText_confirm;
+    RadioGroup radioGroup_mem;
+    Button button_finish;
+    Button button_sendNum;
+    Button button_signup;
+    Button button_confirm;
+
+    Boolean isConfirm = false;
+    Member signUpMember;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,30 +115,134 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         linearLayout = (LinearLayout) findViewById(R.id.linear_signup);
-        //linearLayout.setPadding(0,getStatusBarHeight(),0,0);
-        Log.d("status" ,"status : " + getStatusBarHeight());
+        radioGroup_mem = (RadioGroup) findViewById(R.id.radio);
 
+        editText_name = (EditText) findViewById(R.id.edit_signup_name);
+        editText_id = (EditText) findViewById(R.id.edit_signup_id);
+        editText_password = (EditText) findViewById(R.id.edit_signup_password);
+        editText_repassword = (EditText) findViewById(R.id.edit_signup_passwordcheck);
+        editText_phone = (EditText) findViewById(R.id.edit_signup_phone);
+        editText_confirm = (EditText) findViewById(R.id.edit_signup_confirm);
 
+        button_finish = (Button) findViewById(R.id.button_signup_finish);
+        button_sendNum = (Button) findViewById(R.id.button_signup_sendnumber);
+        button_signup = (Button) findViewById(R.id.button_signup);
+        button_confirm = (Button) findViewById(R.id.button_signup_confirm);
 
-        editText = (EditText) findViewById(R.id.edit_signup_name);
+        View.OnClickListener clickListener = new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                switch(v.getId()){
 
-        //linearLayout.setMinimumHeight(width/1080*1920);
-        //RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,(int)(((float)width/1080)*1920));
-        //layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
-        //linearLayout.setLayoutParams(layoutParams);
+                    case R.id.button_signup_finish:
+                        finish();
+                        break;
 
+                    case R.id.button_signup_sendnumber:
+                        if(!ValidateForm.checkForm(editText_id)){
+                            break;
+                        }
 
-        //Intent intent = new Intent(SignUpActivity.this, CompleteQrcodeActivity.class);
-        //startActivity(intent);
+                        break;
+
+                    case R.id.button_signup:
+                        boolean isPossible = true;
+                        EditText[] editTexts = {editText_name, editText_id, editText_password, editText_repassword, editText_phone, editText_confirm};
+                        String[] strings = new String[6];
+                        if(!ValidateForm.checkForm(editTexts)){
+                            isPossible =false;
+                        }
+                        if (!editText_password.getText().toString().equals(editText_repassword.getText().toString())) {
+                            editText_repassword.setError("비밀번호가 다릅니다.");
+                            isPossible = false;
+                        }
+                        if(!isConfirm){
+                            editText_confirm.setError("인증이 필요합니다.");
+                            Toast.makeText(getApplicationContext(),"인증을 완료 해주세요.", Toast.LENGTH_SHORT).show();
+                            isPossible = false;
+                        }
+
+                        if(isPossible == false){
+                            break;
+                        }
+                        for(int i=0;i<editTexts.length;i++){
+                            strings[i] = editTexts[i].getText().toString();
+                        }
+                        int type;
+                        if(radioGroup_mem.getCheckedRadioButtonId() == R.id.radio_signup_member){
+                            type = 0;
+                        }
+                        else{
+                            type = 1;
+                        }
+
+                        signUpMember = new Member(strings[0],strings[1],strings[2],strings[4],type);
+                        json = gson.toJson(signUpMember);
+                        Log.d("signup", "url : "+ url + "json : " + json);
+                        new SignUpTask().execute();
+                        break;
+
+                    case R.id.button_signup_confirm:
+                        if(!ValidateForm.checkForm(editText_confirm)){
+                            break;
+                        }
+                        if(editText_confirm.getText().toString().equals("1234")){
+                            isConfirm = true;
+                            button_confirm.setBackground(getDrawable(R.drawable.btn_phone_sel));
+                        }
+                        else{
+                            isConfirm = false;
+                            button_confirm.setBackground(getDrawable(R.drawable.btn_phone_nor));
+                        }
+                        break;
+                }
+            }
+        };
+
+        button_finish.setOnClickListener(clickListener);
+        button_signup.setOnClickListener(clickListener);
+        button_sendNum.setOnClickListener(clickListener);
+        button_confirm.setOnClickListener(clickListener);
+
+        /*Intent intent = new Intent(SignUpActivity.this, QrcodeActivity.class);
+        startActivity(intent);*/
     }
 
-    public int getStatusBarHeight()
-    {
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0)
-            result = getResources().getDimensionPixelSize(resourceId);
+    private class SignUpTask extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            url = "http://18.218.187.138:3000/signup";
+            Post post = new Post(url, json);
+            String response = null;
+            try {
+                response = post.post();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+            Log.d("signup" , "signup!!");
+            return response;
+        }
 
-        return result;
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+
+            Response response = gson.fromJson(s,Response.class);
+            if(response!=null) {
+                if (response.getStatus().equals("OK")) {
+                    Toast.makeText(getApplicationContext(), "회원가입이 성공 했습니다.", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(getApplicationContext(), "중복된 아이디 입니다.", Toast.LENGTH_SHORT).show();
+                    this.cancel(true);
+                }
+            }
+            else{
+                Toast.makeText(getApplicationContext(), "오류! 서버로 부터 응답 받지 못함", Toast.LENGTH_SHORT).show();
+            }
+        }
+
     }
+
 }

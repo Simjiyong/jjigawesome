@@ -1,5 +1,6 @@
 package kr.co.company.jjigawesome;
 
+import android.app.Activity;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,18 +8,24 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 
 import java.lang.reflect.Method;
 
-public class QrcodeActivity extends AppCompatActivity {
+public class QrcodeActivity extends Activity {
 
     int newUiOptions;
     View view;
 
+    LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_qrcode);
 
         Display display = this.getWindowManager().getDefaultDisplay();
@@ -77,7 +84,8 @@ public class QrcodeActivity extends AppCompatActivity {
                 }
             });
         }
-
-
+        linearLayout = (LinearLayout) findViewById(R.id.linear_qr);
+        Animation animationDown = AnimationUtils.loadAnimation(this, R.anim.down);
+        linearLayout.startAnimation(animationDown);
     }
 }

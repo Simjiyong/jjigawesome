@@ -1,6 +1,7 @@
 package kr.co.company.jjigawesome;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,16 +10,34 @@ import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import java.io.IOException;
 import java.lang.reflect.Method;
 
 public class LoginActivity extends AppCompatActivity {
 
     int newUiOptions;
     View view;
+
+    String url;
+    String json;
+    Gson gson = new Gson();
+
+    EditText editText_id;
+    EditText editText_password;
+
+    CheckBox checkBox_keep;
+
+    Button button_login;
     Button button_signup;
-    LinearLayout linearLayout;
+
+    Member loginMember;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,30 +101,80 @@ public class LoginActivity extends AppCompatActivity {
             });
         }
 
+        editText_id = (EditText) findViewById(R.id.edit_login_id);
+        editText_password = (EditText) findViewById(R.id.edit_login_password);
+
         button_signup = (Button) findViewById(R.id.button_login_signup);
-        button_signup.setOnClickListener(new View.OnClickListener() {
+        button_login = (Button) findViewById(R.id.button_login);
+
+        View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                startActivity(intent);
+                boolean isPossible = true;
+
+                switch (v.getId()){
+                    case R.id.button_login:
+
+                        if(!ValidateForm.checkForm(editText_id, editText_password)){
+                            isPossible = false;
+                        }
+
+                        if(isPossible == false){
+                            break;
+                        }
+                        loginMember = new Member(editText_id.getText().toString(),editText_password.getText().toString());
+                        json = gson.toJson(loginMember);
+                        new LoginTask().execute();
+                        break;
+
+                    case R.id.button_signup:
+                        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        startActivity(intent);
+                        break;
+                }
             }
-        });
+        };
 
-        //linearLayout = (LinearLayout) findViewById(R.id.linear_login);
-        //linearLayout.setPadding(0,getStatusBarHeight(),0,0);
-
+        button_login.setOnClickListener(onClickListener);
+        button_signup.setOnClickListener(onClickListener);
 
 
     }
 
-    public int getStatusBarHeight()
-    {
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0)
-            result = getResources().getDimensionPixelSize(resourceId);
+    private class LoginTask extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            url = "http://18.218.187.138:3000/login";
+            Post post = new Post(url, json);
+            String response = null;
+            try {
+                response = post.post();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+            Log.d("signup" , "signup!!");
+            return response;
+        }
 
-        return result;
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            Response response = gson.fromJson(s,Response.class);
+            if(response!=null) {
+                if (response.getStatus().equals("OK")) {
+                    Toast.makeText(getApplicationContext(), "로그인 성공 입니다.", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "로그인 실패 입니다.", Toast.LENGTH_SHORT).show();
+                    this.cancel(true);
+                }
+            }
+            else{
+                Toast.makeText(getApplicationContext(), "오류! 서버로 부터 응답 받지 못함", Toast.LENGTH_SHORT).show();
+            }
+        }
+
     }
-
 }
