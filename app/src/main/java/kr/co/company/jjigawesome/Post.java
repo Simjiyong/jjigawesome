@@ -36,7 +36,6 @@ public class Post {
                 .post(body)
                 .build();
         try(Response response = client.newCall(request).execute()){
-            Log.d("response" , "response : " + response.body().string());
             return response.body().string();
         }
     }

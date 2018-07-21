@@ -9,14 +9,16 @@ public class Response {
     private String token;
     private String name;
     private int stamp_number;
+    private int type;
 
     public Response(){}
 
-    public Response(String status, String token, String name, int stamp_number) {
-        this.status = status;
-        this.token = token;
-        this.name = name;
-        this.stamp_number = stamp_number;
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public String getStatus() {

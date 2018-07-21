@@ -132,6 +132,8 @@ public class SignUpActivity extends AppCompatActivity {
         View.OnClickListener clickListener = new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                String id = editText_id.getText().toString();
+
                 switch(v.getId()){
 
                     case R.id.button_signup_finish:
@@ -159,6 +161,10 @@ public class SignUpActivity extends AppCompatActivity {
                         if(!isConfirm){
                             editText_confirm.setError("인증이 필요합니다.");
                             Toast.makeText(getApplicationContext(),"인증을 완료 해주세요.", Toast.LENGTH_SHORT).show();
+                            isPossible = false;
+                        }
+                        if(!id.matches(ValidateForm.EMAIL_REGEX)){
+                            editText_id.setError("이메일 형식이 아닙니다.");
                             isPossible = false;
                         }
 
@@ -211,7 +217,7 @@ public class SignUpActivity extends AppCompatActivity {
     private class SignUpTask extends AsyncTask<String, String, String> {
         @Override
         protected String doInBackground(String... strings) {
-            url = "http://18.218.187.138:3000/signup";
+            url = "http://18.218.187.138:3000/register";
             Post post = new Post(url, json);
             String response = null;
             try {

@@ -111,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boolean isPossible = true;
+                String id = editText_id.getText().toString();
 
                 switch (v.getId()){
                     case R.id.button_login:
@@ -118,16 +119,20 @@ public class LoginActivity extends AppCompatActivity {
                         if(!ValidateForm.checkForm(editText_id, editText_password)){
                             isPossible = false;
                         }
+                        if(!id.matches(ValidateForm.EMAIL_REGEX)){
+                            editText_id.setError("이메일 형식이 아닙니다.");
+                            isPossible = false;
+                        }
 
                         if(isPossible == false){
                             break;
                         }
-                        loginMember = new Member(editText_id.getText().toString(),editText_password.getText().toString());
+                        loginMember = new Member(id,editText_password.getText().toString());
                         json = gson.toJson(loginMember);
                         new LoginTask().execute();
                         break;
 
-                    case R.id.button_signup:
+                    case R.id.button_login_signup:
                         Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
@@ -153,7 +158,7 @@ public class LoginActivity extends AppCompatActivity {
             }catch (IOException e){
                 e.printStackTrace();
             }
-            Log.d("signup" , "signup!!");
+            //Log.d("response" , response);
             return response;
         }
 

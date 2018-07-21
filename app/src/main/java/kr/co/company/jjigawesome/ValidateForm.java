@@ -8,6 +8,7 @@ import android.widget.EditText;
  */
 
 public class ValidateForm {
+    static String EMAIL_REGEX = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";
 
     public static boolean checkForm(EditText... editTexts){
         boolean valid =true;
