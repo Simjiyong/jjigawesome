@@ -1,30 +1,24 @@
 package kr.co.company.jjigawesome;
 
-import android.content.Intent;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import java.lang.reflect.Method;
 
-public class LoginActivity extends AppCompatActivity {
-
+public class ManagerQrActivity extends AppCompatActivity {
     int newUiOptions;
     View view;
-    Button button_signup, button_login;
     LinearLayout linearLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
+        setContentView(R.layout.activity_manager_qr);
         Display display = this.getWindowManager().getDefaultDisplay();
         int realWidth;
         int realHeight;
@@ -81,40 +75,5 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         }
-
-        button_signup = (Button) findViewById(R.id.button_login_signup);
-        button_signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        button_login = (Button) findViewById(R.id.button_login);
-        button_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        //linearLayout = (LinearLayout) findViewById(R.id.linear_login);
-        //linearLayout.setPadding(0,getStatusBarHeight(),0,0);
-
-
-
     }
-
-    public int getStatusBarHeight()
-    {
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0)
-            result = getResources().getDimensionPixelSize(resourceId);
-
-        return result;
-    }
-
 }

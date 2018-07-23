@@ -2,8 +2,8 @@ package kr.co.company.jjigawesome;
 
 import android.content.Intent;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -13,17 +13,15 @@ import android.widget.LinearLayout;
 
 import java.lang.reflect.Method;
 
-public class LoginActivity extends AppCompatActivity {
-
+public class ManagerActivity extends AppCompatActivity {
     int newUiOptions;
     View view;
-    Button button_signup, button_login;
     LinearLayout linearLayout;
-
+    Button button_manager_scan, button_manager_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_manager);
 
         Display display = this.getWindowManager().getDefaultDisplay();
         int realWidth;
@@ -82,39 +80,21 @@ public class LoginActivity extends AppCompatActivity {
             });
         }
 
-        button_signup = (Button) findViewById(R.id.button_login_signup);
-        button_signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        button_login = (Button) findViewById(R.id.button_login);
-        button_login.setOnClickListener(new View.OnClickListener() {
+        button_manager_scan = (Button) findViewById(R.id.button_manager_scan);
+        button_manager_scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                Intent intent = new Intent(ManagerActivity.this, ManagerQrActivity.class);
                 startActivity(intent);
             }
         });
-
-        //linearLayout = (LinearLayout) findViewById(R.id.linear_login);
-        //linearLayout.setPadding(0,getStatusBarHeight(),0,0);
-
-
-
+        button_manager_id = (Button) findViewById(R.id.button_manager_id);
+        button_manager_id.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ManagerActivity.this, ManagerIdActivity.class);
+                startActivity(intent);
+            }
+        });
     }
-
-    public int getStatusBarHeight()
-    {
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0)
-            result = getResources().getDimensionPixelSize(resourceId);
-
-        return result;
-    }
-
 }

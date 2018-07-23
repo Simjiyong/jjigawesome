@@ -19,7 +19,13 @@
         </activity>
         <activity android:name=".SignUpActivity" />
         <activity android:name=".QrcodeActivity" />
-        <activity android:name=".CompleteQrcodeActivity"></activity>
+        <activity android:name=".CompleteQrcodeActivity" />
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".MypageActivity" />
+        <activity android:name=".ManagerActivity" />
+        <activity android:name=".ManagerIdActivity" />
+        <activity android:name=".ManagerQrActivity" />
+        <activity android:name=".BuyStamp"></activity>
     </application>
 
 </manifest>

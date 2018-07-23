@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="kr.co.company.jjigawesome.ManagerActivity">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout_manager"
+        android:layout_width="match_parent"
+        android:layout_height="68.33dp"
+        android:background="#ffffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textview_manager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/notosans"
+            android:text="매니저 회원"
+            android:textColor="#000000"
+            android:textSize="15.33sp" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.67dp"
+        android:background="#b2b2b2" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="43.33dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/notosans"
+        android:text="서울 커피 숭실대점"
+        android:textColor="#000000"
+        android:textSize="18.33sp"
+        android:textStyle="bold" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="42.67dp" />
+
+    <Button
+        android:id="@+id/button_manager_scan"
+        android:layout_width="290.33dp"
+        android:layout_height="46.33dp"
+        android:layout_gravity="center"
+        android:background="@drawable/btn_b_nor"
+        android:fontFamily="@font/notosans"
+        android:gravity="center"
+        android:text="스캔하기"
+        android:textColor="#ffffff"
+        android:textSize="13.33sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10.67dp" />
+
+    <Button
+        android:id="@+id/button_manager_id"
+        android:layout_width="290.33dp"
+        android:layout_height="46.33dp"
+        android:layout_gravity="center"
+        android:background="@drawable/btn_b_nor"
+        android:fontFamily="@font/notosans"
+        android:gravity="center"
+        android:text="ID 입력하기"
+        android:textColor="#ffffff"
+        android:textSize="13.33sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/button_manager_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="26.67dp"
+            android:background="#00000000"
+            android:fontFamily="@font/notosans"
+            android:text="로그아웃"
+            android:textColor="#a3a3a3"
+            android:textSize="15.33sp" />
+    </RelativeLayout>
+</LinearLayout>
