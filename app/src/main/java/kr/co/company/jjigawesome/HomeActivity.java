@@ -91,6 +91,14 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        /*HomePagerAdapter homePagerAdapter = new HomePagerAdapter(
+                getSupportFragmentManager()
+        );
+        ViewPager viewPager = (ViewPager) findViewById(R.id.home_viewpager);
+        viewPager.setAdapter(homePagerAdapter);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.home_tablayout);
+        tabLayout.setupWithViewPager(viewPager);*/
     }
 
 }

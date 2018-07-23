@@ -25,7 +25,10 @@
         <activity android:name=".ManagerActivity" />
         <activity android:name=".ManagerIdActivity" />
         <activity android:name=".ManagerQrActivity" />
-        <activity android:name=".BuyStamp"></activity>
+        <activity android:name=".BuyStamp" />
+        <activity android:name=".ChangeNameActivity" />
+        <activity android:name=".ChangePasswordActivity" />
+        <activity android:name=".MyStampActivity"></activity>
     </application>
 
 </manifest>
