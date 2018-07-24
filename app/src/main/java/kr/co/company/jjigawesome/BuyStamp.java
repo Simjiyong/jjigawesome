@@ -1,5 +1,6 @@
 package kr.co.company.jjigawesome;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -18,6 +20,9 @@ public class BuyStamp extends AppCompatActivity {
 
     LinearLayout linearLayout;
     EditText editText;
+
+    Button button_qrcode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,5 +84,24 @@ public class BuyStamp extends AppCompatActivity {
                 }
             });
         }
+
+        button_qrcode = (Button) findViewById(R.id.button_buystamp_qrcode);
+
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                switch (v.getId()) {
+                    case R.id.button_buystamp_qrcode:
+                        Intent intent = new Intent(BuyStamp.this,  QrcodeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        startActivity(intent);
+                        break;
+                }
+            }
+        };
+
+        button_qrcode.setOnClickListener(onClickListener);
+
     }
 }

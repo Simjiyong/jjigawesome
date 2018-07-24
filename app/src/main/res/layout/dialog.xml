@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="302.33dp"
+    android:layout_height="138.67dp"
+    android:orientation="vertical"
+    android:background="#ffffff">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="20.00dp"
+        android:layout_marginLeft="36.00dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/overlapEmail"
+        android:textSize="15.33sp"/>
+
+    <Button
+        android:layout_width="51.33dp"
+        android:layout_height="29.33dp"
+        android:layout_marginLeft="228.67dp"
+        android:layout_marginTop="30.67dp"
+        android:background="@drawable/btn_ok_01"/>
+
+</LinearLayout>

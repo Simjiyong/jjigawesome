@@ -240,8 +240,9 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "회원가입이 성공 했습니다.", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    Toast.makeText(getApplicationContext(), "중복된 아이디 입니다.", Toast.LENGTH_SHORT).show();
                     this.cancel(true);
+                    MyDialog myDialog = new MyDialog(SignUpActivity.this);
+                    myDialog.show();
                 }
             }
             else{

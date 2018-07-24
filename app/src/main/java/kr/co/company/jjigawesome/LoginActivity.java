@@ -166,6 +166,7 @@ public class LoginActivity extends AppCompatActivity {
             super.onPostExecute(s);
 
             Response response = gson.fromJson(s,Response.class);
+            Log.d("Response", "response : " + response.getType());
             if(response!=null) {
                 if (response.getStatus().equals("OK")) {
                     Toast.makeText(getApplicationContext(), "로그인 성공 했습니다.", Toast.LENGTH_SHORT).show();

@@ -222,12 +222,13 @@
                         android:checked="true"/>
 
                     <TextView
+                        android:layout_marginLeft="6.33dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/notosans"
                         android:text="@string/member"
                         android:textColor="#000000"
-                        android:textSize="13.33sp"
+                        android:textSize="12.33sp"
                         android:layout_weight="1"/>
 
                     <RadioButton
@@ -238,12 +239,13 @@
                         android:button="@null" />
 
                     <TextView
+                        android:layout_marginLeft="6.33dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/notosans"
                         android:text="@string/manager"
                         android:textColor="#000000"
-                        android:textSize="13.33sp"
+                        android:textSize="12.33sp"
                         android:layout_weight="1"/>
 
                 </RadioGroup>
