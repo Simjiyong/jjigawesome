@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -48,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         int realWidth;
         int realHeight;
 
-        if (Build.VERSION.SDK_INT >= 17){
+        if (Build.VERSION.SDK_INT >= 17) {
             //new pleasant way to get real metrics
             DisplayMetrics realMetrics = new DisplayMetrics();
             display.getRealMetrics(realMetrics);
@@ -75,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
             realHeight = display.getHeight();
         }
 
-        if(realWidth * 16 == realHeight * 9){
+        if (realWidth * 16 == realHeight * 9) {
             view = getWindow().getDecorView();
             int uiOptions = view.getSystemUiVisibility();
             newUiOptions = uiOptions;
@@ -113,21 +112,21 @@ public class LoginActivity extends AppCompatActivity {
                 boolean isPossible = true;
                 String id = editText_id.getText().toString();
 
-                switch (v.getId()){
+                switch (v.getId()) {
                     case R.id.button_login:
 
-                        if(!ValidateForm.checkForm(editText_id, editText_password)){
+                        if (!ValidateForm.checkForm(editText_id, editText_password)) {
                             isPossible = false;
                         }
-                        if(!id.matches(ValidateForm.EMAIL_REGEX)){
+                        if (!id.matches(ValidateForm.EMAIL_REGEX)) {
                             editText_id.setError("이메일 형식이 아닙니다.");
                             isPossible = false;
                         }
 
-                        if(isPossible == false){
+                        if (isPossible == false) {
                             break;
                         }
-                        loginMember = new Member(id,editText_password.getText().toString());
+                        loginMember = new Member(id, editText_password.getText().toString());
                         json = gson.toJson(loginMember);
                         new LoginTask().execute();
                         break;
@@ -155,7 +154,7 @@ public class LoginActivity extends AppCompatActivity {
             String response = null;
             try {
                 response = post.post();
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             //Log.d("response" , response);
@@ -166,7 +165,22 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-        return result;
-    }
+            Response response = gson.fromJson(s,Response.class);
+            if(response!=null) {
+                if (response.getStatus().equals("OK")) {
+                    Toast.makeText(getApplicationContext(), "로그인 성공 했습니다.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(getApplicationContext(), "로그인 실패 입니다.", Toast.LENGTH_SHORT).show();
+                    this.cancel(true);
+                }
+            }
+            else{
+                Toast.makeText(getApplicationContext(), "오류! 서버로 부터 응답 받지 못함", Toast.LENGTH_SHORT).show();
+            }
+        }
 
+    }
 }
