@@ -14,4 +14,7 @@
     <string name="qrcode">QR코드 인증</string>
     <string name="completeqr">스탬프 찍기 완료</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
