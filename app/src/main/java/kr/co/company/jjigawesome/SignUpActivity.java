@@ -51,6 +51,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     Boolean isConfirm = false;
     Member signUpMember;
+    Response response;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -234,7 +235,7 @@ public class SignUpActivity extends AppCompatActivity {
             super.onPostExecute(s);
 
 
-            Response response = gson.fromJson(s,Response.class);
+            response = gson.fromJson(s,Response.class);
             if(response!=null) {
                 if (response.getStatus().equals("OK")) {
                     Toast.makeText(getApplicationContext(), "회원가입이 성공 했습니다.", Toast.LENGTH_SHORT).show();

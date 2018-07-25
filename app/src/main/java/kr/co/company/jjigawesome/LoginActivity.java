@@ -37,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     Button button_signup;
 
     Member loginMember;
+    Response response;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,14 +166,21 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            Response response = gson.fromJson(s,Response.class);
-            Log.d("Response", "response : " + response.getType());
+            response = gson.fromJson(s,Response.class);
             if(response!=null) {
+                Log.d("Response", "response : " + response.getType());
                 if (response.getStatus().equals("OK")) {
-                    Toast.makeText(getApplicationContext(), "로그인 성공 했습니다.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                    finish();
+                    if(response.getType() == 0){
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else{
+                        Intent intent = new Intent(LoginActivity.this, ManagerActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+
                 } else {
                     Toast.makeText(getApplicationContext(), "로그인 실패 입니다.", Toast.LENGTH_SHORT).show();
                     this.cancel(true);
