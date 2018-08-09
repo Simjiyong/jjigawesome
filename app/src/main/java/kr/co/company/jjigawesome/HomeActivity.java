@@ -5,10 +5,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -101,6 +103,55 @@ public class HomeActivity extends AppCompatActivity {
         viewPager.setAdapter(homePagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.home_tablayout);
         tabLayout.setupWithViewPager(viewPager);
+
+        Button buttonOpenDrawer = (Button) findViewById(R.id.button_home_menu);
+        buttonOpenDrawer.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View arg0) {
+                DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_home);
+                if(!drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
+                    drawerLayout.openDrawer(Gravity.RIGHT);
+                }
+            }
+        });
+
+        Button buttonCloseDrawer = (Button) findViewById(R.id.close_drawer_button);
+        buttonCloseDrawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_home);
+                if(drawerLayout.isDrawerOpen(Gravity.RIGHT)){
+                    drawerLayout.closeDrawer(Gravity.RIGHT);
+                }
+            }
+        });
+
+        Button buttonMyPage = (Button) findViewById(R.id.button_drawer_mypage);
+        buttonMyPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, MypageActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button buttonMyCoupon = (Button) findViewById(R.id.button_drawer_coupon);
+        buttonMyCoupon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, MyStampActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button buttonBuy = (Button) findViewById(R.id.button_drawer_buy);
+        buttonBuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, BuyStamp.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
 }
