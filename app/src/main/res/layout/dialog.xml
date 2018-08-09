@@ -7,14 +7,15 @@
     android:background="#ffffff">
 
     <TextView
+        android:id="@+id/textview_dialog"
         android:layout_width="wrap_content"
         android:layout_height="20.00dp"
         android:layout_marginLeft="36.00dp"
         android:layout_marginTop="32dp"
-        android:text="@string/overlapEmail"
         android:textSize="15.33sp"/>
 
     <Button
+        android:id="@+id/button_dialog_confirm"
         android:layout_width="51.33dp"
         android:layout_height="29.33dp"
         android:layout_marginLeft="228.67dp"

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="kr.co.company.jjigawesome.FindIDActivity"
+    android:orientation="vertical"
+    android:background="#f6f6f6">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="68.33dp"
+        android:background="#ffffff">
+
+        <TextView
+            android:id="@+id/textview_findid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/notosans"
+            android:text="@string/findid"
+            android:textColor="#000000"
+            android:textSize="15.33sp" />
+
+        <Button
+            android:id="@+id/button_findid_finish"
+            android:layout_width="21.33dp"
+            android:layout_height="21.33dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="22.00dp"
+            android:background="@drawable/btn_del" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="0.67dp"
+        android:background="#b2b2b2" />
+    
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/insertedEmail"
+            android:textSize="13.33sp"
+            android:fontFamily="@font/notosans"
+            android:textColor="#000000"/>
+
+        <EditText
+            android:id="@+id/edit_findid_email"
+            android:layout_width="290.33dp"
+            android:layout_height="46.33dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12.67dp"
+            android:background="@drawable/btn_line_nor"
+            android:fontFamily="@font/notosans"
+            android:hint="@string/email"
+            android:textColorHint="#cacaca"
+            android:textSize="13.33sp"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="12.67dp" />
+
+        <Button
+            android:id="@+id/button_findid_confirm"
+            android:layout_width="290.33dp"
+            android:layout_height="46.33dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10.67dp"
+            android:background="@drawable/btn_b_nor"
+            android:fontFamily="@font/notosans"
+            android:gravity="center"
+            android:text="@string/confirm"
+            android:textColor="#ffffff"
+            android:textSize="13.33sp" />
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

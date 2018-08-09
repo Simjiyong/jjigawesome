@@ -1,6 +1,7 @@
 package kr.co.company.jjigawesome;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,8 +17,11 @@ import java.lang.reflect.Method;
 public class ManagerActivity extends AppCompatActivity {
     int newUiOptions;
     View view;
-    LinearLayout linearLayout;
+    SharedPreferences mPrefs;
+
     Button button_manager_scan, button_manager_id;
+    Button button_logout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +88,7 @@ public class ManagerActivity extends AppCompatActivity {
         button_manager_scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ManagerActivity.this, ManagerQrActivity.class);
+                Intent intent = new Intent(ManagerActivity.this, QrScanActivity.class);
                 startActivity(intent);
             }
         });
@@ -94,6 +98,17 @@ public class ManagerActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(ManagerActivity.this, ManagerIdActivity.class);
                 startActivity(intent);
+            }
+        });
+        button_logout = (Button) findViewById(R.id.button_manager_logout);
+        button_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPrefs = getSharedPreferences("mPrefs", MODE_PRIVATE);
+                mPrefs.edit().remove("member").apply();
+                Intent intent = new Intent(ManagerActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

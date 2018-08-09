@@ -1,5 +1,6 @@
 package kr.co.company.jjigawesome;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,14 +8,21 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.TextView;
+
+
+import com.google.gson.Gson;
 
 import java.lang.reflect.Method;
 
 public class ManagerQrActivity extends AppCompatActivity {
     int newUiOptions;
     View view;
-    LinearLayout linearLayout;
+    Gson gson = new Gson();
+
+    TextView textView_name;
+    TextView textView_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,5 +83,16 @@ public class ManagerQrActivity extends AppCompatActivity {
                 }
             });
         }
+
+        textView_id = (TextView) findViewById(R.id.textview_manager_qr_id);
+        textView_name = (TextView) findViewById(R.id.textview_manager_qr_name);
+
+        Intent intent = getIntent();
+        Log.d("data", intent.getStringExtra("data"));
+
+        Member member = gson.fromJson(intent.getStringExtra("data"),Member.class);
+
+        textView_name.setText(member.getName());
+        textView_id.setText(member.getID());
     }
 }

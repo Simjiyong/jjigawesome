@@ -10,6 +10,7 @@ public class Response {
     private String name;
     private int stamp_number;
     private int type;
+    private String error;
 
     public Response(){}
 
@@ -51,5 +52,13 @@ public class Response {
 
     public void setStamp_number(int stamp_number) {
         this.stamp_number = stamp_number;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }

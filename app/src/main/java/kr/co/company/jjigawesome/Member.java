@@ -8,18 +8,19 @@ class Member {
     private String name;
     private String ID;
     private String password;
-    private String phone_number;
+    private String email;
     private int type;
     private String token;
+    private int stampCount;
 
     public Member(){
     }
 
-    public Member(String name, String ID, String password, String phone_number, int type) {
+    public Member(String name, String ID, String password, String email, int type) {
         this.name = name;
         this.ID = ID;
         this.password = password;
-        this.phone_number = phone_number;
+        this.email = email;
         this.type = type;
     }
 
@@ -52,12 +53,12 @@ class Member {
         this.password = password;
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getType() {
@@ -75,4 +76,13 @@ class Member {
     public void setToken(String token) {
         this.token = token;
     }
+
+    public int getStampCount() {
+        return stampCount;
+    }
+
+    public void setStampCount(int stampCount) {
+        this.stampCount = stampCount;
+    }
+
 }

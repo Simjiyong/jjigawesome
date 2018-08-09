@@ -8,9 +8,21 @@
     android:orientation="vertical"
     tools:context="kr.co.company.jjigawesome.LoginActivity">
 
+
     <Space
         android:layout_width="match_parent"
-        android:layout_height="210.67dp"
+        android:layout_height="80.33dp"
+        android:layout_weight="1"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="92.67dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/img_logo_01"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="38.00dp"
         android:layout_weight="1"/>
     
     <LinearLayout
@@ -98,7 +110,7 @@
             android:background="@drawable/btn_findid"/>
 
         <Button
-            android:id="@+id/button_login_findpassword"
+            android:id="@+id/button_login_findpw"
             android:layout_width="96.67dp"
             android:layout_height="45.67dp"
             android:background="@drawable/btn_findpassword"/>

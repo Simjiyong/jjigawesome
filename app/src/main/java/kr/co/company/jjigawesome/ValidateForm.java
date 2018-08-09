@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 public class ValidateForm {
     static String EMAIL_REGEX = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";
+    static String PASSWORD_REGEX = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$";
 
     public static boolean checkForm(EditText... editTexts){
         boolean valid =true;

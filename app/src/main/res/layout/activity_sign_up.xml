@@ -77,36 +77,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/guideline" />
 
-            <LinearLayout
+            <EditText
+                android:id="@+id/edit_signup_id"
                 android:layout_width="290.33dp"
                 android:layout_height="46.33dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:background="@drawable/btn_line_nor">
-
-                <EditText
-                    android:id="@+id/edit_signup_id"
-                    android:layout_width="204.33dp"
-                    android:layout_height="46.33dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@null"
-                    android:fontFamily="@font/notosans"
-                    android:hint="@string/id"
-                    android:inputType="textEmailAddress"
-                    android:paddingLeft="18.33dp"
-                    android:textColorHint="#cacaca"
-                    android:textSize="13.33sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/edit_signup_name" />
-
-                <Button
-                    android:id="@+id/button_signup_sendnumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/btn_sendnumber"/>
-            </LinearLayout>
+                android:background="@drawable/btn_line_nor"
+                android:fontFamily="@font/notosans"
+                android:hint="@string/id"
+                android:inputType="text"
+                android:paddingLeft="18.33dp"
+                android:textColorHint="#cacaca"
+                android:textSize="13.33sp" />
 
 
             <EditText
@@ -121,10 +104,7 @@
                 android:inputType="textPassword"
                 android:paddingLeft="18.33dp"
                 android:textColorHint="#cacaca"
-                android:textSize="13.33sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_signup_id" />
+                android:textSize="13.33sp" />
 
             <EditText
                 android:id="@+id/edit_signup_passwordcheck"
@@ -143,24 +123,34 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_signup_password" />
 
-
-
-            <EditText
-                android:id="@+id/edit_signup_phone"
+            <LinearLayout
                 android:layout_width="290.33dp"
                 android:layout_height="46.33dp"
-                android:layout_marginTop="10dp"
                 android:layout_gravity="center_horizontal"
-                android:fontFamily="@font/notosans"
-                android:hint="@string/phone"
-                android:inputType="phone"
-                android:paddingLeft="18.33dp"
-                android:textColorHint="#cacaca"
-                android:textSize="13.33sp"
-                android:background="@drawable/btn_line_nor"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_signup_passwordcheck" />
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:background="@drawable/btn_line_nor">
+
+                <EditText
+                    android:id="@+id/edit_signup_email"
+                    android:layout_width="204.33dp"
+                    android:layout_height="46.33dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@null"
+                    android:fontFamily="@font/notosans"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress"
+                    android:paddingLeft="18.33dp"
+                    android:textColorHint="#cacaca"
+                    android:textSize="13.33sp" />
+
+                <Button
+                    android:id="@+id/button_signup_sendnumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_sendnumber"/>
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="290.33dp"

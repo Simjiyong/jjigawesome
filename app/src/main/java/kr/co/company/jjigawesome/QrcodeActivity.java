@@ -1,6 +1,9 @@
 package kr.co.company.jjigawesome;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,22 +14,39 @@ import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+
+import com.google.gson.Gson;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.lang.reflect.Method;
+import java.util.Hashtable;
 
 public class QrcodeActivity extends Activity {
 
     int newUiOptions;
     View view;
 
-    LinearLayout linearLayout;
+    SharedPreferences mPrefs;
+    Gson gson = new Gson();
+    RelativeLayout layout;
+
+    ImageView imageView;
+    Member member;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_qrcode);
+
+        mPrefs = getSharedPreferences("mPrefs", MODE_PRIVATE);
 
         Display display = this.getWindowManager().getDefaultDisplay();
         int realWidth;
@@ -84,8 +104,45 @@ public class QrcodeActivity extends Activity {
                 }
             });
         }
-        linearLayout = (LinearLayout) findViewById(R.id.linear_qr);
+        layout = (RelativeLayout) findViewById(R.id.linear_qr);
         Animation animationDown = AnimationUtils.loadAnimation(this, R.anim.down);
-        linearLayout.startAnimation(animationDown);
+        layout.startAnimation(animationDown);
+
+        member = ((Member)SPtoObject.loadObject(mPrefs,"member",Member.class));
+        member.setPassword(null);
+        member.setEmail(null);
+        member.setToken(null);
+        Log.d("qrString", gson.toJson(member));
+
+        imageView = (ImageView) findViewById(R.id.image_qr);
+        imageView.setImageBitmap(generateQRCode(gson.toJson(member)));
+
+    }
+
+    public static Bitmap generateQRCode(String contents) {
+        Bitmap bitmap = null;
+
+        try {
+            Hashtable hints = new Hashtable();
+            hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+            QRCodeWriter qrCodeWriter = new QRCodeWriter();
+            bitmap = toBitmap(qrCodeWriter.encode(contents, BarcodeFormat.QR_CODE, 200, 200,hints));
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+
+        return bitmap;
+    }
+
+    private static Bitmap toBitmap(BitMatrix matrix) {
+        int height = matrix.getHeight();
+        int width = matrix.getWidth();
+        Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                bmp.setPixel(x, y, matrix.get(x, y) ? Color.BLACK : Color.WHITE);
+            }
+        }
+        return bmp;
     }
 }
