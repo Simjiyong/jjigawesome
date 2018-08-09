@@ -3,6 +3,8 @@ package kr.co.company.jjigawesome;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -92,13 +94,13 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        /*HomePagerAdapter homePagerAdapter = new HomePagerAdapter(
+        HomePagerAdapter homePagerAdapter = new HomePagerAdapter(
                 getSupportFragmentManager()
         );
-        ViewPager viewPager = (ViewPager) findViewById(R.id.home_viewpager);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         viewPager.setAdapter(homePagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.home_tablayout);
-        tabLayout.setupWithViewPager(viewPager);*/
+        tabLayout.setupWithViewPager(viewPager);
     }
 
 }
