@@ -134,7 +134,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         imageView_bg = (ImageView) findViewById(R.id.image_signup_bg);
 
-        Glide.with(this).load(R.drawable.bg_signup).into(imageView_bg);
+        Glide.with(this).load(R.drawable.bg_signup).override(1080,1920).into(imageView_bg);
 
         View.OnClickListener clickListener = new View.OnClickListener(){
             @Override

@@ -112,7 +112,7 @@ public class QrcodeActivity extends Activity {
             });
         }
         imageView_bg = (ImageView) findViewById(R.id.image_qr_bg);
-        Glide.with(this).load(R.drawable.bg_qrcode_01).centerCrop().into(imageView_bg);
+        Glide.with(this).load(R.drawable.bg_qrcode_01).into(imageView_bg);
         layout = (FrameLayout) findViewById(R.id.linear_qr);
         //layout.setBackgroundResource(R.drawable.bg_qrcode_01);
         Animation animationDown = AnimationUtils.loadAnimation(this, R.anim.down);
