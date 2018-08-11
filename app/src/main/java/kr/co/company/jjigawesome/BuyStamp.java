@@ -137,20 +137,13 @@ public class BuyStamp extends AppCompatActivity {
 
         button_qrcode = (Button) findViewById(R.id.button_buystamp_qrcode);
 
-        View.OnClickListener onClickListener = new View.OnClickListener() {
+        button_qrcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                switch (v.getId()) {
-                    case R.id.button_buystamp_qrcode:
-                        Intent intent = new Intent(BuyStamp.this,  QrcodeActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                        startActivity(intent);
-                        break;
-                }
+                Intent intent = new Intent(BuyStamp.this,  QrcodeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
             }
-        };
-
-        button_qrcode.setOnClickListener(onClickListener);
+        });
     }
 }
