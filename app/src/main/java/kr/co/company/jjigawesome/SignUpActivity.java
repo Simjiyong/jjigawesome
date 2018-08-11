@@ -15,11 +15,13 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -36,7 +38,7 @@ public class SignUpActivity extends AppCompatActivity {
     String url;
     String json;
 
-    LinearLayout linearLayout;
+    ImageView imageView_bg;
     EditText editText_name;
     EditText editText_id;
     EditText editText_password;
@@ -116,7 +118,6 @@ public class SignUpActivity extends AppCompatActivity {
             });
         }
 
-        linearLayout = (LinearLayout) findViewById(R.id.linear_signup);
         radioGroup_mem = (RadioGroup) findViewById(R.id.radio);
 
         editText_name = (EditText) findViewById(R.id.edit_signup_name);
@@ -130,6 +131,10 @@ public class SignUpActivity extends AppCompatActivity {
         button_sendNum = (Button) findViewById(R.id.button_signup_sendnumber);
         button_signup = (Button) findViewById(R.id.button_signup);
         button_confirm = (Button) findViewById(R.id.button_signup_confirm);
+
+        imageView_bg = (ImageView) findViewById(R.id.image_signup_bg);
+
+        Glide.with(this).load(R.drawable.bg_signup).into(imageView_bg);
 
         View.OnClickListener clickListener = new View.OnClickListener(){
             @Override

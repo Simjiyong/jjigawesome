@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/linear_signup"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linear_signup"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="kr.co.company.jjigawesome.SignUpActivity">
+
+    <ImageView
+        android:id="@+id/image_signup_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:background="@drawable/bg_signup"
-        tools:context="kr.co.company.jjigawesome.SignUpActivity">
-
+        android:orientation="vertical">
         <RelativeLayout
             android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
@@ -267,6 +273,8 @@
             android:layout_weight="1"/>
 
     </LinearLayout>
+
+    </FrameLayout>
 
 
 

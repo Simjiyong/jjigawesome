@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,10 +16,12 @@ import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -36,9 +39,10 @@ public class QrcodeActivity extends Activity {
 
     SharedPreferences mPrefs;
     Gson gson = new Gson();
-    RelativeLayout layout;
+    FrameLayout layout;
 
     ImageView imageView;
+    ImageView imageView_bg;
     Member member;
 
     Button button_finish;
@@ -107,7 +111,10 @@ public class QrcodeActivity extends Activity {
                 }
             });
         }
-        layout = (RelativeLayout) findViewById(R.id.linear_qr);
+        imageView_bg = (ImageView) findViewById(R.id.image_qr_bg);
+        Glide.with(this).load(R.drawable.bg_qrcode_01).centerCrop().into(imageView_bg);
+        layout = (FrameLayout) findViewById(R.id.linear_qr);
+        //layout.setBackgroundResource(R.drawable.bg_qrcode_01);
         Animation animationDown = AnimationUtils.loadAnimation(this, R.anim.down);
         layout.startAnimation(animationDown);
 

@@ -1,5 +1,6 @@
 package kr.co.company.jjigawesome;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -37,6 +38,7 @@ public class HomeActivity extends AppCompatActivity {
     EditText editText;
     Button button_buy;
     Button button_qrcode;
+    Button button_back;
     TextView textView_count;
 
     @Override
@@ -176,6 +178,18 @@ public class HomeActivity extends AppCompatActivity {
                 Intent intent = new Intent(HomeActivity.this, QrcodeActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
+            }
+        });
+
+        button_back = (Button) findViewById(R.id.button_home_back);
+        button_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPrefs = getSharedPreferences("mPrefs", MODE_PRIVATE);
+                mPrefs.edit().remove("member").apply();
+                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
