@@ -1,6 +1,7 @@
 package kr.co.company.jjigawesome;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +9,9 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.gson.Gson;
@@ -19,9 +22,15 @@ public class ManagerQrActivity extends AppCompatActivity {
     int newUiOptions;
     View view;
     Gson gson = new Gson();
+    String url;
+    String json;
+    SharedPreferences mPrefs;
+    Member member;
 
     TextView textView_name;
     TextView textView_id;
+    Button button_back;
+    Button button_confirm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,13 +95,65 @@ public class ManagerQrActivity extends AppCompatActivity {
 
         textView_id = (TextView) findViewById(R.id.textview_manager_qr_id);
         textView_name = (TextView) findViewById(R.id.textview_manager_qr_name);
+        button_back = (Button) findViewById(R.id.button_manager_qr_back);
+        button_confirm = (Button) findViewById(R.id.button_manager_qr_ok);
 
         Intent intent = getIntent();
         Log.d("data", intent.getStringExtra("data"));
 
-        Member member = gson.fromJson(intent.getStringExtra("data"),Member.class);
+        mPrefs = getSharedPreferences("mPrefs", MODE_PRIVATE);
+        member=((Member)SPtoObject.loadObject(mPrefs,"member",Member.class));
 
-        textView_name.setText(member.getName());
-        textView_id.setText(member.getID());
+        Member guest = gson.fromJson(intent.getStringExtra("data"),Member.class);
+
+        textView_name.setText(guest.getName());
+        textView_id.setText(guest.getID());
+
+        button_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        button_confirm.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                boolean isPossible = true;
+
+                PostString postString = new PostString();
+                postString.setToken(member.getToken());
+                postString.setID(textView_id.getText().toString());
+                url = Post.URL + "/stamp/add";
+                json = gson.toJson(postString);
+                new AddTask().execute(url,json);
+            }
+        });
+    }
+
+    class AddTask extends PostTask{
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Response response;
+
+            try {
+                Log.d("response", s);
+                response = gson.fromJson(s, Response.class);
+
+                if (response.getStatus().equals("ok")) {
+                    Toast.makeText(getApplicationContext(), "성공", Toast.LENGTH_SHORT).show();
+                } else {
+                    this.cancel(true);
+                    Toast.makeText(getApplicationContext(), "실패", Toast.LENGTH_SHORT).show();
+                }
+
+            } catch (NullPointerException e){
+                Toast.makeText(getApplicationContext(), "오류! 서버로부터 응답 받지 못함", Toast.LENGTH_SHORT).show();
+            } catch (Exception e){
+                Toast.makeText(getApplicationContext(), "오류!", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        }
     }
 }

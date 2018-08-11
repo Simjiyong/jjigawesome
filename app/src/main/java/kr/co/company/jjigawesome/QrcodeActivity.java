@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -39,6 +40,8 @@ public class QrcodeActivity extends Activity {
 
     ImageView imageView;
     Member member;
+
+    Button button_finish;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +118,15 @@ public class QrcodeActivity extends Activity {
         Log.d("qrString", gson.toJson(member));
 
         imageView = (ImageView) findViewById(R.id.image_qr);
+        button_finish = (Button) findViewById(R.id.button_qrcode_finish);
+
         imageView.setImageBitmap(generateQRCode(gson.toJson(member)));
+        button_finish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 

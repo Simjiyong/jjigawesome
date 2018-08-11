@@ -1,6 +1,7 @@
 package kr.co.company.jjigawesome;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,20 +12,36 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.lang.reflect.Method;
 
 public class HomeActivity extends AppCompatActivity {
     int newUiOptions;
     View view;
+    Gson gson = new Gson();
+    String url;
+    String json;
+    SharedPreferences mPrefs;
+    Member member;
+    PostString postString;
 
     LinearLayout linearLayout;
     EditText editText;
     Button button_buy;
+    Button button_qrcode;
+    TextView textView_count;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        mPrefs = getSharedPreferences("mPrefs", MODE_PRIVATE);
+        member=((Member)SPtoObject.loadObject(mPrefs,"member",Member.class));
 
         Display display = this.getWindowManager().getDefaultDisplay();
         int realWidth;
@@ -92,6 +109,16 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        button_qrcode = (Button) findViewById(R.id.button_home_qrcode);
+        button_qrcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, QrcodeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
+            }
+        });
+
         /*HomePagerAdapter homePagerAdapter = new HomePagerAdapter(
                 getSupportFragmentManager()
         );
@@ -99,6 +126,45 @@ public class HomeActivity extends AppCompatActivity {
         viewPager.setAdapter(homePagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.home_tablayout);
         tabLayout.setupWithViewPager(viewPager);*/
+
+        textView_count = (TextView) findViewById(R.id.textview_home_count);
+        postString = new PostString();
+        postString.setToken(member.getToken());
+        url = "http://18.218.187.138:3000/stamp/";
+        json = gson.toJson(postString);
+        new GetStampTask().execute(url, json);
+
     }
 
+    private class GetStampTask extends PostTask{
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Response response;
+            try {
+                Log.d("response", s);
+                response = gson.fromJson(s, Response.class);
+
+                if (response.getStatus().equals("ok")) {
+                    textView_count.setText(response.getNumber() + "개");
+                } else {
+                    this.cancel(true);
+                    textView_count.setText("개");
+
+                }
+
+            } catch (NullPointerException e){
+                Toast.makeText(getApplicationContext(), "오류! 서버로부터 응답 받지 못함", Toast.LENGTH_SHORT).show();
+            } catch (Exception e){
+                Toast.makeText(getApplicationContext(), "오류!", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new GetStampTask().execute(url, json);
+    }
 }

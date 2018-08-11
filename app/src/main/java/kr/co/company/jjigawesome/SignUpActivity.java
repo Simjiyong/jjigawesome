@@ -255,7 +255,7 @@ public class SignUpActivity extends AppCompatActivity {
                 Log.d("response", s);
                 response = gson.fromJson(s,Response.class);
 
-                    if (response.getStatus().equals("OK")) {
+                    if (response.getStatus().equals("ok")) {
                         Toast.makeText(getApplicationContext(), "회원가입이 성공 했습니다.", Toast.LENGTH_SHORT).show();
                         finish();
                     } else {

@@ -26,6 +26,7 @@
             android:textSize="15.33dp" />
 
         <Button
+            android:id="@+id/button_qrcode_finish"
             android:layout_width="21.33dp"
             android:layout_height="21.33dp"
             android:layout_alignParentEnd="true"

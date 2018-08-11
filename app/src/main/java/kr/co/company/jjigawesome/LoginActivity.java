@@ -202,47 +202,46 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            try {
+                response = gson.fromJson(s, Response.class);
+                Member member = gson.fromJson(s, Member.class);
+                member.setID(editText_id.getText().toString());
+                if (response != null) {
+                    Log.d("Response", "response : " + s);
 
-            response = gson.fromJson(s,Response.class);
-            Member member =gson.fromJson(s,Member.class);
-            member.setID(editText_id.getText().toString());
-            if(response!=null) {
-                Log.d("Response", "response : " + s);
+                    if (checkBox_keep.isChecked()) {
+                        member.setPassword(editText_password.getText().toString());
+                        SPtoObject.saveObject(mPrefs, member, "member");
+                        Log.d("Member", "member11 : " + member.getID() + member.getEmail() + member.getName() + member.getToken());
 
-                if(checkBox_keep.isChecked()){
-                    member.setPassword(editText_password.getText().toString());
-                    SPtoObject.saveObject(mPrefs,member,"member");
-                    Log.d("Member", "member11 : " + member.getID() + member.getEmail() + member.getName() +member.getToken());
-
-                }
-                else{
-                    SPtoObject.saveObject(mPrefs,member,"member");
-                    Log.d("Member", "member22 : " + member.getID() + member.getEmail() + member.getName() +member.getToken());
-                }
-
-                if (response.getStatus().equals("OK")) {
-                    if(response.getType() == 0){
-                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                    else{
-                        Intent intent = new Intent(LoginActivity.this, ManagerActivity.class);
-                        startActivity(intent);
-                        finish();
+                    } else {
+                        SPtoObject.saveObject(mPrefs, member, "member");
+                        Log.d("Member", "member22 : " + member.getID() + member.getEmail() + member.getName() + member.getToken());
                     }
 
+                    if (response.getStatus().equals("ok")) {
+                        if (response.getType() == 0) {
+                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Intent intent = new Intent(LoginActivity.this, ManagerActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+
+                    } else if (response.getStatus().equals("PW_ERROR")) {
+                        Toast.makeText(getApplicationContext(), "비밀번호가 다릅니다.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "로그인 실패 입니다.", Toast.LENGTH_SHORT).show();
+                        this.cancel(true);
+                    }
                 }
-                else if(response.getStatus().equals("PW_ERROR")){
-                    Toast.makeText(getApplicationContext(), "비밀번호가 다릅니다.", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), "로그인 실패 입니다.", Toast.LENGTH_SHORT).show();
-                    this.cancel(true);
-                }
-            }
-            else{
-                Toast.makeText(getApplicationContext(), "오류! 서버로 부터 응답 받지 못함", Toast.LENGTH_SHORT).show();
+            } catch (NullPointerException e){
+                Toast.makeText(getApplicationContext(), "오류! 서버로부터 응답 받지 못함", Toast.LENGTH_SHORT).show();
+            } catch (Exception e){
+                Toast.makeText(getApplicationContext(), "오류!", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
             }
         }
 

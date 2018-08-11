@@ -5,43 +5,37 @@ package kr.co.company.jjigawesome;
  */
 
 public class PostString {
-    String email;
-    int auth_num;
-    String password;
-    String id;
+    private String email;
+    private int auth_num;
+    private String password;
+    private String id;
+    private String token;
+    private String ID;
 
     public PostString() {
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public int getAuth_num() {
-        return auth_num;
-    }
-
     public void setAuth_num(int auth_num) {
         this.auth_num = auth_num;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getId() {
-        return id;
+    public void setId(String id) {
+        this.ID = id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 }

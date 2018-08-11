@@ -1,5 +1,6 @@
 package kr.co.company.jjigawesome;
 
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +8,12 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.lang.reflect.Method;
 
@@ -15,6 +21,17 @@ public class ManagerIdActivity extends AppCompatActivity {
     int newUiOptions;
     View view;
     LinearLayout linearLayout;
+    Gson gson = new Gson();
+    String url;
+    String json;
+
+    SharedPreferences mPrefs;
+    Member member;
+
+    EditText editText_id;
+    Button button_confirm;
+    Button button_back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,5 +92,69 @@ public class ManagerIdActivity extends AppCompatActivity {
                 }
             });
         }
+
+        mPrefs = getSharedPreferences("mPrefs", MODE_PRIVATE);
+        member=((Member)SPtoObject.loadObject(mPrefs,"member",Member.class));
+
+        editText_id = (EditText) findViewById(R.id.edittext_manager_id_email);
+        button_confirm = (Button) findViewById(R.id.button_manager_id_ok);
+        button_back = (Button) findViewById(R.id.button_manager_id_back);
+
+        button_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        button_confirm.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                boolean isPossible = true;
+                if(!ValidateForm.checkForm(editText_id)){
+                    isPossible = false;
+                }
+
+                if(!isPossible){
+                    return;
+                }
+                PostString postString = new PostString();
+                postString.setToken(member.getToken());
+                postString.setID(editText_id.getText().toString());
+                url = Post.URL + "/stamp/add";
+                json = gson.toJson(postString);
+                new AddTask().execute(url,json);
+            }
+        });
+
     }
+
+    class AddTask extends PostTask{
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Response response;
+
+            try {
+                Log.d("response", s);
+                response = gson.fromJson(s, Response.class);
+
+                if (response.getStatus().equals("ok")) {
+                    Toast.makeText(getApplicationContext(), "성공", Toast.LENGTH_SHORT).show();
+                } else {
+                    this.cancel(true);
+                    Toast.makeText(getApplicationContext(), "실패", Toast.LENGTH_SHORT).show();
+                }
+
+            } catch (NullPointerException e){
+                Toast.makeText(getApplicationContext(), "오류! 서버로부터 응답 받지 못함", Toast.LENGTH_SHORT).show();
+            } catch (Exception e){
+                Toast.makeText(getApplicationContext(), "오류!", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        }
+    }
+
 }
+
+
