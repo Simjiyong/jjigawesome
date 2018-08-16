@@ -43,7 +43,9 @@
         <service
             android:name=".CheckIncreasedStampService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".CheckPWActivity"></activity>
     </application>
 
 </manifest>

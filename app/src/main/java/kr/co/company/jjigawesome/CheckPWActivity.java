@@ -15,18 +15,19 @@ import android.widget.EditText;
 
 import java.lang.reflect.Method;
 
-public class ChangeNameActivity extends AppCompatActivity {
+public class CheckPWActivity extends AppCompatActivity {
     int newUiOptions;
     View view;
 
+    Button button_finish;
     Button button_qrcode;
     Button button_confirm;
-    EditText editText_name;
+    EditText editText_pw;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_change_name);
+        setContentView(R.layout.activity_check_pw);
 
         Display display = this.getWindowManager().getDefaultDisplay();
         int realWidth;
@@ -85,7 +86,7 @@ public class ChangeNameActivity extends AppCompatActivity {
             });
         }
 
-        Button buttonOpenDrawer = (Button) findViewById(R.id.button_change_name_menu);
+        Button buttonOpenDrawer = (Button) findViewById(R.id.button_buystamp_menu);
         buttonOpenDrawer.setOnClickListener(new View.OnClickListener(){
             public void onClick(View arg0) {
                 DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_buystamp);
@@ -110,7 +111,7 @@ public class ChangeNameActivity extends AppCompatActivity {
         buttonMyPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChangeNameActivity.this, MypageActivity.class);
+                Intent intent = new Intent(CheckPWActivity.this, MypageActivity.class);
                 startActivity(intent);
             }
         });
@@ -119,7 +120,7 @@ public class ChangeNameActivity extends AppCompatActivity {
         buttonMyCoupon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChangeNameActivity.this, MyStampActivity.class);
+                Intent intent = new Intent(CheckPWActivity.this, MyStampActivity.class);
                 startActivity(intent);
             }
         });
@@ -128,26 +129,33 @@ public class ChangeNameActivity extends AppCompatActivity {
         buttonBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChangeNameActivity.this, BuyStamp.class);
+                Intent intent = new Intent(CheckPWActivity.this, BuyStamp.class);
                 startActivity(intent);
             }
         });
 
-        button_qrcode = (Button) findViewById(R.id.button_change_name_qrcode);
-        editText_name = (EditText) findViewById(R.id.edit_change_name);
-        button_confirm = (Button) findViewById(R.id.button_change_name_ok);
+        button_finish = (Button) findViewById(R.id.button_check_pw_back);
+        button_qrcode = (Button) findViewById(R.id.button_check_pw_qrcode);
+        editText_pw = (EditText) findViewById(R.id.edit_check_pw);
+        button_confirm = (Button) findViewById(R.id.button_check_pw_ok);
 
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 switch (v.getId()) {
-                    case R.id.button_change_name_qrcode:
-                        Intent intent = new Intent(ChangeNameActivity.this,  QrcodeActivity.class);
+                    case R.id.button_check_pw_back:
+                        finish();
+                        break;
+                    case R.id.button_check_pw_qrcode:
+                        Intent intent = new Intent(CheckPWActivity.this,  QrcodeActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(intent);
                         break;
-                    case R.id.button_change_name_ok:
+                    case R.id.edit_check_pw:
+
+                        break;
+                    case R.id.button_check_pw_ok:
 
                         break;
                 }
@@ -156,5 +164,6 @@ public class ChangeNameActivity extends AppCompatActivity {
 
         button_qrcode.setOnClickListener(onClickListener);
         button_confirm.setOnClickListener(onClickListener);
+
     }
 }

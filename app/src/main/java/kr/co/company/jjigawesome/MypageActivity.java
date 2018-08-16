@@ -1,6 +1,7 @@
 package kr.co.company.jjigawesome;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -11,12 +12,24 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.lang.reflect.Method;
 
 public class MypageActivity extends AppCompatActivity {
     int newUiOptions;
     View view;
+    SharedPreferences mPrefs;
+    Member member;
+
+    TextView textView_name;
+    TextView textView_email;
+    TextView textView_phone;
+
+    Button button_finish;
+    Button button_qrcode;
+    Button button_name;
+    Button button_pw;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,5 +142,49 @@ public class MypageActivity extends AppCompatActivity {
             }
         });
 
+        mPrefs = getSharedPreferences("mPrefs", MODE_PRIVATE);
+        member = (Member) SPtoObject.loadObject(mPrefs,"member", Member.class);
+
+        textView_name = (TextView) findViewById(R.id.textview_mypage_name);
+        textView_email = (TextView) findViewById(R.id.textview_mypage_email);
+        textView_phone = (TextView) findViewById(R.id.textview_mypage_phone);
+        button_finish = (Button) findViewById(R.id.button_mypage_back);
+        button_qrcode = (Button) findViewById(R.id.button_mypage_qrcode);
+        button_name = (Button) findViewById(R.id.button_mypage_change_name);
+        button_pw = (Button) findViewById(R.id.button_mypage_change_password);
+
+        textView_email.setText(member.getEmail());
+        textView_name.setText(member.getName());
+        textView_phone.setText("");
+
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent;
+                switch (v.getId()){
+                    case R.id.button_buystamp_back:
+                        finish();
+                        break;
+                    case R.id.button_mypage_qrcode:
+                        intent = new Intent(MypageActivity.this, QrcodeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        startActivity(intent);
+                        break;
+                    case R.id.button_mypage_change_name:
+                        intent = new Intent(MypageActivity.this, ChangeNameActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.button_mypage_change_password:
+                        intent = new Intent(MypageActivity.this, ChangePasswordActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+            }
+        };
+
+        button_finish.setOnClickListener(onClickListener);
+        button_pw.setOnClickListener(onClickListener);
+        button_name.setOnClickListener(onClickListener);
+        button_qrcode.setOnClickListener(onClickListener);
     }
 }
