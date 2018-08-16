@@ -4,7 +4,7 @@
     <string name="password">비밀번호</string>
     <string name="login">로그인</string>
     <string name="signup">회원가입</string>
-    <string name="name">성명</string>
+    <string name="name">성명 혹은 매장이름</string>
     <string name="checkpassword">비밀번호 확인</string>
     <string name="id">아이디</string>
     <string name="confirm_num">인증번호</string>
@@ -19,6 +19,8 @@
     <string name="confirm">확인</string>
     <string name="findid">아이디 찾기</string>
     <string name="resetpw">비밀번호 재설정</string>
+    <string name="gotomystamp">마이 스탬프 보기</string>
+    <string name="gotobuycoupon">쿠폰 사러 가기</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

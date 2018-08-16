@@ -1,6 +1,7 @@
 package kr.co.company.jjigawesome;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -46,6 +47,8 @@ public class QrcodeActivity extends Activity {
     Member member;
 
     Button button_finish;
+
+    Intent serviceIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +137,8 @@ public class QrcodeActivity extends Activity {
                 finish();
             }
         });
+        serviceIntent = new Intent(this, CheckIncreasedStampService.class);
+        startService(serviceIntent);
 
     }
 
@@ -163,4 +168,5 @@ public class QrcodeActivity extends Activity {
         }
         return bmp;
     }
+
 }

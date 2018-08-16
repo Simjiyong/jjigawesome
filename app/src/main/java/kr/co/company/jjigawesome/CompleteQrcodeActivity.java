@@ -7,6 +7,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.widget.Button;
 
 import java.lang.reflect.Method;
 
@@ -14,6 +15,10 @@ public class CompleteQrcodeActivity extends AppCompatActivity {
 
     int newUiOptions;
     View view;
+
+    Button button_finish;
+    Button button_buyCoupon;
+    Button button_myStamp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +82,13 @@ public class CompleteQrcodeActivity extends AppCompatActivity {
             });
         }
 
+        button_finish = (Button) findViewById(R.id.button_complete_finish);
+        button_finish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 }

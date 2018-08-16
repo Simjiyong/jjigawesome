@@ -41,6 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="43.33dp" />
     <TextView
+        android:id="@+id/textview_manager_id_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|center_vertical"
@@ -48,7 +49,6 @@
         android:textStyle="bold"
         android:textSize="18.33sp"
         android:textColor="#000000"
-
         android:text="서울 커피 숭실대점"/>
     <Space
         android:layout_width="match_parent"

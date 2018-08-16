@@ -29,6 +29,7 @@ public class ManagerQrActivity extends AppCompatActivity {
 
     TextView textView_name;
     TextView textView_id;
+    TextView textView_manager_name;
     Button button_back;
     Button button_confirm;
 
@@ -95,6 +96,7 @@ public class ManagerQrActivity extends AppCompatActivity {
 
         textView_id = (TextView) findViewById(R.id.textview_manager_qr_id);
         textView_name = (TextView) findViewById(R.id.textview_manager_qr_name);
+        textView_manager_name = (TextView) findViewById(R.id.textview_manager_qr_branch);
         button_back = (Button) findViewById(R.id.button_manager_qr_back);
         button_confirm = (Button) findViewById(R.id.button_manager_qr_ok);
 
@@ -108,6 +110,7 @@ public class ManagerQrActivity extends AppCompatActivity {
 
         textView_name.setText(guest.getName());
         textView_id.setText(guest.getID());
+        textView_manager_name.setText(member.getName() + "점");
 
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,9 +146,11 @@ public class ManagerQrActivity extends AppCompatActivity {
 
                 if (response.getStatus().equals("ok")) {
                     Toast.makeText(getApplicationContext(), "성공", Toast.LENGTH_SHORT).show();
+                    finish();
                 } else {
                     this.cancel(true);
                     Toast.makeText(getApplicationContext(), "실패", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
 
             } catch (NullPointerException e){

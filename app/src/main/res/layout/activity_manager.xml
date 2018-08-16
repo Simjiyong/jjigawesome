@@ -37,6 +37,7 @@
         android:layout_height="43.33dp" />
 
     <TextView
+        android:id="@+id/textview_manager_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

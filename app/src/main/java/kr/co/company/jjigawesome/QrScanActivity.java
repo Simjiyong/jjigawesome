@@ -57,5 +57,6 @@ public class QrScanActivity extends AppCompatActivity {
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+        finish();
     }
 }

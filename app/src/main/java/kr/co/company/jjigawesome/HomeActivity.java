@@ -188,6 +188,8 @@ public class HomeActivity extends AppCompatActivity {
                 mPrefs = getSharedPreferences("mPrefs", MODE_PRIVATE);
                 mPrefs.edit().remove("member").apply();
                 Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
                 finish();
             }
@@ -199,6 +201,7 @@ public class HomeActivity extends AppCompatActivity {
         url = "http://18.218.187.138:3000/stamp/";
         json = gson.toJson(postString);
         new GetStampTask().execute(url, json);
+
 
     }
 
@@ -212,13 +215,13 @@ public class HomeActivity extends AppCompatActivity {
                 response = gson.fromJson(s, Response.class);
 
                 if (response.getStatus().equals("ok")) {
-                    textView_count.setText(response.getNumber() + "개");
+                    member.setStampCount(response.getNumber());
+                    SPtoObject.saveObject(mPrefs,member,"member");
+                    textView_count.setText(member.getStampCount() + "개");
                 } else {
                     this.cancel(true);
-                    textView_count.setText("개");
-
+                    textView_count.setText(member.getStampCount() + "개");
                 }
-
             } catch (NullPointerException e){
                 Toast.makeText(getApplicationContext(), "오류! 서버로부터 응답 받지 못함", Toast.LENGTH_SHORT).show();
             } catch (Exception e){

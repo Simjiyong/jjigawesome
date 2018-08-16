@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_qrcode_02"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:context="kr.co.company.jjigawesome.CompleteQrcodeActivity">
 
     <RelativeLayout
@@ -14,7 +14,7 @@
         android:background="#ffffff">
 
         <TextView
-            android:id="@+id/textview_qrcode_qr"
+            android:id="@+id/textview_complete_qr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -24,6 +24,7 @@
             android:textSize="15.33dp" />
 
         <Button
+            android:id="@+id/button_complete_finish"
             android:layout_width="21.33dp"
             android:layout_height="21.33dp"
             android:layout_alignParentEnd="true"
@@ -38,4 +39,39 @@
         android:layout_width="match_parent"
         android:layout_height="0.67dp"
         android:background="#b2b2b2" />
+    
+    <Space
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="339.33dp" />
+
+    <Button
+        android:id="@+id/button_complete_mystamp"
+        android:layout_width="290.33dp"
+        android:layout_height="46.33dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/btn_b_nor"
+        android:text="@string/gotomystamp"
+        android:textSize="13.33dp"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:fontFamily="@font/notosans"/>
+
+    <Button
+        android:id="@+id/button_complete_buystamp"
+        android:layout_width="290.33dp"
+        android:layout_height="46.33dp"
+        android:layout_marginTop="10.67dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/btn_b_nor"
+        android:text="@string/gotobuycoupon"
+        android:textSize="13.33dp"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:fontFamily="@font/notosans"/>
+    <Space
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="60.67dp" />
+
 </LinearLayout>

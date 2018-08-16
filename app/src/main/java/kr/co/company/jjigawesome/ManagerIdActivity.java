@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -28,6 +29,7 @@ public class ManagerIdActivity extends AppCompatActivity {
     SharedPreferences mPrefs;
     Member member;
 
+    TextView textView_manager_name;
     EditText editText_id;
     Button button_confirm;
     Button button_back;
@@ -96,10 +98,12 @@ public class ManagerIdActivity extends AppCompatActivity {
         mPrefs = getSharedPreferences("mPrefs", MODE_PRIVATE);
         member=((Member)SPtoObject.loadObject(mPrefs,"member",Member.class));
 
+        textView_manager_name = (TextView) findViewById(R.id.textview_manager_id_name);
         editText_id = (EditText) findViewById(R.id.edittext_manager_id_email);
         button_confirm = (Button) findViewById(R.id.button_manager_id_ok);
         button_back = (Button) findViewById(R.id.button_manager_id_back);
 
+        textView_manager_name.setText(member.getName() + "점");
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,9 +145,11 @@ public class ManagerIdActivity extends AppCompatActivity {
 
                 if (response.getStatus().equals("ok")) {
                     Toast.makeText(getApplicationContext(), "성공", Toast.LENGTH_SHORT).show();
+                    finish();
                 } else {
                     this.cancel(true);
                     Toast.makeText(getApplicationContext(), "실패", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
 
             } catch (NullPointerException e){

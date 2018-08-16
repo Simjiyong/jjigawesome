@@ -11,6 +11,7 @@ import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.lang.reflect.Method;
 
@@ -21,6 +22,7 @@ public class ManagerActivity extends AppCompatActivity {
 
     Button button_manager_scan, button_manager_id;
     Button button_logout;
+    TextView textView_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +86,12 @@ public class ManagerActivity extends AppCompatActivity {
             });
         }
 
+        mPrefs = getSharedPreferences("mPrefs", MODE_PRIVATE);
+        Member member=((Member)SPtoObject.loadObject(mPrefs,"member",Member.class));
+
+        textView_name = (TextView) findViewById(R.id.textview_manager_name);
+        textView_name.setText(member.getName() + "점");
+
         button_manager_scan = (Button) findViewById(R.id.button_manager_scan);
         button_manager_scan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,9 +112,10 @@ public class ManagerActivity extends AppCompatActivity {
         button_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPrefs = getSharedPreferences("mPrefs", MODE_PRIVATE);
                 mPrefs.edit().remove("member").apply();
                 Intent intent = new Intent(ManagerActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
                 finish();
             }
