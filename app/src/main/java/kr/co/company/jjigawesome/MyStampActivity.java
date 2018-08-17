@@ -37,6 +37,10 @@ public class MyStampActivity extends AppCompatActivity {
     List<Coupon> coupons = new ArrayList<>();
     RecyclerView recyclerView;
 
+    TextView textView_mystamp;
+    TextView textView_coupon_num;
+    Button button_qrcode;
+    Button button_finish;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,8 +156,27 @@ public class MyStampActivity extends AppCompatActivity {
         });
 
         TextView textView_drawer_name = (TextView) findViewById(R.id.drawer_name);
-        textView_drawer_name.setText(member.getName());
+        textView_mystamp = (TextView) findViewById(R.id.textview_mystamp);
+        textView_coupon_num = (TextView) findViewById(R.id.textview_mystamp_coupon_num);
+        button_qrcode = (Button) findViewById(R.id.button_mystamp_qrcode);
+        button_finish = (Button) findViewById(R.id.button_mypage_stamp);
 
+        textView_drawer_name.setText(member.getName());
+        textView_mystamp.setText("나의 스탬프 " + member.getStampCount() + "개");
+        button_finish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        button_qrcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyStampActivity.this,  QrcodeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
+            }
+        });
         recyclerView = (RecyclerView) findViewById(R.id.recycler_mystamp);
         PostString postString = new PostString();
         postString.setToken(member.getToken());
@@ -168,6 +191,13 @@ public class MyStampActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         CouponAdapter adapter = new CouponAdapter(coupons);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //textView_coupon_num.setText(member.getStampCount());
+        //textView_mystamp.setText(member.getStampCount());
     }
 
 
@@ -208,7 +238,7 @@ public class MyStampActivity extends AppCompatActivity {
             Button button_coupon;
             public ViewHolder(View itemView) {
                 super(itemView);
-                button_coupon = (Button) findViewById(R.id.button_coupon);
+                button_coupon = (Button) itemView.findViewById(R.id.button_coupon);
                 button_coupon.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -228,6 +258,7 @@ public class MyStampActivity extends AppCompatActivity {
                 Log.d("response", s);
                 coupons = Arrays.asList(gson.fromJson(s, Coupon[].class));
                 setRecyclerView();
+                textView_coupon_num.setText(coupons.size() + "개");
             } catch (NullPointerException e){
                 Toast.makeText(getApplicationContext(), "오류! 서버로부터 응답 받지 못함", Toast.LENGTH_SHORT).show();
             } catch (Exception e){
@@ -236,4 +267,6 @@ public class MyStampActivity extends AppCompatActivity {
             }
         }
     }
+
+
 }

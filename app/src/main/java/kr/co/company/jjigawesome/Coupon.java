@@ -6,19 +6,24 @@ package kr.co.company.jjigawesome;
 
 public class Coupon {
     private String location;
-    private String date;
+    private String createDate;
     private int type;
     private int remarks;
     private int totalnumber;
 
+
     public Coupon(){}
+
+    public Coupon(int type){
+        this.type = type;
+    }
 
     public String getLocation() {
         return location;
     }
 
-    public String getDate() {
-        return date;
+    public String getCreateDate() {
+        return createDate;
     }
 
     public int getType() {

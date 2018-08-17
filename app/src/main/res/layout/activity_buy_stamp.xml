@@ -60,99 +60,17 @@
                 android:background="@drawable/btn_menu" />
         </RelativeLayout>
 
-        <ScrollView
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="12.67dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_buystamp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+        </android.support.v7.widget.RecyclerView>
 
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="12.67dp" />
-
-                <Button
-                    android:id="@+id/button_seoulbike"
-                    android:layout_width="match_parent"
-                    android:layout_height="155.33dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="6.50dp"
-                    android:layout_marginRight="6.50dp"
-                    android:background="@drawable/img_seoulbike_on" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="6.67dp" />
-
-                <Button
-                    android:id="@+id/button_palace"
-                    android:layout_width="match_parent"
-                    android:layout_height="155.33dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="6.50dp"
-                    android:layout_marginRight="6.50dp"
-                    android:background="@drawable/img_palace_off" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="6.67dp" />
-
-                <Button
-                    android:id="@+id/button_museum"
-                    android:layout_width="match_parent"
-                    android:layout_height="155.33dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="6.50dp"
-                    android:layout_marginRight="6.50dp"
-                    android:background="@drawable/img_museum_off" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="6.67dp" />
-
-                <Button
-                    android:id="@id/button_museum"
-                    android:layout_width="match_parent"
-                    android:layout_height="155.33dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="6.50dp"
-                    android:layout_marginRight="6.50dp"
-                    android:background="@drawable/img_museum_off" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="6.67dp" />
-
-                <Button
-                    android:id="@id/button_museum"
-                    android:layout_width="match_parent"
-                    android:layout_height="155.33dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="6.50dp"
-                    android:layout_marginRight="6.50dp"
-                    android:background="@drawable/img_museum_off" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="6.67dp" />
-
-                <Button
-                    android:id="@id/button_museum"
-                    android:layout_width="match_parent"
-                    android:layout_height="155.33dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="6.50dp"
-                    android:layout_marginRight="6.50dp"
-                    android:background="@drawable/img_museum_off" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="6.67dp" />
-
-            </LinearLayout>
-        </ScrollView>
     </LinearLayout>
 
     <include layout="@layout/activity_drawer" />

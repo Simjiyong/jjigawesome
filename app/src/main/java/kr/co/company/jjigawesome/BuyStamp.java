@@ -6,28 +6,44 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BuyStamp extends AppCompatActivity {
     int newUiOptions;
     View view;
     SharedPreferences mPrefs;
     Member member;
+    RecyclerView recyclerView;
+    List<Coupon> coupons = new ArrayList<>();
+    Gson gson = new Gson();
+    String url;
+    String json;
 
     LinearLayout linearLayout;
     EditText editText;
 
     Button button_qrcode;
+    TextView textView_buystamp;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,6 +171,145 @@ public class BuyStamp extends AppCompatActivity {
 
 
         TextView textView_drawer_name = (TextView) findViewById(R.id.drawer_name);
+        textView_buystamp = (TextView) findViewById(R.id.textview_buystamp);
         textView_drawer_name.setText(member.getName());
+
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_buystamp);
+        for(int i=0;i<3;i++){
+            coupons.add(new Coupon(i));
+        }
+        setRecyclerView();
+    }
+
+    private void setRecyclerView(){
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        BuyStamp.CouponAdapter adapter = new BuyStamp.CouponAdapter(coupons);
+        recyclerView.setAdapter(adapter);
+    }
+
+
+    private class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.ViewHolder>{
+        List<Coupon> coupons;
+
+        public CouponAdapter(List<Coupon> coupons){
+            this.coupons = coupons;
+        }
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_coupon,parent,false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, final int position) {
+            final Coupon coupon = coupons.get(position);
+            final int type = coupon.getType();
+
+            final PostString postString = new PostString();
+            holder.button_coupon.setEnabled(false);
+            if(type == 0) {
+                holder.button_coupon.setBackgroundResource(R.drawable.img_seoulbike_off);
+                if(member.getStampCount()>=5){
+                    holder.button_coupon.setBackgroundResource(R.drawable.img_seoulbike_on);
+                    holder.button_coupon.setEnabled(true);
+                    postString.setStamp(5);
+                }
+            }
+            else if(type == 1){
+                holder.button_coupon.setBackgroundResource(R.drawable.img_palace_off);
+                if(member.getStampCount()>=20){
+                    holder.button_coupon.setBackgroundResource(R.drawable.img_palace_on);
+                    holder.button_coupon.setEnabled(true);
+                    postString.setStamp(20);
+                }
+            }
+            else if(type == 2){
+                holder.button_coupon.setBackgroundResource(R.drawable.img_museum_off);
+                if(member.getStampCount()>=30){
+                    holder.button_coupon.setBackgroundResource(R.drawable.img_museum_on);
+                    holder.button_coupon.setEnabled(true);
+                    postString.setStamp(30);
+                }
+            }
+            holder.button_coupon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    postString.setToken(member.getToken());
+                    postString.setType(type);
+                    url = Post.URL + "/stamp/exchange";
+                    json = gson.toJson(postString);
+                    new ExchangeStampTask().execute(url, json);
+                }
+            });
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return coupons.size();
+        }
+
+        class ViewHolder extends RecyclerView.ViewHolder{
+            Button button_coupon;
+            public ViewHolder(View itemView) {
+                super(itemView);
+                button_coupon = itemView.findViewById(R.id.button_coupon);
+            }
+        }
+    }
+
+    private class ExchangeStampTask extends PostTask{
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Response response;
+            try {
+                Log.d("response", s);
+                response = gson.fromJson(s, Response.class);
+
+                if (response.getStatus().equals("ok")) {
+                    PostString postString = new PostString();
+                    postString.setToken(member.getToken());
+                    url = "http://18.218.187.138:3000/stamp/";
+                    json = gson.toJson(postString);
+                    new GetStampTask().execute(url, json);
+                } else {
+                    this.cancel(true);
+                }
+            } catch (NullPointerException e){
+                Toast.makeText(getApplicationContext(), "오류! 서버로부터 응답 받지 못함", Toast.LENGTH_SHORT).show();
+            } catch (Exception e){
+                Toast.makeText(getApplicationContext(), "오류!", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private class GetStampTask extends PostTask{
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Response response;
+            try {
+                Log.d("response", s);
+                response = gson.fromJson(s, Response.class);
+
+                if (response.getStatus().equals("ok")) {
+                    member.setStampCount(response.getNumber());
+                    SPtoObject.saveObject(mPrefs,member,"member");
+                    textView_buystamp.setText(member.getStampCount() + "개");
+                } else {
+                    this.cancel(true);
+                    textView_buystamp.setText(member.getStampCount() + "개");
+                }
+            } catch (NullPointerException e){
+                Toast.makeText(getApplicationContext(), "오류! 서버로부터 응답 받지 못함", Toast.LENGTH_SHORT).show();
+            } catch (Exception e){
+                Toast.makeText(getApplicationContext(), "오류!", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        }
     }
 }

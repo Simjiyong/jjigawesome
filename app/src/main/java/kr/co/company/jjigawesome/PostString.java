@@ -12,6 +12,8 @@ public class PostString {
     private String token;
     private String ID;
     private String name;
+    private int type;
+    private int stamp;
 
     public PostString() {
     }
@@ -42,5 +44,13 @@ public class PostString {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public void setStamp(int stamp) {
+        this.stamp = stamp;
     }
 }

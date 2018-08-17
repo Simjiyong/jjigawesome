@@ -236,6 +236,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        new GetStampTask().execute(url, json);
+        textView_count = (TextView) findViewById(R.id.textview_home_count);
+        textView_count.setText(member.getStampCount() + "개");
     }
 }

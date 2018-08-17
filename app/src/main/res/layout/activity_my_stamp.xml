@@ -99,8 +99,8 @@
         </LinearLayout>
 
         <Space
-            android:layout_width="match_parent"
-            android:layout_height="12.67dp" />
+        android:layout_width="match_parent"
+        android:layout_height="12.67dp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_mystamp"
