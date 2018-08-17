@@ -1,6 +1,7 @@
 package kr.co.company.jjigawesome;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -11,18 +12,36 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.lang.reflect.Method;
 
 public class ChangePasswordActivity extends AppCompatActivity {
     int newUiOptions;
     View view;
+    SharedPreferences mPrefs;
+    String json;
+    String url;
+    Gson gson = new Gson();
+    Member member;
 
+    Button button_qrcode;
+    Button button_finish;
+    Button button_confirm;
+    EditText editText_pw;
+    EditText editText_repw;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
+
+        mPrefs = getSharedPreferences("mPrefs", MODE_PRIVATE);
+        member=((Member)SPtoObject.loadObject(mPrefs,"member",Member.class));
 
         Display display = this.getWindowManager().getDefaultDisplay();
         int realWidth;
@@ -84,7 +103,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         Button buttonOpenDrawer = (Button) findViewById(R.id.button_change_password_menu);
         buttonOpenDrawer.setOnClickListener(new View.OnClickListener(){
             public void onClick(View arg0) {
-                DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_buystamp);
+                DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_change_password);
                 if(!drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
                     drawerLayout.openDrawer(Gravity.RIGHT);
                 }
@@ -95,7 +114,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         buttonCloseDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_buystamp);
+                DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_change_password);
                 if(drawerLayout.isDrawerOpen(Gravity.RIGHT)){
                     drawerLayout.closeDrawer(Gravity.RIGHT);
                 }
@@ -129,23 +148,88 @@ public class ChangePasswordActivity extends AppCompatActivity {
             }
         });
 
-        Button button_qrcode = (Button) findViewById(R.id.button_check_pw_qrcode);
+        button_qrcode = (Button) findViewById(R.id.button_change_password_qrcode);
+        button_confirm = (Button) findViewById(R.id.button_change_password_ok);
+        button_finish = (Button) findViewById(R.id.button_change_password_back);
+        editText_pw = (EditText) findViewById(R.id.edit_change_password);
+        editText_repw = (EditText) findViewById(R.id.edit_change_password_re);
+
+        TextView textView_drawer_name = (TextView) findViewById(R.id.drawer_name);
+        textView_drawer_name.setText(member.getName());
 
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean isPossible = true;
 
                 switch (v.getId()) {
-                    case R.id.button_check_pw_qrcode:
+                    case R.id.button_change_password_qrcode:
                         Intent intent = new Intent(ChangePasswordActivity.this,  QrcodeActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(intent);
+                        break;
+                    case R.id.button_change_password_back:
+                        finish();
+                        break;
+                    case R.id.button_change_password_ok:
+                        if(!ValidateForm.checkForm(editText_pw,editText_repw)){
+                            isPossible = false;
+                        }
+                        if(!editText_pw.getText().toString().equals(editText_repw.getText().toString())){
+                            isPossible = false;
+                        }
+
+                        if(!isPossible){
+                            break;
+                        }
+                        PostString postString = new PostString();
+                        postString.setToken(member.getToken());
+                        postString.setPassword(editText_pw.getText().toString());
+                        url = Post.URL + "/find/reset";
+                        json = gson.toJson(postString);
+                        new ChangePWTask().execute(url,json);
                         break;
                 }
             }
         };
 
         button_qrcode.setOnClickListener(onClickListener);
+        button_finish.setOnClickListener(onClickListener);
+        button_confirm.setOnClickListener(onClickListener);
 
+    }
+
+    private class ChangePWTask extends PostTask{
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            try {
+                Log.d("response", s);
+                Response response = gson.fromJson(s, Response.class);
+
+                if (response.getStatus().equals("ok")) {
+                    final MyDialog myDialog = new MyDialog(ChangePasswordActivity.this);
+                    myDialog.setTextViewText("비밀번호 수정이 완료되었습니다.");
+                    myDialog.getButton_confirm().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            myDialog.dismiss();
+                            finish();
+                        }
+                    });
+                    myDialog.show();
+                } else {
+                    this.cancel(true);
+                    Toast.makeText(getApplicationContext(), "비밀번호 수정을 실패 했습니다.", Toast.LENGTH_SHORT).show();
+                }
+
+            }  catch (NullPointerException e){
+                Toast.makeText(getApplicationContext(), "오류! 서버로부터 응답 받지 못함", Toast.LENGTH_SHORT).show();
+            } catch (Exception e){
+                Toast.makeText(getApplicationContext(), "오류!", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -11,6 +11,7 @@ public class PostString {
     private String id;
     private String token;
     private String ID;
+    private String name;
 
     public PostString() {
     }
@@ -37,5 +38,9 @@ public class PostString {
 
     public void setID(String ID) {
         this.ID = ID;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

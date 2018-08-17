@@ -98,60 +98,16 @@
                 android:textSize="11.67dp" />
         </LinearLayout>
 
-        <ScrollView
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="12.67dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_mystamp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="12.67dp" />
-
-                <Button
-                    android:id="@+id/button_seoulbike_use"
-                    android:layout_width="match_parent"
-                    android:layout_height="155.33dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="6.50dp"
-                    android:layout_marginRight="6.50dp"
-                    android:background="@drawable/img_seoulbike_use" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="6.67dp" />
-
-                <Button
-                    android:id="@+id/button_palace_use"
-                    android:layout_width="match_parent"
-                    android:layout_height="155.33dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="6.50dp"
-                    android:layout_marginRight="6.50dp"
-                    android:background="@drawable/img_palace_use" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="6.67dp" />
-
-                <Button
-                    android:id="@+id/button_museum_use"
-                    android:layout_width="match_parent"
-                    android:layout_height="155.33dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="6.50dp"
-                    android:layout_marginRight="6.50dp"
-                    android:background="@drawable/img_museum_use" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="6.67dp" />
-
-            </LinearLayout>
-        </ScrollView>
+        </android.support.v7.widget.RecyclerView>
     </LinearLayout>
 
     <include layout="@layout/activity_drawer" />

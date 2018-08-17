@@ -1,12 +1,12 @@
 package kr.co.company.jjigawesome;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -26,7 +26,6 @@ public class MypageActivity extends AppCompatActivity {
     TextView textView_name;
     TextView textView_email;
     TextView textView_phone;
-
     Button button_finish;
     Button button_qrcode;
     Button button_name;
@@ -154,6 +153,8 @@ public class MypageActivity extends AppCompatActivity {
         button_name = (Button) findViewById(R.id.button_mypage_change_name);
         button_pw = (Button) findViewById(R.id.button_mypage_change_password);
 
+        TextView textView_drawer_name = (TextView) findViewById(R.id.drawer_name);
+        textView_drawer_name.setText(member.getName());
         textView_email.setText(member.getEmail());
         textView_name.setText(member.getName());
         textView_phone.setText("");
@@ -173,10 +174,12 @@ public class MypageActivity extends AppCompatActivity {
                         break;
                     case R.id.button_mypage_change_name:
                         intent = new Intent(MypageActivity.this, ChangeNameActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(intent);
                         break;
                     case R.id.button_mypage_change_password:
                         intent = new Intent(MypageActivity.this,CheckPWActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(intent);
                         break;
                 }

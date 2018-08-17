@@ -1,6 +1,7 @@
 package kr.co.company.jjigawesome;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -13,12 +14,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.lang.reflect.Method;
 
 public class BuyStamp extends AppCompatActivity {
     int newUiOptions;
     View view;
+    SharedPreferences mPrefs;
+    Member member;
 
     LinearLayout linearLayout;
     EditText editText;
@@ -29,6 +33,9 @@ public class BuyStamp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_stamp);
+
+        mPrefs = getSharedPreferences("mPrefs", MODE_PRIVATE);
+        member=((Member)SPtoObject.loadObject(mPrefs,"member",Member.class));
 
         Display display = this.getWindowManager().getDefaultDisplay();
         int realWidth;
@@ -145,5 +152,9 @@ public class BuyStamp extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+        TextView textView_drawer_name = (TextView) findViewById(R.id.drawer_name);
+        textView_drawer_name.setText(member.getName());
     }
 }

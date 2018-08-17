@@ -52,11 +52,7 @@
             android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="0.67dp"
-            android:background="#b2b2b2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
+            android:background="#b2b2b2" />
 
         <Space
             android:layout_width="match_parent"

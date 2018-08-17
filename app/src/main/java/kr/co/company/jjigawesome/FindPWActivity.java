@@ -117,12 +117,10 @@ public class FindPWActivity extends AppCompatActivity {
                         finish();
                         break;
                     case R.id.button_findpw_confirm:
-                        if(!ValidateForm.checkForm(editText_num)){
+                        if(!ValidateForm.checkForm(editText_num, editText_email)){
                             isPossible = false;
                         }
-                        if(!ValidateForm.checkForm(editText_email)){
-                            isPossible = false;
-                        }
+
                         if(isPossible == false){
                             break;
                         }

@@ -1,27 +1,50 @@
 package kr.co.company.jjigawesome;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MyStampActivity extends AppCompatActivity {
     int newUiOptions;
     View view;
+    SharedPreferences mPrefs;
+    Member member;
+    Gson gson = new Gson();
+    String url;
+    String json;
+    List<Coupon> coupons = new ArrayList<>();
+    RecyclerView recyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_stamp);
+
+        mPrefs = getSharedPreferences("mPrefs", MODE_PRIVATE);
+        member = (Member) SPtoObject.loadObject(mPrefs,"member", Member.class);
 
         Display display = this.getWindowManager().getDefaultDisplay();
         int realWidth;
@@ -127,5 +150,90 @@ public class MyStampActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        TextView textView_drawer_name = (TextView) findViewById(R.id.drawer_name);
+        textView_drawer_name.setText(member.getName());
+
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_mystamp);
+        PostString postString = new PostString();
+        postString.setToken(member.getToken());
+        url = Post.URL + "/stamp/hold";
+        json = gson.toJson(postString);
+        new GettingCouponTask().execute(url, json);
+    }
+
+    private void setRecyclerView(){
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        CouponAdapter adapter = new CouponAdapter(coupons);
+        recyclerView.setAdapter(adapter);
+    }
+
+
+    private class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.ViewHolder>{
+        List<Coupon> coupons = new ArrayList<>();
+
+        public CouponAdapter(List<Coupon> coupons){
+            this.coupons = coupons;
+        }
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(MyStampActivity.this).inflate(R.layout.layout_coupon,parent,false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int position) {
+            Coupon coupon = coupons.get(position);
+            int type = coupon.getType();
+            if(type == 0) {
+                holder.button_coupon.setBackgroundResource(R.drawable.img_seoulbike_use);
+            }
+            else if(type == 1){
+                holder.button_coupon.setBackgroundResource(R.drawable.img_palace_use);
+            }
+            else if(type == 2){
+                holder.button_coupon.setBackgroundResource(R.drawable.img_museum_use);
+            }
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return coupons.size();
+        }
+
+        class ViewHolder extends RecyclerView.ViewHolder{
+            Button button_coupon;
+            public ViewHolder(View itemView) {
+                super(itemView);
+                button_coupon = (Button) findViewById(R.id.button_coupon);
+                button_coupon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+            }
+        }
+    }
+
+    private class GettingCouponTask extends PostTask{
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Response response;
+            try {
+                Log.d("response", s);
+                coupons = Arrays.asList(gson.fromJson(s, Coupon[].class));
+                setRecyclerView();
+            } catch (NullPointerException e){
+                Toast.makeText(getApplicationContext(), "오류! 서버로부터 응답 받지 못함", Toast.LENGTH_SHORT).show();
+            } catch (Exception e){
+                Toast.makeText(getApplicationContext(), "오류!", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        }
     }
 }

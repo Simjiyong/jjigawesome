@@ -1,5 +1,8 @@
 package kr.co.company.jjigawesome;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 /**
  * Created by BHY on 2018. 7. 20..
  */
@@ -11,8 +14,11 @@ public class Response {
     private int number;
     private int type;
     private String error;
+    private ArrayList<Coupon> stamp;
 
-    public Response(){}
+    public Response(){
+        stamp = new ArrayList<>();
+    }
 
     public String getStatus() {
         return status;
@@ -36,5 +42,9 @@ public class Response {
 
     public String getError() {
         return error;
+    }
+
+    public ArrayList<Coupon> getStamp() {
+        return stamp;
     }
 }

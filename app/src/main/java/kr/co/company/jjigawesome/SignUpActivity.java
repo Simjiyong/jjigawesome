@@ -189,7 +189,7 @@ public class SignUpActivity extends AppCompatActivity {
                             isPossible = false;
                         }
 
-                        if(isPossible == false){
+                        if(!isPossible){
                             break;
                         }
                         for(int i=0;i<editTexts.length;i++){
@@ -210,13 +210,11 @@ public class SignUpActivity extends AppCompatActivity {
                         break;
 
                     case R.id.button_signup_confirm:
-                        if(!ValidateForm.checkForm(editText_confirm)){
+                        if(!ValidateForm.checkForm(editText_confirm,editText_email)){
                             isPossible = false;
                         }
-                        if(!ValidateForm.checkForm(editText_email)){
-                            isPossible = false;
-                        }
-                        if(isPossible == false){
+
+                        if(!isPossible){
                             break;
                         }
                         postString = new PostString();

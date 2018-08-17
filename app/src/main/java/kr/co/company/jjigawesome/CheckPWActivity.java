@@ -1,6 +1,7 @@
 package kr.co.company.jjigawesome;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -12,22 +13,36 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.lang.reflect.Method;
 
 public class CheckPWActivity extends AppCompatActivity {
     int newUiOptions;
     View view;
+    Gson gson = new Gson();
+    String url;
+    String json;
 
     Button button_finish;
     Button button_qrcode;
     Button button_confirm;
     EditText editText_pw;
 
+    SharedPreferences mPrefs;
+    Member member;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_pw);
+
+        mPrefs = getSharedPreferences("mPrefs", MODE_PRIVATE);
+        member=((Member)SPtoObject.loadObject(mPrefs,"member",Member.class));
 
         Display display = this.getWindowManager().getDefaultDisplay();
         int realWidth;
@@ -86,10 +101,10 @@ public class CheckPWActivity extends AppCompatActivity {
             });
         }
 
-        Button buttonOpenDrawer = (Button) findViewById(R.id.button_buystamp_menu);
+        Button buttonOpenDrawer = (Button) findViewById(R.id.button_check_pw_menu);
         buttonOpenDrawer.setOnClickListener(new View.OnClickListener(){
             public void onClick(View arg0) {
-                DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_buystamp);
+                DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_check_pw);
                 if(!drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
                     drawerLayout.openDrawer(Gravity.RIGHT);
                 }
@@ -100,7 +115,7 @@ public class CheckPWActivity extends AppCompatActivity {
         buttonCloseDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_buystamp);
+                DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_check_pw);
                 if(drawerLayout.isDrawerOpen(Gravity.RIGHT)){
                     drawerLayout.closeDrawer(Gravity.RIGHT);
                 }
@@ -139,9 +154,13 @@ public class CheckPWActivity extends AppCompatActivity {
         editText_pw = (EditText) findViewById(R.id.edit_check_pw);
         button_confirm = (Button) findViewById(R.id.button_check_pw_ok);
 
+        TextView textView_drawer_name = (TextView) findViewById(R.id.drawer_name);
+        textView_drawer_name.setText(member.getName());
+
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean isPossible = true;
 
                 switch (v.getId()) {
                     case R.id.button_check_pw_back:
@@ -153,6 +172,21 @@ public class CheckPWActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.button_check_pw_ok:
+                        if(!ValidateForm.checkForm(editText_pw)){
+                            isPossible = false;
+                        }
+
+                        if(!isPossible){
+                            break;
+                        }
+
+                        PostString postString = new PostString();
+                        postString.setToken(member.getToken());
+                        Log.d("token", member.getToken());
+                        postString.setPassword(editText_pw.getText().toString());
+                        url = Post.URL+"/find/check_password";
+                        json = gson.toJson(postString);
+                        new CheckPWTask().execute(url, json);
 
                         break;
                 }
@@ -161,6 +195,41 @@ public class CheckPWActivity extends AppCompatActivity {
 
         button_qrcode.setOnClickListener(onClickListener);
         button_confirm.setOnClickListener(onClickListener);
+        button_finish.setOnClickListener(onClickListener);
 
+    }
+
+    private class CheckPWTask extends PostTask{
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Response response;
+            try {
+                Log.d("response", s);
+                response = gson.fromJson(s, Response.class);
+
+                if (response.getStatus().equals("ok")) {
+                    Intent intent = new Intent(CheckPWActivity.this,  ChangePasswordActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    startActivity(intent);
+                } else {
+                    this.cancel(true);
+                    final MyDialog myDialog = new MyDialog(CheckPWActivity.this);
+                    myDialog.setTextViewText("비밀번호가 일치하지 않습니다.");
+                    myDialog.getButton_confirm().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            myDialog.dismiss();
+                        }
+                    });
+                    myDialog.show();
+                }
+            } catch (NullPointerException e){
+                Toast.makeText(getApplicationContext(), "오류! 서버로부터 응답 받지 못함", Toast.LENGTH_SHORT).show();
+            } catch (Exception e){
+                Toast.makeText(getApplicationContext(), "오류!", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        }
     }
 }

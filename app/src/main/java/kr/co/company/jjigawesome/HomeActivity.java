@@ -202,6 +202,8 @@ public class HomeActivity extends AppCompatActivity {
         json = gson.toJson(postString);
         new GetStampTask().execute(url, json);
 
+        TextView textView_drawer_name = (TextView) findViewById(R.id.drawer_name);
+        textView_drawer_name.setText(member.getName());
 
     }
 
