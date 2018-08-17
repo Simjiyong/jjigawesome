@@ -180,12 +180,22 @@ public class BuyStamp extends AppCompatActivity {
         TextView textView_drawer_name = (TextView) findViewById(R.id.drawer_name);
         textView_buystamp = (TextView) findViewById(R.id.textview_buystamp);
         textView_drawer_name.setText(member.getName());
-
+        textView_buystamp.setText("나의 스탬프 " + member.getStampCount()+ "개");
         recyclerView = (RecyclerView) findViewById(R.id.recycler_buystamp);
         for(int i=0;i<3;i++){
             coupons.add(new Coupon(i));
         }
         setRecyclerView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        PostString postString = new PostString();
+        postString.setToken(member.getToken());
+        url = "http://18.218.187.138:3000/stamp/";
+        json = gson.toJson(postString);
+        new GetStampTask().execute(url,json);
     }
 
     private void setRecyclerView(){
@@ -306,10 +316,10 @@ public class BuyStamp extends AppCompatActivity {
                 if (response.getStatus().equals("ok")) {
                     member.setStampCount(response.getNumber());
                     SPtoObject.saveObject(mPrefs,member,"member");
-                    textView_buystamp.setText(member.getStampCount() + "개");
+                    textView_buystamp.setText("나의 스탬프 " + member.getStampCount() + "개");
                 } else {
                     this.cancel(true);
-                    textView_buystamp.setText(member.getStampCount() + "개");
+                    textView_buystamp.setText("나의 스탬프 " + member.getStampCount() + "개");
                 }
             } catch (NullPointerException e){
                 Toast.makeText(getApplicationContext(), "오류! 서버로부터 응답 받지 못함", Toast.LENGTH_SHORT).show();

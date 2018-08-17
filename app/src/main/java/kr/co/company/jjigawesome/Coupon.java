@@ -10,7 +10,7 @@ public class Coupon {
     private int type;
     private int remarks;
     private int totalnumber;
-
+    private String stampname;
 
     public Coupon(){}
 
@@ -27,6 +27,14 @@ public class Coupon {
     }
 
     public int getType() {
+        try {
+            if(stampname !=null) {
+                type = Integer.parseInt(stampname);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
         return type;
     }
 
@@ -37,4 +45,5 @@ public class Coupon {
     public int getTotalnumber() {
         return totalnumber;
     }
+
 }

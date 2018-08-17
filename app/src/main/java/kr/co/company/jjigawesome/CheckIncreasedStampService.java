@@ -91,6 +91,8 @@ public class CheckIncreasedStampService extends Service {
                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(intent);
+                        checkIncreasedStampThread.interrupt();
+                        checkIncreasedStampThread = null;
                     }
                 } else {
                     this.cancel(true);

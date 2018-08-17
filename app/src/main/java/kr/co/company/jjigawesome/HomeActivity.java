@@ -190,12 +190,15 @@ public class HomeActivity extends AppCompatActivity {
                 Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
                 finish();
             }
         });
 
         textView_count = (TextView) findViewById(R.id.textview_home_count);
+        textView_count.setText(member.getStampCount() + "개");
+
         postString = new PostString();
         postString.setToken(member.getToken());
         url = "http://18.218.187.138:3000/stamp/";
@@ -236,7 +239,6 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        textView_count = (TextView) findViewById(R.id.textview_home_count);
-        textView_count.setText(member.getStampCount() + "개");
+        new GetStampTask().execute(url,json);
     }
 }

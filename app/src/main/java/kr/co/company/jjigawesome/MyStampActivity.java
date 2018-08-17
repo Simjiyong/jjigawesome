@@ -196,8 +196,11 @@ public class MyStampActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //textView_coupon_num.setText(member.getStampCount());
-        //textView_mystamp.setText(member.getStampCount());
+        PostString postString = new PostString();
+        postString.setToken(member.getToken());
+        url = "http://18.218.187.138:3000/stamp/";
+        json = gson.toJson(postString);
+        new GetStampTask().execute(url,json);
     }
 
 
@@ -259,6 +262,32 @@ public class MyStampActivity extends AppCompatActivity {
                 coupons = Arrays.asList(gson.fromJson(s, Coupon[].class));
                 setRecyclerView();
                 textView_coupon_num.setText(coupons.size() + "개");
+            } catch (NullPointerException e){
+                Toast.makeText(getApplicationContext(), "오류! 서버로부터 응답 받지 못함", Toast.LENGTH_SHORT).show();
+            } catch (Exception e){
+                Toast.makeText(getApplicationContext(), "오류!", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private class GetStampTask extends PostTask{
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Response response;
+            try {
+                Log.d("response", s);
+                response = gson.fromJson(s, Response.class);
+
+                if (response.getStatus().equals("ok")) {
+                    member.setStampCount(response.getNumber());
+                    SPtoObject.saveObject(mPrefs,member,"member");
+                    textView_mystamp.setText("나의 스탬프 " + member.getStampCount() + "개");
+                } else {
+                    this.cancel(true);
+                    textView_mystamp.setText("나의 스탬프 " + member.getStampCount() + "개");
+                }
             } catch (NullPointerException e){
                 Toast.makeText(getApplicationContext(), "오류! 서버로부터 응답 받지 못함", Toast.LENGTH_SHORT).show();
             } catch (Exception e){
