@@ -152,9 +152,6 @@ public class CheckPWActivity extends AppCompatActivity {
                         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(intent);
                         break;
-                    case R.id.edit_check_pw:
-
-                        break;
                     case R.id.button_check_pw_ok:
 
                         break;

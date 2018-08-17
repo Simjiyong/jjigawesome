@@ -15,6 +15,7 @@ public class MyDialog extends Dialog {
 
     TextView textView;
     Button button_confirm;
+    Button button_cancel;
 
 
     public MyDialog(@NonNull Context context) {
@@ -23,6 +24,7 @@ public class MyDialog extends Dialog {
         setContentView(R.layout.dialog);
         textView = (TextView) findViewById(R.id.textview_dialog);
         button_confirm = (Button) findViewById(R.id.button_dialog_confirm);
+        button_cancel = (Button) findViewById(R.id.button_dialog_cancel);
     }
 
     public void setTextViewText(String string){
@@ -32,4 +34,8 @@ public class MyDialog extends Dialog {
     public Button getButton_confirm() {
         return button_confirm;
     }
+    public Button getButton_cancel(){
+        return getButton_cancel();
+    }
+
 }

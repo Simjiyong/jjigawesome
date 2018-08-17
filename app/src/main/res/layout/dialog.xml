@@ -13,13 +13,25 @@
         android:layout_marginLeft="36.00dp"
         android:layout_marginTop="32dp"
         android:textSize="15.33sp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="177.33dp"
+        android:layout_marginTop="30.67dp">
 
-    <Button
-        android:id="@+id/button_dialog_confirm"
-        android:layout_width="51.33dp"
-        android:layout_height="29.33dp"
-        android:layout_marginLeft="228.67dp"
-        android:layout_marginTop="30.67dp"
-        android:background="@drawable/btn_ok_01"/>
+        <Button
+            android:id="@+id/button_dialog_cancel"
+            android:layout_width="51.33dp"
+            android:layout_height="29.33dp"
+            android:background="@drawable/btn_no_01"/>
+
+        <Button
+            android:id="@+id/button_dialog_confirm"
+            android:layout_width="51.33dp"
+            android:layout_height="29.33dp"
+            android:background="@drawable/btn_ok_01"/>
+    </LinearLayout>
+
 
 </LinearLayout>

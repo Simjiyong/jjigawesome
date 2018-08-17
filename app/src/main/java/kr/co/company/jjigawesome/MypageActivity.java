@@ -1,5 +1,6 @@
 package kr.co.company.jjigawesome;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -175,7 +176,7 @@ public class MypageActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.button_mypage_change_password:
-                        intent = new Intent(MypageActivity.this, ChangePasswordActivity.class);
+                        intent = new Intent(MypageActivity.this,CheckPWActivity.class);
                         startActivity(intent);
                         break;
                 }
