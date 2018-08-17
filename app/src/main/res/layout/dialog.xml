@@ -24,7 +24,8 @@
             android:id="@+id/button_dialog_cancel"
             android:layout_width="51.33dp"
             android:layout_height="29.33dp"
-            android:background="@drawable/btn_no_01"/>
+            android:background="@drawable/btn_no_01"
+            android:visibility="invisible"/>
 
         <Button
             android:id="@+id/button_dialog_confirm"

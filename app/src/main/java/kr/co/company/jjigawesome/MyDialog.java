@@ -26,7 +26,6 @@ public class MyDialog extends Dialog {
         textView = (TextView) findViewById(R.id.textview_dialog);
         button_confirm = (Button) findViewById(R.id.button_dialog_confirm);
         button_cancel = (Button) findViewById(R.id.button_dialog_cancel);
-        button_cancel.setVisibility(View.INVISIBLE);
     }
 
     public void showCancelButton(){
