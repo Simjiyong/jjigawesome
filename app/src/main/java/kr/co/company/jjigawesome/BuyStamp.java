@@ -43,7 +43,7 @@ public class BuyStamp extends AppCompatActivity {
 
     Button button_qrcode;
     TextView textView_buystamp;
-
+    Button button_finish;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +159,7 @@ public class BuyStamp extends AppCompatActivity {
         });
 
         button_qrcode = (Button) findViewById(R.id.button_buystamp_qrcode);
+        button_finish = (Button) findViewById(R.id.button_buystamp_back);
 
         button_qrcode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,6 +167,12 @@ public class BuyStamp extends AppCompatActivity {
                 Intent intent = new Intent(BuyStamp.this,  QrcodeActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
+            }
+        });
+        button_finish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 
