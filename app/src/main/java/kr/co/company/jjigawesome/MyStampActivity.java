@@ -133,6 +133,20 @@ public class MyStampActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyStampActivity.this, MypageActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            }
+        });
+
+        Button buttonMyStamp = (Button) findViewById(R.id.button_drawer_mystamp);
+        buttonMyStamp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyStampActivity.this, HomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -142,6 +156,8 @@ public class MyStampActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyStampActivity.this, MyStampActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });
@@ -151,7 +167,10 @@ public class MyStampActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyStampActivity.this, BuyStamp.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -196,11 +215,12 @@ public class MyStampActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        PostString postString = new PostString();
-        postString.setToken(member.getToken());
-        url = "http://18.218.187.138:3000/stamp/";
-        json = gson.toJson(postString);
-        new GetStampTask().execute(url,json);
+        textView_mystamp.setText("나의 스탬프 " + member.getStampCount() + "개");
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_mystamp);
+        if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
+            drawerLayout.closeDrawer(Gravity.RIGHT);
+        }
+        textView_coupon_num.setText(coupons.size() + "개");
     }
 
 

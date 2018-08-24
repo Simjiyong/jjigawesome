@@ -127,6 +127,8 @@ public class CheckPWActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CheckPWActivity.this, MypageActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });
@@ -136,6 +138,8 @@ public class CheckPWActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CheckPWActivity.this, MyStampActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });
@@ -145,6 +149,8 @@ public class CheckPWActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CheckPWActivity.this, BuyStamp.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });
@@ -187,7 +193,6 @@ public class CheckPWActivity extends AppCompatActivity {
                         url = Post.URL+"/find/check_password";
                         json = gson.toJson(postString);
                         new CheckPWTask().execute(url, json);
-
                         break;
                 }
             }
@@ -198,6 +203,8 @@ public class CheckPWActivity extends AppCompatActivity {
         button_finish.setOnClickListener(onClickListener);
 
     }
+
+
 
     private class CheckPWTask extends PostTask{
         @Override
@@ -212,6 +219,7 @@ public class CheckPWActivity extends AppCompatActivity {
                     Intent intent = new Intent(CheckPWActivity.this,  ChangePasswordActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                     startActivity(intent);
+                    finish();
                 } else {
                     this.cancel(true);
                     final MyDialog myDialog = new MyDialog(CheckPWActivity.this);

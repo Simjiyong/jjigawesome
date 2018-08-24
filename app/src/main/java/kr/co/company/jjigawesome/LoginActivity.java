@@ -141,18 +141,21 @@ public class LoginActivity extends AppCompatActivity {
                     case R.id.button_login_signup:
                         intent = new Intent(LoginActivity.this, SignUpActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         startActivity(intent);
                         break;
 
                     case R.id.button_login_findid:
                         intent = new Intent(LoginActivity.this, FindIDActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         startActivity(intent);
                         break;
 
                     case R.id.button_login_findpw:
                         intent = new Intent(LoginActivity.this, FindPWActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         startActivity(intent);
                         break;
                 }
@@ -222,10 +225,16 @@ public class LoginActivity extends AppCompatActivity {
                     if (response.getStatus().equals("ok")) {
                         if (response.getType() == 0) {
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                             startActivity(intent);
                             finish();
                         } else {
                             Intent intent = new Intent(LoginActivity.this, ManagerActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                             startActivity(intent);
                             finish();
                         }

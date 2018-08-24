@@ -31,6 +31,8 @@ public class MypageActivity extends AppCompatActivity {
     Button button_name;
     Button button_pw;
 
+    DrawerLayout drawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,10 +96,10 @@ public class MypageActivity extends AppCompatActivity {
         }
 
 
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_mypage);
         Button buttonOpenDrawer = (Button) findViewById(R.id.button_mypage_menu);
         buttonOpenDrawer.setOnClickListener(new View.OnClickListener(){
             public void onClick(View arg0) {
-                DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_mypage);
                 if(!drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
                     drawerLayout.openDrawer(Gravity.RIGHT);
                 }
@@ -108,7 +110,6 @@ public class MypageActivity extends AppCompatActivity {
         buttonCloseDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_mypage);
                 if(drawerLayout.isDrawerOpen(Gravity.RIGHT)){
                     drawerLayout.closeDrawer(Gravity.RIGHT);
                 }
@@ -120,6 +121,20 @@ public class MypageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MypageActivity.this, MypageActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            }
+        });
+
+        Button buttonMyStamp = (Button) findViewById(R.id.button_drawer_mystamp);
+        buttonMyStamp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MypageActivity.this, HomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -128,8 +143,16 @@ public class MypageActivity extends AppCompatActivity {
         buttonMyCoupon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MypageActivity.this, MyStampActivity.class);
+                Intent intent = new Intent(MypageActivity.this, HomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                intent = new Intent(MypageActivity.this, MyStampActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -137,8 +160,16 @@ public class MypageActivity extends AppCompatActivity {
         buttonBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MypageActivity.this, BuyStamp.class);
+                Intent intent = new Intent(MypageActivity.this, HomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                intent = new Intent(MypageActivity.this, BuyStamp.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -164,7 +195,7 @@ public class MypageActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent;
                 switch (v.getId()){
-                    case R.id.button_buystamp_back:
+                    case R.id.button_mypage_back:
                         finish();
                         break;
                     case R.id.button_mypage_qrcode:
@@ -190,5 +221,13 @@ public class MypageActivity extends AppCompatActivity {
         button_pw.setOnClickListener(onClickListener);
         button_name.setOnClickListener(onClickListener);
         button_qrcode.setOnClickListener(onClickListener);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(drawerLayout.isDrawerOpen(Gravity.RIGHT)){
+            drawerLayout.closeDrawer(Gravity.RIGHT);
+        }
     }
 }

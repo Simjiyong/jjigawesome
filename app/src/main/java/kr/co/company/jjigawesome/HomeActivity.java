@@ -34,6 +34,7 @@ public class HomeActivity extends AppCompatActivity {
     Member member;
     PostString postString;
 
+
     LinearLayout linearLayout;
     EditText editText;
     Button button_buy;
@@ -158,6 +159,20 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, MyStampActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            }
+        });
+
+        Button buttonMyStamp = (Button) findViewById(R.id.button_drawer_mystamp);
+        buttonMyStamp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, HomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -167,6 +182,8 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, BuyStamp.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });
@@ -176,7 +193,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, QrcodeActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
             }
         });
@@ -188,9 +205,9 @@ public class HomeActivity extends AppCompatActivity {
                 mPrefs = getSharedPreferences("mPrefs", MODE_PRIVATE);
                 mPrefs.edit().remove("member").apply();
                 Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
                 finish();
             }
@@ -239,6 +256,10 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        new GetStampTask().execute(url,json);
+        textView_count.setText(member.getStampCount() + "개");
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_home);
+        if(drawerLayout.isDrawerOpen(Gravity.RIGHT)){
+            drawerLayout.closeDrawer(Gravity.RIGHT);
+        }
     }
 }

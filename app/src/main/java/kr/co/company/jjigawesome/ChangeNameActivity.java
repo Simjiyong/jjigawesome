@@ -125,6 +125,8 @@ public class ChangeNameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ChangeNameActivity.this, MypageActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });
@@ -134,6 +136,8 @@ public class ChangeNameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ChangeNameActivity.this, MyStampActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });
@@ -143,6 +147,8 @@ public class ChangeNameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ChangeNameActivity.this, BuyStamp.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });
@@ -162,7 +168,7 @@ public class ChangeNameActivity extends AppCompatActivity {
                 switch (v.getId()) {
                     case R.id.button_change_name_qrcode:
                         Intent intent = new Intent(ChangeNameActivity.this,  QrcodeActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(intent);
                         break;
                     case R.id.button_change_name_ok:
@@ -176,7 +182,7 @@ public class ChangeNameActivity extends AppCompatActivity {
                         PostString postString = new PostString();
                         postString.setToken(member.getToken());
                         postString.setName(editText_name.getText().toString());
-                        url = Post.URL + "";
+                        url = Post.URL + "find/reset_name";
                         json = gson.toJson(postString);
                         new ChangeNameTask().execute(url,json);
                         break;
@@ -191,6 +197,7 @@ public class ChangeNameActivity extends AppCompatActivity {
         button_confirm.setOnClickListener(onClickListener);
         button_finish.setOnClickListener(onClickListener);
     }
+
 
     private class ChangeNameTask extends PostTask{
         @Override
@@ -224,4 +231,6 @@ public class ChangeNameActivity extends AppCompatActivity {
             }
         }
     }
+
+
 }

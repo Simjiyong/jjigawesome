@@ -136,6 +136,20 @@ public class BuyStamp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BuyStamp.this, MypageActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            }
+        });
+
+        Button buttonMyStamp = (Button) findViewById(R.id.button_drawer_mystamp);
+        buttonMyStamp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BuyStamp.this, HomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -145,7 +159,10 @@ public class BuyStamp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BuyStamp.this, MyStampActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -154,6 +171,8 @@ public class BuyStamp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BuyStamp.this, BuyStamp.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });
@@ -165,7 +184,7 @@ public class BuyStamp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BuyStamp.this,  QrcodeActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
             }
         });
@@ -191,11 +210,11 @@ public class BuyStamp extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        PostString postString = new PostString();
-        postString.setToken(member.getToken());
-        url = "http://18.218.187.138:3000/stamp/";
-        json = gson.toJson(postString);
-        new GetStampTask().execute(url,json);
+        textView_buystamp.setText("나의 스탬프 " + member.getStampCount()+ "개");
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_buystamp);
+        if(drawerLayout.isDrawerOpen(Gravity.RIGHT)){
+            drawerLayout.closeDrawer(Gravity.RIGHT);
+        }
     }
 
     private void setRecyclerView(){
@@ -328,5 +347,11 @@ public class BuyStamp extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void startActivity(Intent intent) {
+        super.startActivity(intent);
+
     }
 }

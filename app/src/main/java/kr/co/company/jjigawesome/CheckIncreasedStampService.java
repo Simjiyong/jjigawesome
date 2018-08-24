@@ -88,8 +88,8 @@ public class CheckIncreasedStampService extends Service {
                         member.setStampCount(response.getNumber());
                         SPtoObject.saveObject(mPrefs,member,"member");
                         Intent intent = new Intent(CheckIncreasedStampService.this, CompleteQrcodeActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(intent);
                         checkIncreasedStampThread.interrupt();
                         checkIncreasedStampThread = null;

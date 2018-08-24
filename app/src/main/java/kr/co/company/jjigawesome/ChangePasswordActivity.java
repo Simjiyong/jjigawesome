@@ -126,6 +126,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ChangePasswordActivity.this, MypageActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });
@@ -135,6 +137,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ChangePasswordActivity.this, MyStampActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });
@@ -144,6 +148,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ChangePasswordActivity.this, BuyStamp.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });
@@ -165,7 +171,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 switch (v.getId()) {
                     case R.id.button_change_password_qrcode:
                         Intent intent = new Intent(ChangePasswordActivity.this,  QrcodeActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(intent);
                         break;
                     case R.id.button_change_password_back:
@@ -198,6 +204,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
         button_confirm.setOnClickListener(onClickListener);
 
     }
+
+
 
     private class ChangePWTask extends PostTask{
         @Override
@@ -232,4 +240,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
             }
         }
     }
+
+
 }
