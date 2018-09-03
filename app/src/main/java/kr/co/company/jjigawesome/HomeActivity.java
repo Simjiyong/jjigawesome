@@ -1,6 +1,6 @@
 package kr.co.company.jjigawesome;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -13,10 +13,12 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,14 +36,19 @@ public class HomeActivity extends AppCompatActivity {
     Member member;
     PostString postString;
 
-
-    LinearLayout linearLayout;
-    EditText editText;
     Button button_buy;
     Button button_qrcode;
     Button button_back;
     TextView textView_count;
 
+    RelativeLayout couponListLayout;
+    LayoutInflater inflater;
+    View couponList1;
+    TextView list1Name;
+    ImageView[] progressBar1;
+    View couponList2;
+    TextView list2Name;
+    ImageView[] progressBar2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +113,122 @@ public class HomeActivity extends AppCompatActivity {
                 }
             });
         }
+
+        //////////////////////////////////////////
+
+        couponListLayout = (RelativeLayout) findViewById(R.id.coupon_list_layout);
+        inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        couponList1 = inflater.inflate(R.layout.home_coupon_list,null);
+        couponList1.setId(View.generateViewId());
+        list1Name = (TextView) couponList1.findViewById(R.id.coupon_list_name);
+        list1Name.setText("따릉이");
+        TextView list1Num = (TextView) couponList1.findViewById(R.id.coupon_list_num);
+        list1Num.setText("5개");
+        int stampCount = member.getStampCount();
+        ImageView couponListOn = (ImageView) couponList1.findViewById(R.id.coupon_list_on);
+        ImageView couponListCheck = (ImageView) couponList1.findViewById(R.id.coupon_list_check);
+        if(stampCount < 5) {
+            couponListOn.setVisibility(View.INVISIBLE);
+            couponListCheck.setVisibility(View.INVISIBLE);
+            list1Name.setTextColor(0xff9d9d9d);
+        }
+        else{
+            couponListOn.setVisibility(View.VISIBLE);
+            couponListCheck.setVisibility(View.VISIBLE);
+            list1Name.setTextColor(0xff545454);
+        }
+        progressBar1 = new ImageView[38];
+        progressBar1[0] = couponList1.findViewById(R.id.progressbar_home_l);
+        for(int i=1; i<37; i++)
+        {
+            String progressCenter = "progressbar_home_c_"+i;
+            int resID = getResources().getIdentifier(progressCenter, "id", getPackageName());
+            progressBar1[i] = ((ImageView) couponList1.findViewById(resID));
+        }
+        progressBar1[37] = couponList1.findViewById(R.id.progressbar_home_r);
+        if(stampCount/(float)5 >= 1/(float)38)
+            progressBar1[0].setImageResource(R.drawable.progressbar_home_sel_l);
+        else
+            progressBar1[0].setImageResource(R.drawable.progressbar_home_nor_l);
+        for (int i=1; i<37; i++)
+        {
+            if(stampCount/(float)5 >= (i+1)/(float)38)
+                progressBar1[i].setImageResource(R.drawable.progressbar_home_sel_c);
+            else
+                progressBar1[i].setImageResource(R.drawable.progressbar_home_nor_c);
+        }
+        if(stampCount/(float)5 >= 1)
+            progressBar1[37].setImageResource(R.drawable.progressbar_home_sel_r);
+        else
+            progressBar1[37].setImageResource(R.drawable.progressbar_home_nor_r);
+        RelativeLayout.LayoutParams couponList1Params = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        couponList1.setLayoutParams(couponList1Params);
+        couponList1Params.addRule(RelativeLayout.ALIGN_PARENT_TOP,1);
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        int size = Math.round(26 * dm.density);
+        couponList1Params.topMargin = size;
+        couponListLayout.addView(couponList1);
+
+        //////////////////////////////////////////////////
+        couponList2 = inflater.inflate(R.layout.home_coupon_list,null);
+        couponList2.setId(View.generateViewId());
+        list2Name = (TextView) couponList2.findViewById(R.id.coupon_list_name);
+        list2Name.setText("경복궁 야간 개장");
+        TextView list2Num = (TextView) couponList2.findViewById(R.id.coupon_list_num);
+        list2Num.setText("20개");
+        ImageView couponList2On = (ImageView) couponList2.findViewById(R.id.coupon_list_on);
+        ImageView couponList2Check = (ImageView) couponList2.findViewById(R.id.coupon_list_check);
+        if(stampCount < 20) {
+            couponList2On.setVisibility(View.INVISIBLE);
+            couponList2Check.setVisibility(View.INVISIBLE);
+            list2Name.setTextColor(0xff9d9d9d);
+        }
+        else{
+            couponList2On.setVisibility(View.VISIBLE);
+            couponList2Check.setVisibility(View.VISIBLE);
+            list2Name.setTextColor(0xff545454);
+        }
+        progressBar2 = new ImageView[38];
+        progressBar2[0] = couponList2.findViewById(R.id.progressbar_home_l);
+        for(int i=1; i<37; i++)
+        {
+            String progressCenter = "progressbar_home_c_"+i;
+            int resID = getResources().getIdentifier(progressCenter, "id", getPackageName());
+            progressBar2[i] = ((ImageView) couponList2.findViewById(resID));
+        }
+        progressBar2[37] = couponList2.findViewById(R.id.progressbar_home_r);
+        if(stampCount/(float)20 >= 1/(float)38)
+            progressBar2[0].setImageResource(R.drawable.progressbar_home_sel_l);
+        else
+            progressBar2[0].setImageResource(R.drawable.progressbar_home_nor_l);
+        for (int i=1; i<37; i++)
+        {
+            if(stampCount/(float)20 >= (i+1)/(float)38)
+                progressBar2[i].setImageResource(R.drawable.progressbar_home_sel_c);
+            else
+                progressBar2[i].setImageResource(R.drawable.progressbar_home_nor_c);
+        }
+        if(stampCount/(float)20 >= 1)
+            progressBar2[37].setImageResource(R.drawable.progressbar_home_sel_r);
+        else
+            progressBar2[37].setImageResource(R.drawable.progressbar_home_nor_r);
+        RelativeLayout.LayoutParams couponList2Params = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        couponList2.setLayoutParams(couponList2Params);
+        couponList2Params.addRule(RelativeLayout.BELOW, couponList1.getId());
+        size = Math.round(10 * dm.density);
+        couponList2Params.topMargin = size;
+        couponListLayout.addView(couponList2);
+
+        ////////////////////
+
+
+        //////////////////////////////////////
 
         button_buy = (Button) findViewById(R.id.button_home_buy);
         button_buy.setOnClickListener(new View.OnClickListener() {
@@ -240,9 +363,135 @@ public class HomeActivity extends AppCompatActivity {
                     member.setStampCount(response.getNumber());
                     SPtoObject.saveObject(mPrefs,member,"member");
                     textView_count.setText(member.getStampCount() + "개");
+                    //////////////////////////////////////////////////
+                    int stampCount = member.getStampCount();
+                    ImageView couponListOn = (ImageView) couponList1.findViewById(R.id.coupon_list_on);
+                    ImageView couponListCheck = (ImageView) couponList1.findViewById(R.id.coupon_list_check);
+                    if(stampCount < 5) {
+                        couponListOn.setVisibility(View.INVISIBLE);
+                        couponListCheck.setVisibility(View.INVISIBLE);
+                        list1Name.setTextColor(0xff9d9d9d);
+                    }
+                    else{
+                        couponListOn.setVisibility(View.VISIBLE);
+                        couponListCheck.setVisibility(View.VISIBLE);
+                        list1Name.setTextColor(0xff545454);
+                    }
+                    if(stampCount/(float)5 >= 1/(float)38)
+                        progressBar1[0].setImageResource(R.drawable.progressbar_home_sel_l);
+                    else
+                        progressBar1[0].setImageResource(R.drawable.progressbar_home_nor_l);
+                    for (int i=1; i<37; i++)
+                    {
+                        if(stampCount/(float)5 >= (i+1)/(float)38)
+                            progressBar1[i].setImageResource(R.drawable.progressbar_home_sel_c);
+                        else
+                            progressBar1[i].setImageResource(R.drawable.progressbar_home_nor_c);
+                    }
+                    if(stampCount/(float)5 >= 1)
+                        progressBar1[37].setImageResource(R.drawable.progressbar_home_sel_r);
+                    else
+                        progressBar1[37].setImageResource(R.drawable.progressbar_home_nor_r);
+                    RelativeLayout.LayoutParams couponList1Params = new RelativeLayout.LayoutParams(
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT
+                    );
+                    ////////////////
+                    ImageView couponList2On = (ImageView) couponList2.findViewById(R.id.coupon_list_on);
+                    ImageView couponList2Check = (ImageView) couponList2.findViewById(R.id.coupon_list_check);
+                    if(stampCount < 20) {
+                        couponList2On.setVisibility(View.INVISIBLE);
+                        couponList2Check.setVisibility(View.INVISIBLE);
+                        list2Name.setTextColor(0xff9d9d9d);
+                    }
+                    else{
+                        couponList2On.setVisibility(View.VISIBLE);
+                        couponList2Check.setVisibility(View.VISIBLE);
+                        list2Name.setTextColor(0xff545454);
+                    }
+                    if(stampCount/(float)20 >= 1/(float)38)
+                        progressBar2[0].setImageResource(R.drawable.progressbar_home_sel_l);
+                    else
+                        progressBar2[0].setImageResource(R.drawable.progressbar_home_nor_l);
+                    for (int i=1; i<37; i++)
+                    {
+                        if(stampCount/(float)20 >= (i+1)/(float)38)
+                            progressBar2[i].setImageResource(R.drawable.progressbar_home_sel_c);
+                        else
+                            progressBar2[i].setImageResource(R.drawable.progressbar_home_nor_c);
+                    }
+                    if(stampCount/(float)20 >= 1)
+                        progressBar2[37].setImageResource(R.drawable.progressbar_home_sel_r);
+                    else
+                        progressBar2[37].setImageResource(R.drawable.progressbar_home_nor_r);
+                    //////////////////////
                 } else {
                     this.cancel(true);
                     textView_count.setText(member.getStampCount() + "개");
+                    //////////////////////////////////////////////////
+
+                    int stampCount = member.getStampCount();
+                    ImageView couponListOn = (ImageView) couponList1.findViewById(R.id.coupon_list_on);
+                    ImageView couponListCheck = (ImageView) couponList1.findViewById(R.id.coupon_list_check);
+                    if(stampCount < 5) {
+                        couponListOn.setVisibility(View.INVISIBLE);
+                        couponListCheck.setVisibility(View.INVISIBLE);
+                        list1Name.setTextColor(0xff9d9d9d);
+                    }
+                    else{
+                        couponListOn.setVisibility(View.VISIBLE);
+                        couponListCheck.setVisibility(View.VISIBLE);
+                        list1Name.setTextColor(0xff545454);
+                    }
+                    if(stampCount/(float)5 >= 1/(float)38)
+                        progressBar1[0].setImageResource(R.drawable.progressbar_home_sel_l);
+                    else
+                        progressBar1[0].setImageResource(R.drawable.progressbar_home_nor_l);
+                    for (int i=1; i<37; i++)
+                    {
+                        if(stampCount/(float)5 >= (i+1)/(float)38)
+                            progressBar1[i].setImageResource(R.drawable.progressbar_home_sel_c);
+                        else
+                            progressBar1[i].setImageResource(R.drawable.progressbar_home_nor_c);
+                    }
+                    if(stampCount/(float)5 >= 1)
+                        progressBar1[37].setImageResource(R.drawable.progressbar_home_sel_r);
+                    else
+                        progressBar1[37].setImageResource(R.drawable.progressbar_home_nor_r);
+                    RelativeLayout.LayoutParams couponList1Params = new RelativeLayout.LayoutParams(
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT
+                    );
+                    ////////////////
+                    ImageView couponList2On = (ImageView) couponList2.findViewById(R.id.coupon_list_on);
+                    ImageView couponList2Check = (ImageView) couponList2.findViewById(R.id.coupon_list_check);
+                    if(stampCount < 20) {
+                        couponList2On.setVisibility(View.INVISIBLE);
+                        couponList2Check.setVisibility(View.INVISIBLE);
+                        list2Name.setTextColor(0xff9d9d9d);
+                    }
+                    else{
+                        couponList2On.setVisibility(View.VISIBLE);
+                        couponList2Check.setVisibility(View.VISIBLE);
+                        list2Name.setTextColor(0xff545454);
+                    }
+                    if(stampCount/(float)20 >= 1/(float)38)
+                        progressBar2[0].setImageResource(R.drawable.progressbar_home_sel_l);
+                    else
+                        progressBar2[0].setImageResource(R.drawable.progressbar_home_nor_l);
+                    for (int i=1; i<37; i++)
+                    {
+                        if(stampCount/(float)20 >= (i+1)/(float)38)
+                            progressBar2[i].setImageResource(R.drawable.progressbar_home_sel_c);
+                        else
+                            progressBar2[i].setImageResource(R.drawable.progressbar_home_nor_c);
+                    }
+                    if(stampCount/(float)20 >= 1)
+                        progressBar2[37].setImageResource(R.drawable.progressbar_home_sel_r);
+                    else
+                        progressBar2[37].setImageResource(R.drawable.progressbar_home_nor_r);
+                    //////////////////////
+
                 }
             } catch (NullPointerException e){
                 Toast.makeText(getApplicationContext(), "오류! 서버로부터 응답 받지 못함", Toast.LENGTH_SHORT).show();
@@ -252,7 +501,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
     }
-
     @Override
     protected void onResume() {
         super.onResume();

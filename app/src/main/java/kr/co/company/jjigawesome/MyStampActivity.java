@@ -241,6 +241,7 @@ public class MyStampActivity extends AppCompatActivity {
             Coupon coupon = coupons.get(position);
             int type = coupon.getType();
             if(type == 0) {
+
                 holder.button_coupon.setBackgroundResource(R.drawable.img_seoulbike_use);
             }
             else if(type == 1){
@@ -254,6 +255,8 @@ public class MyStampActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
+
+            Log.d("마이스탬프 쿠폰",Integer.toString(coupons.size()));
             return coupons.size();
         }
 

@@ -182,7 +182,7 @@ public class ChangeNameActivity extends AppCompatActivity {
                         PostString postString = new PostString();
                         postString.setToken(member.getToken());
                         postString.setName(editText_name.getText().toString());
-                        url = Post.URL + "find/reset_name";
+                        url = Post.URL + "/]find/reset_name";
                         json = gson.toJson(postString);
                         new ChangeNameTask().execute(url,json);
                         break;
