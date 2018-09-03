@@ -11,6 +11,10 @@ public class Coupon {
     private int remarks;
     private int totalnumber;
     private String stampname;
+    private String key;
+    private int stamp_number;
+    private int thema;
+    private String couponname;
 
     public Coupon(){}
 
@@ -46,4 +50,23 @@ public class Coupon {
         return totalnumber;
     }
 
+    public String getStampname() {
+        return stampname;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public int getStamp_number() {
+        return stamp_number;
+    }
+
+    public int getThema() {
+        return thema;
+    }
+
+    public String getCouponname() {
+        return couponname;
+    }
 }

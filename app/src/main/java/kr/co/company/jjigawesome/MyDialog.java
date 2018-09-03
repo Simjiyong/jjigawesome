@@ -40,7 +40,7 @@ public class MyDialog extends Dialog {
         return button_confirm;
     }
     public Button getButton_cancel(){
-        return getButton_cancel();
+        return button_cancel;
     }
 
 }

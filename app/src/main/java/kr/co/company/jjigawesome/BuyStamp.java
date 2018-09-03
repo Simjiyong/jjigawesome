@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class BuyStamp extends AppCompatActivity {
@@ -33,10 +34,13 @@ public class BuyStamp extends AppCompatActivity {
     SharedPreferences mPrefs;
     Member member;
     RecyclerView recyclerView;
+    BuyStamp.CouponAdapter adapter;
     List<Coupon> coupons = new ArrayList<>();
     Gson gson = new Gson();
     String url;
     String json;
+    int realWidth;
+    int realHeight;
 
     LinearLayout linearLayout;
     EditText editText;
@@ -44,6 +48,7 @@ public class BuyStamp extends AppCompatActivity {
     Button button_qrcode;
     TextView textView_buystamp;
     Button button_finish;
+    Button button_tmp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +59,7 @@ public class BuyStamp extends AppCompatActivity {
         member=((Member)SPtoObject.loadObject(mPrefs,"member",Member.class));
 
         Display display = this.getWindowManager().getDefaultDisplay();
-        int realWidth;
-        int realHeight;
+
 
         if (Build.VERSION.SDK_INT >= 17){
             //new pleasant way to get real metrics
@@ -204,13 +208,22 @@ public class BuyStamp extends AppCompatActivity {
         for(int i=0;i<3;i++){
             coupons.add(new Coupon(i));
         }
-        setRecyclerView();
+        PostString postString = new PostString();
+        url = Post.URL+"/stamp/info";
+        json = gson.toJson(postString);
+        new GetCouponListTask().execute(url,json);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        textView_buystamp.setText("나의 스탬프 " + member.getStampCount()+ "개");
+
+        PostString postString = new PostString();
+        postString.setToken(member.getToken());
+        url = "http://18.218.187.138:3000/stamp/";
+        json = gson.toJson(postString);
+        new GetStampTask().execute(url, json);
+
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_buystamp);
         if(drawerLayout.isDrawerOpen(Gravity.RIGHT)){
             drawerLayout.closeDrawer(Gravity.RIGHT);
@@ -221,8 +234,9 @@ public class BuyStamp extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        BuyStamp.CouponAdapter adapter = new BuyStamp.CouponAdapter(coupons);
+        adapter = new BuyStamp.CouponAdapter(coupons);
         recyclerView.setAdapter(adapter);
+
     }
 
 
@@ -234,17 +248,23 @@ public class BuyStamp extends AppCompatActivity {
         }
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_coupon,parent,false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_buy_coupon,parent,false);
             return new ViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(ViewHolder holder, final int position) {
+            final ViewHolder holder1 = holder;
             final Coupon coupon = coupons.get(position);
             final int type = coupon.getType();
 
+            /*ViewGroup.LayoutParams params = holder.button_coupon.getLayoutParams();
+            params.width = (int)(((float)realWidth/1080) * 1041);
+            params.height = (int)(((float)realWidth/1080) * 466);
+            holder.button_coupon.setLayoutParams(params);*/
+
             final PostString postString = new PostString();
-            holder.button_coupon.setEnabled(false);
+            /*holder.button_coupon.setEnabled(false);
             if(type == 0) {
                 holder.button_coupon.setBackgroundResource(R.drawable.img_seoulbike_off);
                 if(member.getStampCount()>=5){
@@ -268,15 +288,46 @@ public class BuyStamp extends AppCompatActivity {
                     holder.button_coupon.setEnabled(true);
                     postString.setStamp(30);
                 }
+            }*/
+            if(member.getStampCount()<coupon.getStamp_number()){
+                holder.button_coupon.setEnabled(false);
+                holder.linearLayout_coupon.setBackgroundResource(R.drawable.img_ticket_off);
             }
+            else{
+                holder.button_coupon.setEnabled(true);
+                holder.linearLayout_coupon.setBackgroundResource(R.drawable.img_ticket_on);
+            }
+            holder.textView_couponName.setText(coupon.getCouponname());
+            holder.button_coupon.setText(String.valueOf(coupon.getStamp_number()));
             holder.button_coupon.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
-                    postString.setToken(member.getToken());
-                    postString.setType(type);
-                    url = Post.URL + "/stamp/exchange";
-                    json = gson.toJson(postString);
-                    new ExchangeStampTask().execute(url, json);
+                    final MyDialog myDialog = new MyDialog(BuyStamp.this);
+                    myDialog.setTextViewText("쿠폰을 교환하시겠습니까?");
+                    myDialog.showCancelButton();
+                    myDialog.getButton_cancel().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            myDialog.dismiss();
+                        }
+                    });
+                    myDialog.getButton_confirm().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            button_tmp = holder1.button_coupon;
+                            postString.setToken(member.getToken());
+                            postString.setStamp(coupon.getStamp_number());
+                            postString.setType(type);
+                            url = Post.URL + "/stamp/exchange";
+                            json = gson.toJson(postString);
+                            new ExchangeStampTask().execute(url, json);
+                            myDialog.dismiss();
+                        }
+                    });
+
+                    myDialog.show();
+
                 }
             });
 
@@ -288,9 +339,13 @@ public class BuyStamp extends AppCompatActivity {
         }
 
         class ViewHolder extends RecyclerView.ViewHolder{
+            LinearLayout linearLayout_coupon;
             Button button_coupon;
+            TextView textView_couponName;
             public ViewHolder(View itemView) {
                 super(itemView);
+                linearLayout_coupon = itemView.findViewById(R.id.linear_coupon);
+                textView_couponName = itemView.findViewById(R.id.textview_coupon_name);
                 button_coupon = itemView.findViewById(R.id.button_coupon);
             }
         }
@@ -310,7 +365,9 @@ public class BuyStamp extends AppCompatActivity {
                     postString.setToken(member.getToken());
                     url = "http://18.218.187.138:3000/stamp/";
                     json = gson.toJson(postString);
+                    Log.e("postString", json);
                     new GetStampTask().execute(url, json);
+
                 } else {
                     this.cancel(true);
                 }
@@ -333,9 +390,13 @@ public class BuyStamp extends AppCompatActivity {
                 response = gson.fromJson(s, Response.class);
 
                 if (response.getStatus().equals("ok")) {
+
                     member.setStampCount(response.getNumber());
                     SPtoObject.saveObject(mPrefs,member,"member");
                     textView_buystamp.setText("나의 스탬프 " + member.getStampCount() + "개");
+
+                    setRecyclerView();
+
                 } else {
                     this.cancel(true);
                     textView_buystamp.setText("나의 스탬프 " + member.getStampCount() + "개");
@@ -349,9 +410,28 @@ public class BuyStamp extends AppCompatActivity {
         }
     }
 
+    private class GetCouponListTask extends PostTask{
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            super.onPostExecute(s);
+            Response response;
+            try {
+                Log.d("response", s);
+                coupons = Arrays.asList(gson.fromJson(s, Coupon[].class));
+                setRecyclerView();
+
+            } catch (NullPointerException e){
+                Toast.makeText(getApplicationContext(), "오류! 서버로부터 응답 받지 못함", Toast.LENGTH_SHORT).show();
+            } catch (Exception e){
+                Toast.makeText(getApplicationContext(), "오류!", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        }
+    }
+
     @Override
     public void startActivity(Intent intent) {
         super.startActivity(intent);
-
     }
 }

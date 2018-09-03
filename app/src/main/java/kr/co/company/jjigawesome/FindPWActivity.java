@@ -149,6 +149,7 @@ public class FindPWActivity extends AppCompatActivity {
                         postString.setEmail(editText_email.getText().toString());
                         postString.setId(editText_id.getText().toString());
                         json = gson.toJson(postString);
+                        Log.e("postString", json);
                         new PasswordTask().execute();
                         break;
                     case R.id.button_findpw_reset:

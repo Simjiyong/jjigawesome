@@ -14,12 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".LoginActivity"
+            android:theme="@style/LoginTheme">
         </activity>
         <activity android:name=".SignUpActivity" />
         <activity
@@ -45,7 +41,15 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".CheckPWActivity"></activity>
+        <activity android:name=".CheckPWActivity" />
+        <activity android:name=".SplashActivity"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

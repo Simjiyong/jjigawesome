@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +42,7 @@ public class HomeActivity extends AppCompatActivity {
     Button button_qrcode;
     Button button_back;
     TextView textView_count;
-
+    RelativeLayout relativeLayout_count;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -213,6 +214,18 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        relativeLayout_count = (RelativeLayout) findViewById(R.id.relativeLayout_home_count);
+        relativeLayout_count.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postString = new PostString();
+                postString.setToken(member.getToken());
+                url = "http://18.218.187.138:3000/stamp/";
+                json = gson.toJson(postString);
+                new GetStampTask().execute(url, json);
+            }
+        });
+
         textView_count = (TextView) findViewById(R.id.textview_home_count);
         textView_count.setText(member.getStampCount() + "개");
 
@@ -256,7 +269,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        textView_count.setText(member.getStampCount() + "개");
+        new GetStampTask().execute(url,json);
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_home);
         if(drawerLayout.isDrawerOpen(Gravity.RIGHT)){
             drawerLayout.closeDrawer(Gravity.RIGHT);

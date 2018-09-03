@@ -43,32 +43,50 @@
     <Space
         android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="339.33dp" />
+        android:layout_height="97.67dp" />
+    
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="203.67dp"
+        android:src="@drawable/bg_qrcode_02_stamp"/>
 
-    <Button
-        android:id="@+id/button_complete_mystamp"
-        android:layout_width="290.33dp"
-        android:layout_height="46.33dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/btn_b_nor"
-        android:text="@string/gotomystamp"
-        android:textSize="13.33dp"
-        android:gravity="center"
-        android:textColor="#ffffff"
-        android:fontFamily="@font/notosans"/>
+    <Space
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="106.33dp" />
 
-    <Button
-        android:id="@+id/button_complete_buystamp"
-        android:layout_width="290.33dp"
-        android:layout_height="46.33dp"
-        android:layout_marginTop="10.67dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/btn_b_nor"
-        android:text="@string/gotobuycoupon"
-        android:textSize="13.33dp"
-        android:gravity="center"
-        android:textColor="#ffffff"
-        android:fontFamily="@font/notosans"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button_complete_mystamp"
+            android:layout_width="290.33dp"
+            android:layout_height="46.33dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/btn_b_nor"
+            android:text="@string/gotomystamp"
+            android:textSize="13.33dp"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:fontFamily="@font/notosans"/>
+
+        <Button
+            android:id="@+id/button_complete_buystamp"
+            android:layout_width="290.33dp"
+            android:layout_height="46.33dp"
+            android:layout_marginTop="10.67dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/btn_b_nor"
+            android:text="@string/gotobuycoupon"
+            android:textSize="13.33dp"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:fontFamily="@font/notosans"/>
+    </LinearLayout>
+
+
     <Space
         android:layout_weight="1"
         android:layout_width="match_parent"
