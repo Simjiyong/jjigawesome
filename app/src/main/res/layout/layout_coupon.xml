@@ -32,14 +32,19 @@
                     android:id="@+id/textview_coupon_name"
                     android:layout_width="210.67dp"
                     android:layout_height="match_parent"
-                    android:text="test"/>
+                    android:text="test"
+                    android:fontFamily="@font/notosans"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="12.67dp"
+                    android:textColor="#000000"
+                    android:textSize="15.33dp"/>
 
                 <Button
                     android:id="@+id/button_coupon"
                     android:layout_width="23.00dp"
                     android:layout_height="match_parent"
-                    android:text="발급"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:background="@null"/>
             </LinearLayout>
 
             <TextView
