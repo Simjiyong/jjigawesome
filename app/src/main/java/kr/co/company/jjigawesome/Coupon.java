@@ -15,6 +15,7 @@ public class Coupon {
     private int stamp_number;
     private int thema;
     private String couponname;
+    private Row data;
 
     public Coupon(){}
 
@@ -68,5 +69,13 @@ public class Coupon {
 
     public String getCouponname() {
         return couponname;
+    }
+
+    public Row getData() {
+        return data;
+    }
+
+    public void setData(Row data) {
+        this.data = data;
     }
 }
