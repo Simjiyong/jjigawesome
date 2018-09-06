@@ -25,7 +25,6 @@ import com.google.gson.Gson;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class BuyStamp extends AppCompatActivity {
@@ -41,6 +40,7 @@ public class BuyStamp extends AppCompatActivity {
     String json;
     int realWidth;
     int realHeight;
+    ImageView[] imageViews = new ImageView[15];
 
     LinearLayout linearLayout;
     EditText editText;
@@ -48,7 +48,6 @@ public class BuyStamp extends AppCompatActivity {
     Button button_qrcode;
     TextView textView_buystamp;
     Button button_finish;
-    Button button_tmp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -288,7 +287,9 @@ public class BuyStamp extends AppCompatActivity {
                     holder.button_coupon.setEnabled(true);
                     postString.setStamp(30);
                 }
-            }*/
+           }*/
+            imageViews[position] = holder.imageView_coupon;
+
             if(member.getStampCount()<coupon.getStamp_number()){
                 holder.button_coupon.setEnabled(false);
                 holder.linearLayout_coupon.setBackgroundResource(R.drawable.img_ticket_off);
@@ -298,7 +299,7 @@ public class BuyStamp extends AppCompatActivity {
                 holder.linearLayout_coupon.setBackgroundResource(R.drawable.img_ticket_on);
             }
             holder.textView_couponName.setText(coupon.getCouponname());
-            holder.button_coupon.setText(String.valueOf(coupon.getStamp_number()));
+            holder.button_coupon.setText(String.valueOf(coupon.getStamp_number() + "개"));
             holder.button_coupon.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -339,6 +340,7 @@ public class BuyStamp extends AppCompatActivity {
         }
 
         class ViewHolder extends RecyclerView.ViewHolder{
+            ImageView imageView_coupon;
             LinearLayout linearLayout_coupon;
             Button button_coupon;
             TextView textView_couponName;
@@ -347,6 +349,7 @@ public class BuyStamp extends AppCompatActivity {
                 linearLayout_coupon = itemView.findViewById(R.id.linear_coupon);
                 textView_couponName = itemView.findViewById(R.id.textview_coupon_name);
                 button_coupon = itemView.findViewById(R.id.button_coupon);
+                imageView_coupon = itemView.findViewById(R.id.image_coupon);
             }
         }
     }
@@ -419,6 +422,9 @@ public class BuyStamp extends AppCompatActivity {
             try {
                 Log.d("response", s);
                 coupons = Arrays.asList(gson.fromJson(s, Coupon[].class));
+                for(int i=0;i<coupons.size();i++){
+                    new GetApiDataTask(coupons.get(i),i).execute(Post.API_URL+coupons.get(i).getKey());
+                }
                 setRecyclerView();
 
             } catch (NullPointerException e){
@@ -433,5 +439,34 @@ public class BuyStamp extends AppCompatActivity {
     @Override
     public void startActivity(Intent intent) {
         super.startActivity(intent);
+    }
+
+    private class GetApiDataTask extends PostAPITask{
+
+        Coupon coupon;
+        int position;
+
+        GetApiDataTask(Coupon coupon, int position){
+            this.coupon = coupon;
+            this.position = position;
+        }
+
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try {
+                Log.d("response", s);
+                Gson gson = new Gson();
+                apiResponse = gson.fromJson(s, kr.co.company.jjigawesome.Response.class);
+                coupon.setData(apiResponse.getSearchCulturalFacilitiesDetailService().getRow().get(0));
+                Glide.with(getApplicationContext()).load(coupon.getData().getMAIN_IMG()).into(imageViews[position]);
+
+            } catch (NullPointerException e){
+
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 }

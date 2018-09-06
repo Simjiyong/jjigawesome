@@ -15,6 +15,7 @@ public class Response {
     private int type;
     private String error;
     private ArrayList<Coupon> stamp;
+    private ApiResponse SearchCulturalFacilitiesDetailService;
 
     public Response(){
         stamp = new ArrayList<>();
@@ -46,5 +47,9 @@ public class Response {
 
     public ArrayList<Coupon> getStamp() {
         return stamp;
+    }
+
+    public ApiResponse getSearchCulturalFacilitiesDetailService() {
+        return SearchCulturalFacilitiesDetailService;
     }
 }

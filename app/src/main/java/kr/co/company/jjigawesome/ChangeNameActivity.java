@@ -233,5 +233,4 @@ public class ChangeNameActivity extends AppCompatActivity {
         }
     }
 
-
 }

@@ -330,5 +330,4 @@ public class MyStampActivity extends AppCompatActivity {
         }
     }
 
-
 }

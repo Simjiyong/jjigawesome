@@ -15,8 +15,10 @@
 
 
         <ImageView
-            android:layout_width="80.00dp"
+            android:id="@+id/image_coupon"
+            android:layout_width="70.00dp"
             android:layout_height="match_parent"
+            android:scaleType="centerInside"
             android:layout_weight="1"/>
 
         <TextView
@@ -24,7 +26,12 @@
             android:layout_width="214.33dp"
             android:layout_height="match_parent"
             android:text="test"
-            android:layout_weight="1"/>
+            android:fontFamily="@font/notosans"
+            android:gravity="center_vertical"
+            android:paddingLeft="12.67dp"
+            android:layout_weight="1"
+            android:textColor="#000000"
+            android:textSize="15.33dp"/>
 
 
         <Button
@@ -32,7 +39,11 @@
             android:layout_width="52.67dp"
             android:layout_height="match_parent"
             android:background="@null"
-            android:layout_weight="1"/>
+            android:fontFamily="@font/notosans"
+            android:layout_weight="1"
+            android:textSize="15.33dp"
+            android:textColor="#ffffff"
+            android:gravity="center"/>
 
 
     </LinearLayout>
