@@ -10,11 +10,18 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -34,19 +41,26 @@ public class LoginActivity extends AppCompatActivity {
     EditText editText_password;
 
     CheckBox checkBox_keep;
-
+    ImageView imageView_logo;
+    ImageView imageView_logo2;
     Button button_login;
-    Button button_signup;
-    Button button_findid;
-    Button button_findpw;
-
+    ImageButton button_signup;
+    ImageButton button_findid;
+    ImageButton button_findpw;
+    Space space01;
+    Space space02;
+    Space space03;
     Member loginMember;
     Response response;
+
+    LinearLayout linearLayout_allView;
+    LinearLayout linearLayout_smallView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
 
 
 
@@ -110,12 +124,26 @@ public class LoginActivity extends AppCompatActivity {
         editText_id = (EditText) findViewById(R.id.edit_login_id);
         editText_password = (EditText) findViewById(R.id.edit_login_password);
 
-        button_signup = (Button) findViewById(R.id.button_login_signup);
+        button_signup = (ImageButton) findViewById(R.id.button_login_signup);
         button_login = (Button) findViewById(R.id.button_login);
-        button_findid = (Button) findViewById(R.id.button_login_findid);
-        button_findpw = (Button) findViewById(R.id.button_login_findpw);
-
+        button_findid = (ImageButton) findViewById(R.id.button_login_findid);
+        button_findpw = (ImageButton) findViewById(R.id.button_login_findpw);
+        imageView_logo = (ImageView) findViewById(R.id.image_login_logo);
+        imageView_logo2 = (ImageView) findViewById(R.id.image_login_logo2);
         checkBox_keep = (CheckBox) findViewById(R.id.checkbox_login);
+        space01 = (Space) findViewById(R.id.space_01);
+        space02 = (Space) findViewById(R.id.space_02);
+        space03 = (Space) findViewById(R.id.space_03);
+
+        linearLayout_allView = (LinearLayout) findViewById(R.id.linear_login_allView);
+        linearLayout_smallView = (LinearLayout) findViewById(R.id.linear_login_smallView);
+
+
+        Glide.with(this).load(R.drawable.img_logo_01).into(imageView_logo);
+        Glide.with(this).load(R.drawable.btn_findid).into(button_findid);
+        Glide.with(this).load(R.drawable.btn_findpassword).into(button_findpw);
+        Glide.with(this).load(R.drawable.btn_signup).into(button_signup);
+
 
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
@@ -180,9 +208,23 @@ public class LoginActivity extends AppCompatActivity {
             }
             else{
                 checkBox_keep.setChecked(false);
+                showAllView();
             }
         }
+        else{
+            checkBox_keep.setChecked(false);
+            showAllView();
+        }
 
+    }
+
+    private void showAllView(){
+        imageView_logo2.setVisibility(View.GONE);
+        linearLayout_allView.setVisibility(View.VISIBLE);
+        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.translate);
+        linearLayout_allView.startAnimation(animation);
+        animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.alpha);
+        linearLayout_smallView.startAnimation(animation);
     }
 
     private class LoginTask extends AsyncTask<String, String, String> {
@@ -241,16 +283,20 @@ public class LoginActivity extends AppCompatActivity {
 
                     } else if (response.getStatus().equals("PW_ERROR")) {
                         Toast.makeText(getApplicationContext(), "비밀번호가 다릅니다.", Toast.LENGTH_SHORT).show();
+                        showAllView();
                     } else {
                         Toast.makeText(getApplicationContext(), "로그인 실패 입니다.", Toast.LENGTH_SHORT).show();
                         this.cancel(true);
+                        showAllView();
                     }
                 }
             } catch (NullPointerException e){
                 Toast.makeText(getApplicationContext(), "오류! 서버로부터 응답 받지 못함", Toast.LENGTH_SHORT).show();
+                showAllView();
             } catch (Exception e){
                 Toast.makeText(getApplicationContext(), "오류!", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
+                showAllView();
             }
         }
 

@@ -36,11 +36,16 @@ public class MyStampActivity extends AppCompatActivity {
     String json;
     List<Coupon> coupons = new ArrayList<>();
     RecyclerView recyclerView;
+    CouponAdapter adapter;
+
+    int realWidth;
+    int realHeight;
 
     TextView textView_mystamp;
     TextView textView_coupon_num;
     Button button_qrcode;
     Button button_finish;
+    int tmpPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +56,7 @@ public class MyStampActivity extends AppCompatActivity {
         member = (Member) SPtoObject.loadObject(mPrefs,"member", Member.class);
 
         Display display = this.getWindowManager().getDefaultDisplay();
-        int realWidth;
-        int realHeight;
+
 
         if (Build.VERSION.SDK_INT >= 17) {
             //new pleasant way to get real metrics
@@ -208,13 +212,18 @@ public class MyStampActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        CouponAdapter adapter = new CouponAdapter(coupons);
+        adapter = new CouponAdapter(coupons);
         recyclerView.setAdapter(adapter);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        new GetStampTask(getApplicationContext(),mPrefs,member).execute();PostString postString = new PostString();
+        postString.setToken(member.getToken());
+        url = Post.URL + "/stamp/hold";
+        json = gson.toJson(postString);
+        new GettingCouponTask().execute(url, json);
         textView_mystamp.setText("나의 스탬프 " + member.getStampCount() + "개");
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_mystamp);
         if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
@@ -237,40 +246,45 @@ public class MyStampActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            Coupon coupon = coupons.get(position);
+        public void onBindViewHolder(ViewHolder holder, final int position) {
+            final Coupon coupon = coupons.get(position);
             int type = coupon.getType();
-            if(type == 0) {
 
-                holder.button_coupon.setBackgroundResource(R.drawable.img_seoulbike_use);
-            }
-            else if(type == 1){
-                holder.button_coupon.setBackgroundResource(R.drawable.img_palace_use);
-            }
-            else if(type == 2){
-                holder.button_coupon.setBackgroundResource(R.drawable.img_museum_use);
-            }
+            /*ViewGroup.LayoutParams params = holder.button_coupon.getLayoutParams();
+            params.width = (int)(((float)realWidth/1080) * 1041);
+            params.height = (int)(((float)realWidth/1080) * 466);
+            holder.button_coupon.setLayoutParams(params);*/
+
+            holder.textView_couponName.setText(coupon.getCouponname());
+
+            holder.button_coupon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PostString2 postString = new PostString2();
+                    postString.setToken(member.getToken());
+                    postString.setType(String.valueOf(coupon.getStampname()));
+                    url = Post.URL + "/stamp/email";
+                    json = gson.toJson(postString);
+                    new SendCouponTask().execute(url,json);
+                    tmpPosition = position;
+                }
+            });
 
         }
 
         @Override
         public int getItemCount() {
-
-            Log.d("마이스탬프 쿠폰",Integer.toString(coupons.size()));
             return coupons.size();
         }
 
         class ViewHolder extends RecyclerView.ViewHolder{
             Button button_coupon;
+            TextView textView_couponName;
+
             public ViewHolder(View itemView) {
                 super(itemView);
                 button_coupon = (Button) itemView.findViewById(R.id.button_coupon);
-                button_coupon.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                });
+                textView_couponName = itemView.findViewById(R.id.textview_coupon_name);
             }
         }
     }
@@ -294,7 +308,7 @@ public class MyStampActivity extends AppCompatActivity {
         }
     }
 
-    private class GetStampTask extends PostTask{
+    private class SendCouponTask extends PostTask{
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
@@ -302,15 +316,11 @@ public class MyStampActivity extends AppCompatActivity {
             try {
                 Log.d("response", s);
                 response = gson.fromJson(s, Response.class);
-
-                if (response.getStatus().equals("ok")) {
-                    member.setStampCount(response.getNumber());
-                    SPtoObject.saveObject(mPrefs,member,"member");
-                    textView_mystamp.setText("나의 스탬프 " + member.getStampCount() + "개");
-                } else {
-                    this.cancel(true);
-                    textView_mystamp.setText("나의 스탬프 " + member.getStampCount() + "개");
-                }
+                PostString postString = new PostString();
+                postString.setToken(member.getToken());
+                url = Post.URL + "/stamp/hold";
+                json = gson.toJson(postString);
+                new GettingCouponTask().execute(url, json);
             } catch (NullPointerException e){
                 Toast.makeText(getApplicationContext(), "오류! 서버로부터 응답 받지 못함", Toast.LENGTH_SHORT).show();
             } catch (Exception e){

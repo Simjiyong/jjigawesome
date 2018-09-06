@@ -70,6 +70,7 @@
                         android:orientation="vertical">
 
                         <RelativeLayout
+                            android:id="@+id/relativeLayout_home_count"
                             android:layout_width="match_parent"
                             android:layout_height="112.00dp"
                             android:background="@drawable/bg_home_01">

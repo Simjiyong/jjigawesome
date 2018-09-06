@@ -76,7 +76,7 @@
         android:layout_gravity="center_horizontal"
         android:background="@drawable/btn_line_nor"
         android:fontFamily="@font/notosans"
-        android:hint="이메일 또는 아이디"
+        android:hint="@string/id"
         android:paddingLeft="18.33dp"
         android:textColorHint="#cacaca"
         android:textSize="13.33dp"

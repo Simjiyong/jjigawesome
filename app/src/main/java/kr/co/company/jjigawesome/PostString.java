@@ -31,7 +31,7 @@ public class PostString {
     }
 
     public void setId(String id) {
-        this.ID = id;
+        this.id = id;
     }
 
     public void setToken(String token) {
