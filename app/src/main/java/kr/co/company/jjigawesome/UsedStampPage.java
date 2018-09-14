@@ -110,9 +110,11 @@ public class UsedStampPage extends android.support.v4.app.Fragment {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             Coupon coupon = coupons.get(position);
-            int type = coupon.getType();
-            if(type == 0) {
-                holder.usedCouponName.setText("따릉이 1일 이용권");
+            holder.usedCouponName.setText(coupon.getStampname());
+            int stampNum = coupon.getRemarks() * -1;
+            holder.usedStampCount.setText("스탬프 "+ stampNum +"개");
+            /*if(type == 0) {
+                holder.usedCouponName.setText("1111");
                 holder.usedStampCount.setText("스탬프 5개");
             }
             else if(type == 1){
@@ -122,8 +124,7 @@ public class UsedStampPage extends android.support.v4.app.Fragment {
             else if(type == 2){
                 holder.usedCouponName.setText("국립민속박물관 무료관람권");
                 holder.usedStampCount.setText("스탬프 30개");
-
-            }
+            }*/
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date date = null;
             try {

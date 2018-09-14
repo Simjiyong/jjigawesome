@@ -17,14 +17,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class BuyStamp extends AppCompatActivity {
@@ -48,6 +51,7 @@ public class BuyStamp extends AppCompatActivity {
     Button button_qrcode;
     TextView textView_buystamp;
     Button button_finish;
+    Button button_tmp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -299,6 +303,14 @@ public class BuyStamp extends AppCompatActivity {
                 holder.linearLayout_coupon.setBackgroundResource(R.drawable.img_ticket_on);
             }
             holder.textView_couponName.setText(coupon.getCouponname());
+            holder.textView_couponName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(BuyStamp.this, CouponDetailActivity.class);
+                    intent.putExtra("data", coupon.getData());
+                    startActivity(intent);
+                }
+            });
             holder.button_coupon.setText(String.valueOf(coupon.getStamp_number() + "개"));
             holder.button_coupon.setOnClickListener(new View.OnClickListener() {
 

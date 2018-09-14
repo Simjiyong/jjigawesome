@@ -20,7 +20,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
+<!--
             <Button
                 android:id="@+id/button_home_back"
                 android:layout_width="21.33dp"
@@ -29,7 +29,13 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="16dp"
                 android:background="@drawable/btn_back" />
-
+                -->
+            <ImageView
+                android:layout_width="100.00dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/img_logo_02"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"/>
             <Button
                 android:id="@+id/button_home_qrcode"
                 android:layout_width="21.33dp"

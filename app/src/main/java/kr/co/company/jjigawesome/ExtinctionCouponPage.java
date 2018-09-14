@@ -69,7 +69,6 @@ public class ExtinctionCouponPage extends android.support.v4.app.Fragment {
         new GetExpiredCouponTask().execute(url, json);
         return v;
     }
-
     private void setRecyclerView(){
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -110,7 +109,8 @@ public class ExtinctionCouponPage extends android.support.v4.app.Fragment {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             Coupon coupon = coupons.get(position);
-            int type = coupon.getType();
+            holder.expiredCouponName.setText(coupon.getStampname());
+          /*  int type = coupon.getType();
             if(type == 0) {
                 holder.expiredCouponName.setText("따릉이 1일 이용권");
             }
@@ -119,7 +119,7 @@ public class ExtinctionCouponPage extends android.support.v4.app.Fragment {
             }
             else if(type == 2){
                 holder.expiredCouponName.setText("국립민속박물관 무료관람권");
-            }
+            }*/
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date date = null;
             try {
