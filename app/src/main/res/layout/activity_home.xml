@@ -20,7 +20,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
+<!--
             <Button
                 android:id="@+id/button_home_back"
                 android:layout_width="21.33dp"
@@ -29,7 +29,13 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="16dp"
                 android:background="@drawable/btn_back" />
-
+                -->
+            <ImageView
+                android:layout_width="100.00dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/img_logo_02"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"/>
             <Button
                 android:id="@+id/button_home_qrcode"
                 android:layout_width="21.33dp"
@@ -130,27 +136,13 @@
                         </RelativeLayout>
 
                         <RelativeLayout
+                            android:id="@+id/coupon_list_layout"
                             android:layout_width="match_parent"
-                            android:layout_height="239.00dp"
+                            android:layout_height="265.00dp"
                             android:background="#f6f6f6">
 
-                            <include
-                                android:id="@+id/coupon_list_1"
-                                layout="@layout/home_coupon_list"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentTop="true"
-                                android:layout_marginTop="26.00dp" />
-
-                            <include
-                                android:id="@+id/coupon_list_2"
-                                layout="@layout/home_coupon_list"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@id/coupon_list_1"
-                                android:layout_marginTop="10.00dp" />
-
                             <ImageView
+                                android:id="@+id/coupon_more"
                                 android:layout_width="15.00dp"
                                 android:layout_height="15.00dp"
                                 android:layout_alignParentBottom="true"

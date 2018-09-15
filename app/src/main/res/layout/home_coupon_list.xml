@@ -7,36 +7,39 @@
     <RelativeLayout
         android:id="@+id/coupon_list"
         android:layout_width="match_parent"
-        android:layout_height="30.00dp">
+        android:layout_height="30.00dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
         <TextView
             android:id="@+id/coupon_list_name"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="31.33dp"
+            android:includeFontPadding="false"
             android:fontFamily="@font/notosans"
             android:gravity="center_vertical"
             android:text="따릉이"
             android:textColor="#545454"
-            android:textSize="13.33sp" />
+            android:textSize="13.33dp" />
 
         <ImageView
             android:id="@+id/coupon_list_on"
             android:layout_width="3.67dp"
             android:layout_height="3.67dp"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/coupon_list_name"
             android:layout_marginStart="6.33dp"
+            android:layout_toRightOf="@id/coupon_list_name"
             android:background="@drawable/img_on" />
 
         <ImageView
             android:id="@+id/coupon_list_check"
             android:layout_width="22.00dp"
             android:layout_height="25.33dp"
-            android:layout_gravity="right"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="24.67dp"
+            android:layout_gravity="right"
+            android:layout_marginStart="330dp"
             android:background="@drawable/img_check" />
     </RelativeLayout>
 
@@ -320,12 +323,11 @@
         android:id="@+id/coupon_list_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@id/coupon_list_progress_bar"
-        android:layout_marginEnd="24.67dp"
-        android:layout_marginTop="6.67dp"
+        android:layout_marginStart="330dp"
         android:fontFamily="@font/notosans"
         android:text="5개"
         android:textColor="#000000"
-        android:textSize="15.33sp" />
+        android:textSize="15.33dp" />
 </RelativeLayout>

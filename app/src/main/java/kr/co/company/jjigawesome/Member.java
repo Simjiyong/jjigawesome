@@ -13,6 +13,7 @@ class Member {
     private String token;
     private int stampCount;
 
+
     public Member(){
     }
 

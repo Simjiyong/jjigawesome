@@ -1,5 +1,8 @@
 package kr.co.company.jjigawesome;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
@@ -23,7 +26,7 @@ public class ApiResponse {
     }
 }
 
-class Row{
+class Row implements Parcelable{
     private String FAC_CODE;
     private String SUBJCODE;
     private String CODENAME;
@@ -43,6 +46,17 @@ class Row{
     private String ETC_DESC;
     private String FAC_DESC;
     private String ENTRFREE;
+
+    public Row(Parcel parcel) {
+        this.MAIN_IMG = parcel.readString();
+        this.FAC_NAME = parcel.readString();
+        this.ADDR = parcel.readString();
+        this.OPENHOUR = parcel.readString();
+        this.CLOSEDAY = parcel.readString();
+        this.HOMEPAGE = parcel.readString();
+        this.PHNE = parcel.readString();
+        this.FAC_DESC = parcel.readString();
+    }
 
     public String getFAC_CODE() {
         return FAC_CODE;
@@ -118,6 +132,33 @@ class Row{
 
     public String getENTRFREE() {
         return ENTRFREE;
+    }
+
+    public static final Parcelable.Creator<Row> CREATOR = new Parcelable.Creator<Row>() {
+        @Override
+        public Row createFromParcel(Parcel parcel) {
+            return new Row(parcel);
+        }
+        @Override
+        public Row[] newArray(int size) {
+            return new Row[size];
+        }
+    };
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.MAIN_IMG);
+        dest.writeString(this.FAC_NAME);
+        dest.writeString(this.ADDR);
+        dest.writeString(this.OPENHOUR);
+        dest.writeString(this.CLOSEDAY);
+        dest.writeString(this.HOMEPAGE);
+        dest.writeString(this.PHNE);
+        dest.writeString(this.FAC_DESC);
     }
 }
 

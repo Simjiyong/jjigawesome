@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="45dp"
+    android:layout_marginEnd="29dp"
+    android:layout_marginStart="29dp"
+    android:layout_marginTop="45dp"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    tools:context="kr.co.company.jjigawesome.CouponDetailActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="57dp">
+
+        <Button
+            android:id="@+id/button_popup_close"
+            android:layout_width="21.33dp"
+            android:layout_height="21.33dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="16.33dp"
+            android:layout_marginTop="17.67dp"
+            android:background="@drawable/btn_del" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/detail_coupon_image"
+        android:layout_width="match_parent"
+        android:layout_height="170.33dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="18.67dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="21.33dp"
+            android:layout_marginStart="21.33dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/detail_coupon_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/notosans"
+                android:includeFontPadding="false"
+                android:text="경복궁"
+                android:textColor="#000000"
+                android:textSize="22.67dp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="19.33dp" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="57.00dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="51.67dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosans"
+                            android:includeFontPadding="false"
+                            android:text="주소"
+                            android:textColor="#747474"
+                            android:textSize="12.67dp" />
+
+                        <Space
+                            android:layout_width="24.00dp"
+                            android:layout_height="match_parent" />
+
+                        <TextView
+                            android:id="@+id/detail_coupon_addr"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosans"
+                            android:includeFontPadding="false"
+                            android:text="서울시"
+                            android:textColor="#000000"
+                            android:textSize="12.67dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="51.67dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosans"
+                            android:includeFontPadding="false"
+                            android:text="관람시간"
+                            android:textColor="#747474"
+                            android:textSize="12.67dp" />
+
+                        <Space
+                            android:layout_width="24.00dp"
+                            android:layout_height="match_parent" />
+
+                        <TextView
+                            android:id="@+id/detail_coupon_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosans"
+                            android:includeFontPadding="false"
+                            android:text="09:00 ~ 20:00"
+                            android:textColor="#000000"
+                            android:textSize="12.67dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="51.67dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosans"
+                            android:includeFontPadding="false"
+                            android:text="휴관일"
+                            android:textColor="#747474"
+                            android:textSize="12.67dp" />
+
+                        <Space
+                            android:layout_width="24.00dp"
+                            android:layout_height="match_parent" />
+
+                        <TextView
+                            android:id="@+id/detail_coupon_holiday"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosans"
+                            android:includeFontPadding="false"
+                            android:text="매주 월요일"
+                            android:textColor="#000000"
+                            android:textSize="12.67dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="51.67dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosans"
+                            android:includeFontPadding="false"
+                            android:text="홈페이지"
+                            android:textColor="#747474"
+                            android:textSize="12.67dp" />
+
+                        <Space
+                            android:layout_width="24.00dp"
+                            android:layout_height="match_parent" />
+
+                        <TextView
+                            android:id="@+id/detail_coupon_homepage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosans"
+                            android:includeFontPadding="false"
+                            android:text="www.saint.ssu.ac.kr"
+                            android:textColor="#000000"
+                            android:textSize="12.67dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="51.67dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosans"
+                            android:includeFontPadding="false"
+                            android:text="전화번호"
+                            android:textColor="#747474"
+                            android:textSize="12.67dp" />
+
+                        <Space
+                            android:layout_width="24.00dp"
+                            android:layout_height="match_parent" />
+
+                        <TextView
+                            android:id="@+id/detail_coupon_phoneNum"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosans"
+                            android:includeFontPadding="false"
+                            android:text="02 848 2422"
+                            android:textColor="#000000"
+                            android:textSize="12.67dp" />
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="15.00dp" />
+
+                    <TextView
+                        android:id="@+id/detail_coupon_intro"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/notosans"
+                        android:includeFontPadding="false"
+                        android:text="ㅁㄴ워ㅐㅂ댬네ㅓㄴadasdadqweasdfsadfawerasdfㅇ래ㅑㅓ나ㅣㅇㅁㄴ워ㅐㅂ댬네ㅓㄴㅇ래ㅑㅓ나ㅣㅇㅁㄴ워ㅐㅂ댬네ㅓㄴㅇ래ㅑㅓ나ㅣㅇㅁㄴ워ㅐㅂ댬네ㅓㄴㅇ래ㅑㅓ나ㅣㅇㅁㄴ워ㅐㅂ댬네ㅓㄴㅇ래ㅑㅓ나ㅣㅇㅁㄴ워ㅐㅂ댬네ㅓㄴㅇ래ㅑㅓ나ㅣㅇㅁㄴ워ㅐㅂ댬네ㅓㄴㅇ래ㅑㅓ나ㅣㅇ"
+                        android:textColor="#000000" />
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>
