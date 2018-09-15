@@ -52,7 +52,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".CouponDetailActivity"
-            android:theme="@style/Theme.AppCompat.Dialog"></activity>
+            android:theme="@style/DialogFullScreen"> </activity>
     </application>
 
 </manifest>
