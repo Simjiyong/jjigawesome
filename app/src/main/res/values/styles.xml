@@ -9,11 +9,13 @@
         <item name="windowNoTitle">true</item>
     </style>
     <style name="LoginTheme" parent="AppTheme">
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:windowTranslucentStatus">true</item>
+        <item name="colorPrimary">#000000</item>
+        <item name="colorPrimaryDark">#000000</item>
+        <item name="android:statusBarColor">#000</item>
+        <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
-    <style name="SplashTheme" parent="LoginTheme">
+    <style name="SplashTheme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
