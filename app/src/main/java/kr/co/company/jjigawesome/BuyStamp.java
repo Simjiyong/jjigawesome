@@ -292,7 +292,7 @@ public class BuyStamp extends AppCompatActivity {
                     postString.setStamp(30);
                 }
            }*/
-            imageViews[position] = holder.imageView_coupon;
+            Glide.with(getApplicationContext()).load(coupon.getLogo()).into(holder.imageView_coupon);
 
             if(member.getStampCount()<coupon.getStamp_number()){
                 holder.button_coupon.setEnabled(false);
@@ -472,7 +472,7 @@ public class BuyStamp extends AppCompatActivity {
                 Gson gson = new Gson();
                 apiResponse = gson.fromJson(s, kr.co.company.jjigawesome.Response.class);
                 coupon.setData(apiResponse.getSearchCulturalFacilitiesDetailService().getRow().get(0));
-                Glide.with(getApplicationContext()).load(coupon.getData().getMAIN_IMG()).into(imageViews[position]);
+                //Glide.with(getApplicationContext()).load(coupon.getData().getMAIN_IMG()).into(imageViews[position]);
 
             } catch (NullPointerException e){
 

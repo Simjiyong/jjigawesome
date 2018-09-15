@@ -16,9 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import java.lang.reflect.Method;
@@ -255,7 +257,8 @@ public class MyStampActivity extends AppCompatActivity {
             params.height = (int)(((float)realWidth/1080) * 466);
             holder.button_coupon.setLayoutParams(params);*/
 
-            holder.textView_couponName.setText(coupon.getCouponname());
+            holder.textView_couponName.setText(coupon.getStampname());
+            Glide.with(getApplicationContext()).load(coupon.getLogo()).into(holder.imageView_couponLogo);
 
             holder.button_coupon.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -280,11 +283,13 @@ public class MyStampActivity extends AppCompatActivity {
         class ViewHolder extends RecyclerView.ViewHolder{
             Button button_coupon;
             TextView textView_couponName;
+            ImageView imageView_couponLogo;
 
             public ViewHolder(View itemView) {
                 super(itemView);
                 button_coupon = (Button) itemView.findViewById(R.id.button_coupon);
                 textView_couponName = itemView.findViewById(R.id.textview_coupon_name);
+                imageView_couponLogo = itemView.findViewById(R.id.image_coupon_logo);
             }
         }
     }

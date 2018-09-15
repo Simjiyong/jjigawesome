@@ -16,6 +16,7 @@ public class Coupon {
     private int thema;
     private String couponname;
     private Row data;
+    private String logo;
 
     public Coupon(){}
 
@@ -77,5 +78,9 @@ public class Coupon {
 
     public void setData(Row data) {
         this.data = data;
+    }
+
+    public String getLogo() {
+        return logo;
     }
 }
