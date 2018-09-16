@@ -24,8 +24,13 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import java.lang.reflect.Method;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class MyStampActivity extends AppCompatActivity {
@@ -262,6 +267,21 @@ public class MyStampActivity extends AppCompatActivity {
 
             holder.textView_couponName.setText(coupon.getStampname());
             Glide.with(getApplicationContext()).load(coupon.getLogo()).into(holder.imageView_couponLogo);
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = null;
+            try {
+                date = dateFormat.parse(coupon.getCreateDate());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Calendar cal = Calendar.getInstance();
+            Calendar createDay = Calendar.getInstance();
+            createDay.setTime(date);
+            cal.setTime(date);
+            cal.add(Calendar.DATE, 90);
+            String dateExpired = dateFormat.format(createDay.getTime())+ " ~ " + dateFormat.format(cal.getTime());
+
+            holder.textView_couponExpired.setText(dateExpired);
 
             holder.button_coupon.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -286,12 +306,14 @@ public class MyStampActivity extends AppCompatActivity {
         class ViewHolder extends RecyclerView.ViewHolder{
             Button button_coupon;
             TextView textView_couponName;
+            TextView textView_couponExpired;
             ImageView imageView_couponLogo;
 
             public ViewHolder(View itemView) {
                 super(itemView);
                 button_coupon = (Button) itemView.findViewById(R.id.button_coupon);
                 textView_couponName = itemView.findViewById(R.id.textview_coupon_name);
+                textView_couponExpired = itemView.findViewById(R.id.textview_coupon_expired);
                 imageView_couponLogo = itemView.findViewById(R.id.image_coupon_logo);
             }
         }
