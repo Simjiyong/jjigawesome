@@ -14,6 +14,7 @@ public class PostString {
     private String name;
     private int type;
     private int stamp;
+    private int num;
 
     public PostString() {
     }
@@ -52,5 +53,9 @@ public class PostString {
 
     public void setStamp(int stamp) {
         this.stamp = stamp;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
     }
 }

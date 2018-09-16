@@ -39,6 +39,7 @@ public class MyStampActivity extends AppCompatActivity {
     List<Coupon> coupons = new ArrayList<>();
     RecyclerView recyclerView;
     CouponAdapter adapter;
+    MyDialog myDialog;
 
     int realWidth;
     int realHeight;
@@ -58,6 +59,8 @@ public class MyStampActivity extends AppCompatActivity {
         member = (Member) SPtoObject.loadObject(mPrefs,"member", Member.class);
 
         Display display = this.getWindowManager().getDefaultDisplay();
+
+        myDialog = new MyDialog(this);
 
 
         if (Build.VERSION.SDK_INT >= 17) {
@@ -263,9 +266,9 @@ public class MyStampActivity extends AppCompatActivity {
             holder.button_coupon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    PostString2 postString = new PostString2();
+                    PostString postString = new PostString();
                     postString.setToken(member.getToken());
-                    postString.setType(String.valueOf(coupon.getStampname()));
+                    postString.setNum(coupon.getNum());
                     url = Post.URL + "/stamp/email";
                     json = gson.toJson(postString);
                     new SendCouponTask().execute(url,json);
@@ -321,6 +324,14 @@ public class MyStampActivity extends AppCompatActivity {
             try {
                 Log.d("response", s);
                 response = gson.fromJson(s, Response.class);
+                myDialog.setTextViewText("쿠폰을 메일로 보냈습니다.");
+                myDialog.getButton_confirm().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        myDialog.dismiss();
+                    }
+                });
+                myDialog.show();
                 PostString postString = new PostString();
                 postString.setToken(member.getToken());
                 url = Post.URL + "/stamp/hold";

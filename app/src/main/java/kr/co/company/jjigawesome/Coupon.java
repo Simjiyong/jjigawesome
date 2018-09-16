@@ -17,6 +17,7 @@ public class Coupon {
     private String couponname;
     private Row data;
     private String logo;
+    private int num;
 
     public Coupon(){}
 
@@ -82,5 +83,9 @@ public class Coupon {
 
     public String getLogo() {
         return logo;
+    }
+
+    public int getNum() {
+        return num;
     }
 }
