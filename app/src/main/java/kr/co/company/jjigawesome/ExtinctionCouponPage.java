@@ -31,6 +31,7 @@ import java.util.List;
  */
 public class ExtinctionCouponPage extends android.support.v4.app.Fragment {
     View view;
+    View v;
     Gson gson = new Gson();
     String url;
     String json;
@@ -46,7 +47,7 @@ public class ExtinctionCouponPage extends android.support.v4.app.Fragment {
         // Required empty public constructor
     }
 
-    public static ExtinctionCouponPage newInstance(){
+    public static ExtinctionCouponPage newInstance() {
         Bundle args = new Bundle();
 
         ExtinctionCouponPage fragment = new ExtinctionCouponPage();
@@ -58,24 +59,26 @@ public class ExtinctionCouponPage extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_extinction_coupon_page, container, false);
-        mPrefs = this.getActivity().getSharedPreferences("mPrefs", Context.MODE_PRIVATE);
-        member=((Member)SPtoObject.loadObject(mPrefs,"member",Member.class));
-        mRecyclerView = (RecyclerView) v.findViewById(R.id.expire_recycler_view);
-        postString = new PostString();
-        postString.setToken(member.getToken());
-        url = "http://18.218.187.138:3000/stamp/hold";
-        json = gson.toJson(postString);
-        new GetExpiredCouponTask().execute(url, json);
+            v = inflater.inflate(R.layout.fragment_extinction_coupon_page, container, false);
+            mPrefs = this.getActivity().getSharedPreferences("mPrefs", Context.MODE_PRIVATE);
+            member = ((Member) SPtoObject.loadObject(mPrefs, "member", Member.class));
+            mRecyclerView = (RecyclerView) v.findViewById(R.id.expire_recycler_view);
+            postString = new PostString();
+            postString.setToken(member.getToken());
+            url = "http://18.218.187.138:3000/stamp/hold";
+            json = gson.toJson(postString);
+            new GetExpiredCouponTask().execute(url, json);
         return v;
     }
-    private void setRecyclerView(){
+
+    private void setRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
         ExpiredCouponAdapter adapter = new ExpiredCouponAdapter(coupons);
         mRecyclerView.setAdapter(adapter);
     }
+
     private class GetExpiredCouponTask extends PostTask {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
@@ -83,6 +86,16 @@ public class ExtinctionCouponPage extends android.support.v4.app.Fragment {
             try {
                 Log.d("expire response", s);
                 coupons = Arrays.asList(gson.fromJson(s, Coupon[].class));
+                if(coupons.size() == 0) {
+                    TextView tv = (TextView) v.findViewById(R.id.textview_no_use);
+                    tv.setText("소멸 예정 쿠폰이 없습니다.");
+                    v.findViewById(R.id.expire_recycler_view).setVisibility(View.GONE);
+                    v.findViewById(R.id.textview_no_use).setVisibility(View.VISIBLE);
+                }
+                else{
+                    v.findViewById(R.id.expire_recycler_view).setVisibility(View.VISIBLE);
+                    v.findViewById(R.id.textview_no_use).setVisibility(View.GONE);
+                }
                 setRecyclerView();
             } catch (NullPointerException e) {
                 Toast.makeText(getActivity(), "오류! 서버로부터 응답 받지 못함", Toast.LENGTH_SHORT).show();
@@ -93,16 +106,18 @@ public class ExtinctionCouponPage extends android.support.v4.app.Fragment {
         }
     }
 
-    private class ExpiredCouponAdapter extends RecyclerView.Adapter<ExpiredCouponAdapter.ViewHolder>{
+    private class ExpiredCouponAdapter extends RecyclerView.Adapter<ExpiredCouponAdapter.ViewHolder> {
         List<Coupon> coupons = new ArrayList<>();
 
-        public ExpiredCouponAdapter(List<Coupon> coupons){
+        public ExpiredCouponAdapter(List<Coupon> coupons) {
             this.coupons = coupons;
         }
+
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.layout_expire_coupon,parent,false);
+                        .inflate(R.layout.layout_expire_coupon, parent, false);
             return new ViewHolder(view);
         }
 
@@ -137,11 +152,13 @@ public class ExtinctionCouponPage extends android.support.v4.app.Fragment {
         @Override
         public int getItemCount() {
             Log.d("쿠폰 사이즈", Integer.toString(coupons.size()));
-            return coupons.size();  }
+            return coupons.size();
+        }
 
-        class ViewHolder extends RecyclerView.ViewHolder{
+        class ViewHolder extends RecyclerView.ViewHolder {
             TextView expiredCouponName;
             TextView expiredDate;
+
             public ViewHolder(View itemView) {
                 super(itemView);
                 expiredCouponName = (TextView) itemView.findViewById(R.id.expire_coupon_name);

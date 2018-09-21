@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -173,6 +172,20 @@ public class MypageActivity extends AppCompatActivity {
             }
         });
 
+        Button button_logout = (Button) findViewById(R.id.button_drawer_logout);
+        button_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPrefs = getSharedPreferences("mPrefs", MODE_PRIVATE);
+                mPrefs.edit().remove("member").apply();
+                Intent intent = new Intent(MypageActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
         mPrefs = getSharedPreferences("mPrefs", MODE_PRIVATE);
         member = (Member) SPtoObject.loadObject(mPrefs,"member", Member.class);
 

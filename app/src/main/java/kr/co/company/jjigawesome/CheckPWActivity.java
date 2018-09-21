@@ -155,6 +155,20 @@ public class CheckPWActivity extends AppCompatActivity {
             }
         });
 
+        Button button_logout = (Button) findViewById(R.id.button_drawer_logout);
+        button_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPrefs = getSharedPreferences("mPrefs", MODE_PRIVATE);
+                mPrefs.edit().remove("member").apply();
+                Intent intent = new Intent(CheckPWActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
         button_finish = (Button) findViewById(R.id.button_check_pw_back);
         button_qrcode = (Button) findViewById(R.id.button_check_pw_qrcode);
         editText_pw = (EditText) findViewById(R.id.edit_check_pw);

@@ -1,9 +1,23 @@
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/expire_recycler_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="kr.co.company.jjigawesome.ExtinctionCouponPage">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/expire_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
     <!-- TODO: Update blank fragment layout -->
-</android.support.v7.widget.RecyclerView>
+    <TextView
+        android:id="@+id/textview_no_use"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="45.00dp"
+        android:fontFamily="@font/notosans"
+        android:text="사용내역이 없습니다"
+        android:textColor="#737373"
+        android:textSize="13.33dp"
+        android:visibility="invisible"/>
+</FrameLayout>

@@ -153,6 +153,20 @@ public class ChangeNameActivity extends AppCompatActivity {
             }
         });
 
+        Button button_logout = (Button) findViewById(R.id.button_drawer_logout);
+        button_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPrefs = getSharedPreferences("mPrefs", MODE_PRIVATE);
+                mPrefs.edit().remove("member").apply();
+                Intent intent = new Intent(ChangeNameActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
         button_qrcode = (Button) findViewById(R.id.button_change_name_qrcode);
         editText_name = (EditText) findViewById(R.id.edit_change_name);
         button_confirm = (Button) findViewById(R.id.button_change_name_ok);

@@ -61,7 +61,7 @@ public class MyStampActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_stamp);
 
         mPrefs = getSharedPreferences("mPrefs", MODE_PRIVATE);
-        member = (Member) SPtoObject.loadObject(mPrefs,"member", Member.class);
+        member = (Member) SPtoObject.loadObject(mPrefs, "member", Member.class);
 
         Display display = this.getWindowManager().getDefaultDisplay();
 
@@ -188,6 +188,22 @@ public class MyStampActivity extends AppCompatActivity {
             }
         });
 
+        Button button_logout = (Button) findViewById(R.id.button_drawer_logout);
+        button_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPrefs = getSharedPreferences("mPrefs", MODE_PRIVATE);
+                mPrefs.edit().remove("member").apply();
+                Intent intent = new Intent(MyStampActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
         TextView textView_drawer_name = (TextView) findViewById(R.id.drawer_name);
         textView_mystamp = (TextView) findViewById(R.id.textview_mystamp);
         textView_coupon_num = (TextView) findViewById(R.id.textview_mystamp_coupon_num);
@@ -205,7 +221,7 @@ public class MyStampActivity extends AppCompatActivity {
         button_qrcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyStampActivity.this,  QrcodeActivity.class);
+                Intent intent = new Intent(MyStampActivity.this, QrcodeActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
             }
@@ -218,7 +234,7 @@ public class MyStampActivity extends AppCompatActivity {
         new GettingCouponTask().execute(url, json);
     }
 
-    private void setRecyclerView(){
+    private void setRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -229,7 +245,8 @@ public class MyStampActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        new GetStampTask(getApplicationContext(),mPrefs,member).execute();PostString postString = new PostString();
+        new GetStampTask(getApplicationContext(), mPrefs, member).execute();
+        PostString postString = new PostString();
         postString.setToken(member.getToken());
         url = Post.URL + "/stamp/hold";
         json = gson.toJson(postString);
@@ -243,15 +260,16 @@ public class MyStampActivity extends AppCompatActivity {
     }
 
 
-    private class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.ViewHolder>{
+    private class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.ViewHolder> {
         List<Coupon> coupons = new ArrayList<>();
 
-        public CouponAdapter(List<Coupon> coupons){
+        public CouponAdapter(List<Coupon> coupons) {
             this.coupons = coupons;
         }
+
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(MyStampActivity.this).inflate(R.layout.layout_coupon,parent,false);
+            View view = LayoutInflater.from(MyStampActivity.this).inflate(R.layout.layout_coupon, parent, false);
             return new ViewHolder(view);
         }
 
@@ -279,21 +297,47 @@ public class MyStampActivity extends AppCompatActivity {
             createDay.setTime(date);
             cal.setTime(date);
             cal.add(Calendar.DATE, 90);
-            String dateExpired = dateFormat.format(createDay.getTime())+ " ~ " + dateFormat.format(cal.getTime());
+            String dateExpired = dateFormat.format(createDay.getTime()) + " ~ " + dateFormat.format(cal.getTime());
 
             holder.textView_couponExpired.setText(dateExpired);
 
             holder.button_coupon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    ///////////////////////////////
+                    final MyDialog myDialog = new MyDialog(MyStampActivity.this);
+                    myDialog.setTextViewText("쿠폰을 사용하시겠습니까?");
+                    myDialog.showCancelButton();
+                    myDialog.getButton_cancel().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            myDialog.dismiss();
+                        }
+                    });
+                    myDialog.getButton_confirm().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            PostString postString = new PostString();
+                            postString.setToken(member.getToken());
+                            postString.setNum(coupon.getNum());
+                            url = Post.URL + "/stamp/email";
+                            json = gson.toJson(postString);
+                            new SendCouponTask().execute(url, json);
+                            tmpPosition = position;
+                            myDialog.dismiss();
+                        }
+                    });
+                    myDialog.show();
+                }
+                ////////////////////////
+                /*
                     PostString postString = new PostString();
                     postString.setToken(member.getToken());
                     postString.setNum(coupon.getNum());
                     url = Post.URL + "/stamp/email";
                     json = gson.toJson(postString);
                     new SendCouponTask().execute(url,json);
-                    tmpPosition = position;
-                }
+                    tmpPosition = position;*/
             });
 
         }
@@ -303,7 +347,7 @@ public class MyStampActivity extends AppCompatActivity {
             return coupons.size();
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder{
+        class ViewHolder extends RecyclerView.ViewHolder {
             Button button_coupon;
             TextView textView_couponName;
             TextView textView_couponExpired;
@@ -319,7 +363,7 @@ public class MyStampActivity extends AppCompatActivity {
         }
     }
 
-    private class GettingCouponTask extends PostTask{
+    private class GettingCouponTask extends PostTask {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
@@ -329,16 +373,16 @@ public class MyStampActivity extends AppCompatActivity {
                 coupons = Arrays.asList(gson.fromJson(s, Coupon[].class));
                 setRecyclerView();
                 textView_coupon_num.setText(coupons.size() + "개");
-            } catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 Toast.makeText(getApplicationContext(), "오류! 서버로부터 응답 받지 못함", Toast.LENGTH_SHORT).show();
-            } catch (Exception e){
+            } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), "오류!", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
         }
     }
 
-    private class SendCouponTask extends PostTask{
+    private class SendCouponTask extends PostTask {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
@@ -359,9 +403,9 @@ public class MyStampActivity extends AppCompatActivity {
                 url = Post.URL + "/stamp/hold";
                 json = gson.toJson(postString);
                 new GettingCouponTask().execute(url, json);
-            } catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 Toast.makeText(getApplicationContext(), "오류! 서버로부터 응답 받지 못함", Toast.LENGTH_SHORT).show();
-            } catch (Exception e){
+            } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), "오류!", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }

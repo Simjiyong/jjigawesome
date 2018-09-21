@@ -35,6 +35,7 @@ public class BuyStamp extends AppCompatActivity {
     View view;
     SharedPreferences mPrefs;
     Member member;
+    LinearLayoutManager layoutManager;
     RecyclerView recyclerView;
     BuyStamp.CouponAdapter adapter;
     List<Coupon> coupons = new ArrayList<>();
@@ -53,6 +54,8 @@ public class BuyStamp extends AppCompatActivity {
     Button button_finish;
     Button button_tmp;
 
+    public static int index = -1;
+    public static int top = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -184,6 +187,22 @@ public class BuyStamp extends AppCompatActivity {
             }
         });
 
+        Button button_logout = (Button) findViewById(R.id.button_drawer_logout);
+        button_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPrefs = getSharedPreferences("mPrefs", MODE_PRIVATE);
+                mPrefs.edit().remove("member").apply();
+                Intent intent = new Intent(BuyStamp.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
         button_qrcode = (Button) findViewById(R.id.button_buystamp_qrcode);
         button_finish = (Button) findViewById(R.id.button_buystamp_back);
 
@@ -233,8 +252,17 @@ public class BuyStamp extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        index = layoutManager.findFirstVisibleItemPosition();
+        View v = recyclerView.getChildAt(0);
+        top = (v == null) ? 0 : (v.getTop() - recyclerView.getPaddingTop());
+    }
+
     private void setRecyclerView(){
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        layoutManager = new LinearLayoutManager(getApplicationContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new BuyStamp.CouponAdapter(coupons);
@@ -421,6 +449,10 @@ public class BuyStamp extends AppCompatActivity {
             } catch (Exception e){
                 Toast.makeText(getApplicationContext(), "오류!", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
+            }
+            if(index != -1)
+            {
+                layoutManager.scrollToPositionWithOffset(index, top);
             }
         }
     }
