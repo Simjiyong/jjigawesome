@@ -64,8 +64,7 @@
         android:inputType="textPersonName"
         android:paddingLeft="18.33dp"
         android:textColorHint="#cacaca"
-        android:textSize="13.33dp"
-        android:text="심지용"/>
+        android:textSize="13.33dp" />
     <Space
         android:layout_width="match_parent"
         android:layout_height="10.67dp" />
@@ -79,8 +78,7 @@
         android:hint="@string/id"
         android:paddingLeft="18.33dp"
         android:textColorHint="#cacaca"
-        android:textSize="13.33dp"
-        android:text="sjyjoa"/>
+        android:textSize="13.33dp" />
     <Space
         android:layout_width="match_parent"
         android:layout_height="20.00dp" />
