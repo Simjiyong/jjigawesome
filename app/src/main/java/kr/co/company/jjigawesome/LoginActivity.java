@@ -221,9 +221,9 @@ public class LoginActivity extends AppCompatActivity {
     private void showAllView(){
         imageView_logo2.setVisibility(View.GONE);
         linearLayout_allView.setVisibility(View.VISIBLE);
-        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.translate);
+        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.alpha);
         linearLayout_allView.startAnimation(animation);
-        animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.alpha);
+        //animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.alpha);
         linearLayout_smallView.startAnimation(animation);
     }
 
