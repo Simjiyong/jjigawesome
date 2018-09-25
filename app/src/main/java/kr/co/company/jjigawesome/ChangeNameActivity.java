@@ -34,6 +34,8 @@ public class ChangeNameActivity extends AppCompatActivity {
     Button button_confirm;
     EditText editText_name;
 
+    String newName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -193,6 +195,7 @@ public class ChangeNameActivity extends AppCompatActivity {
                         if(!isPossible){
                             break;
                         }
+                        newName = editText_name.getText().toString();
                         PostString postString = new PostString();
                         postString.setToken(member.getToken());
                         postString.setName(editText_name.getText().toString());
@@ -223,6 +226,8 @@ public class ChangeNameActivity extends AppCompatActivity {
                 Response response = gson.fromJson(s, Response.class);
 
                 if (response.getStatus().equals("ok")) {
+                    member.setName(newName);
+                    SPtoObject.saveObject(mPrefs, member, "member");
                     final MyDialog myDialog = new MyDialog(ChangeNameActivity.this);
                     myDialog.setTextViewText("닉네임 수정이 완료되었습니다.");
                     myDialog.getButton_confirm().setOnClickListener(new View.OnClickListener() {
@@ -233,6 +238,7 @@ public class ChangeNameActivity extends AppCompatActivity {
                         }
                     });
                     myDialog.show();
+
                 } else {
                     this.cancel(true);
                     Toast.makeText(getApplicationContext(), "닉네임 수정을 실패 했습니다.", Toast.LENGTH_SHORT).show();

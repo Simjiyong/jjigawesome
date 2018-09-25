@@ -230,6 +230,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.alpha);
         linearLayout_allView.startAnimation(animation);
         //animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.alpha);
         linearLayout_smallView.startAnimation(animation);

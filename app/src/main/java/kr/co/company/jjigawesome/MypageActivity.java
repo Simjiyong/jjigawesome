@@ -243,5 +243,6 @@ public class MypageActivity extends AppCompatActivity {
         if(drawerLayout.isDrawerOpen(Gravity.RIGHT)){
             drawerLayout.closeDrawer(Gravity.RIGHT);
         }
+        member = ((Member) SPtoObject.loadObject(mPrefs, "member", Member.class));
     }
 }
