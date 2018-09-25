@@ -12,6 +12,7 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.lang.reflect.Method;
@@ -27,8 +28,8 @@ public class MypageActivity extends AppCompatActivity {
     TextView textView_phone;
     Button button_finish;
     Button button_qrcode;
-    Button button_name;
-    Button button_pw;
+    RelativeLayout button_name;
+    RelativeLayout button_pw;
 
     DrawerLayout drawerLayout;
 
@@ -194,8 +195,8 @@ public class MypageActivity extends AppCompatActivity {
         textView_phone = (TextView) findViewById(R.id.textview_mypage_phone);
         button_finish = (Button) findViewById(R.id.button_mypage_back);
         button_qrcode = (Button) findViewById(R.id.button_mypage_qrcode);
-        button_name = (Button) findViewById(R.id.button_mypage_change_name);
-        button_pw = (Button) findViewById(R.id.button_mypage_change_password);
+        button_name = (RelativeLayout) findViewById(R.id.button_mypage_change_name);
+        button_pw = (RelativeLayout) findViewById(R.id.button_mypage_change_password);
 
         TextView textView_drawer_name = (TextView) findViewById(R.id.drawer_name);
         textView_drawer_name.setText(member.getName());

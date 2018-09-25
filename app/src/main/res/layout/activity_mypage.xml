@@ -24,8 +24,8 @@
 
             <Button
                 android:id="@+id/button_mypage_back"
-                android:layout_width="21.33dp"
-                android:layout_height="21.33dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="16dp"
@@ -43,8 +43,8 @@
 
             <Button
                 android:id="@+id/button_mypage_qrcode"
-                android:layout_width="21.33dp"
-                android:layout_height="21.33dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="18.67dp"
                 android:layout_toLeftOf="@id/button_mypage_menu"
@@ -52,8 +52,8 @@
 
             <Button
                 android:id="@+id/button_mypage_menu"
-                android:layout_width="21.33dp"
-                android:layout_height="21.33dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="22.00dp"
@@ -126,6 +126,7 @@
             android:layout_height="34.00dp" />
 
         <RelativeLayout
+            android:id="@+id/button_mypage_change_name"
             android:layout_width="match_parent"
             android:layout_height="68.33dp"
             android:background="#ffffff">
@@ -142,7 +143,6 @@
                 android:textSize="15.33dp" />
 
             <Button
-                android:id="@+id/button_mypage_change_name"
                 android:layout_width="21.33dp"
                 android:layout_height="21.33dp"
                 android:layout_alignParentEnd="true"
@@ -157,6 +157,7 @@
             android:background="#b2b2b2" />
 
         <RelativeLayout
+            android:id="@+id/button_mypage_change_password"
             android:layout_width="match_parent"
             android:layout_height="68.33dp"
             android:background="#ffffff">
@@ -173,7 +174,6 @@
                 android:textSize="15.33dp" />
 
             <Button
-                android:id="@+id/button_mypage_change_password"
                 android:layout_width="21.33dp"
                 android:layout_height="21.33dp"
                 android:layout_alignParentEnd="true"

@@ -41,7 +41,7 @@ public class HomeActivity extends AppCompatActivity {
 
     LinearLayout linearLayout;
     EditText editText;
-    Button button_buy;
+    RelativeLayout button_buy;
     Button button_qrcode;
     Button button_back;
     TextView textView_count;
@@ -182,7 +182,7 @@ public class HomeActivity extends AppCompatActivity {
 
         //////////////////////////////////////
 
-        button_buy = (Button) findViewById(R.id.button_home_buy);
+        button_buy = (RelativeLayout) findViewById(R.id.button_home_buy);
         button_buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -270,7 +270,6 @@ public class HomeActivity extends AppCompatActivity {
                 mPrefs = getSharedPreferences("mPrefs", MODE_PRIVATE);
                 mPrefs.edit().remove("member").apply();
                 Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);

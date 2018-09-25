@@ -81,8 +81,8 @@
 
                 <CheckBox
                     android:id="@+id/checkbox_login"
-                    android:layout_width="17dp"
-                    android:layout_height="17dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:background="@drawable/check_box"
                     android:button="@null" />
 
@@ -120,20 +120,23 @@
                 <ImageButton
                     android:id="@+id/button_login_findid"
                     android:layout_width="96.67dp"
-                    android:layout_height="45.67dp"
-                    android:background="@null"/>
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    android:scaleType="centerCrop"/>
 
                 <ImageButton
                     android:id="@+id/button_login_findpw"
                     android:layout_width="96.67dp"
-                    android:layout_height="45.67dp"
-                    android:background="@null" />
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    android:scaleType="centerCrop" />
 
                 <ImageButton
                     android:id="@+id/button_login_signup"
                     android:layout_width="96.67dp"
-                    android:layout_height="45.67dp"
-                    android:background="@null"/>
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    android:scaleType="centerCrop"/>
             </LinearLayout>
 
         </LinearLayout>

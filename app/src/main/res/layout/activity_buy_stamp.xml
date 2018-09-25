@@ -24,8 +24,8 @@
 
             <Button
                 android:id="@+id/button_buystamp_back"
-                android:layout_width="21.33dp"
-                android:layout_height="21.33dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="16dp"
@@ -43,8 +43,8 @@
 
             <Button
                 android:id="@+id/button_buystamp_qrcode"
-                android:layout_width="21.33dp"
-                android:layout_height="21.33dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="18.67dp"
                 android:layout_toLeftOf="@id/button_buystamp_menu"
@@ -52,8 +52,8 @@
 
             <Button
                 android:id="@+id/button_buystamp_menu"
-                android:layout_width="21.33dp"
-                android:layout_height="21.33dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="22.00dp"

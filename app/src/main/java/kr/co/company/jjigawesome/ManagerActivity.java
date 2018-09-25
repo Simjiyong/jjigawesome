@@ -114,7 +114,6 @@ public class ManagerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mPrefs.edit().remove("member").apply();
                 Intent intent = new Intent(ManagerActivity.this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
                 finish();

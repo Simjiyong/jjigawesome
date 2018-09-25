@@ -38,8 +38,8 @@
                 android:layout_centerHorizontal="true"/>
             <Button
                 android:id="@+id/button_home_qrcode"
-                android:layout_width="21.33dp"
-                android:layout_height="21.33dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="18.67dp"
                 android:layout_toLeftOf="@id/button_home_menu"
@@ -47,8 +47,8 @@
 
             <Button
                 android:id="@+id/button_home_menu"
-                android:layout_width="21.33dp"
-                android:layout_height="21.33dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="22.00dp"
@@ -109,6 +109,7 @@
                         </RelativeLayout>
 
                         <RelativeLayout
+                            android:id="@+id/button_home_buy"
                             android:layout_width="match_parent"
                             android:layout_height="68.33dp"
                             android:background="#ffffff">
@@ -126,7 +127,6 @@
                                 android:textSize="15.33sp" />
 
                             <Button
-                                android:id="@+id/button_home_buy"
                                 android:layout_width="21.33dp"
                                 android:layout_height="21.33dp"
                                 android:layout_alignParentEnd="true"

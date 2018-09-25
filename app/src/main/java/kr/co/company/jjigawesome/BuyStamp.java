@@ -256,9 +256,11 @@ public class BuyStamp extends AppCompatActivity {
     public void onPause()
     {
         super.onPause();
-        index = layoutManager.findFirstVisibleItemPosition();
-        View v = recyclerView.getChildAt(0);
-        top = (v == null) ? 0 : (v.getTop() - recyclerView.getPaddingTop());
+        if(layoutManager !=null) {
+            index = layoutManager.findFirstVisibleItemPosition();
+            View v = recyclerView.getChildAt(0);
+            top = (v == null) ? 0 : (v.getTop() - recyclerView.getPaddingTop());
+        }
     }
 
     private void setRecyclerView(){
