@@ -36,6 +36,8 @@ public class ChangeNameActivity extends AppCompatActivity {
 
     String newName;
 
+    TextView textView_drawer_name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -174,7 +176,7 @@ public class ChangeNameActivity extends AppCompatActivity {
         button_confirm = (Button) findViewById(R.id.button_change_name_ok);
         button_finish = (Button) findViewById(R.id.button_change_name_back);
 
-        TextView textView_drawer_name = (TextView) findViewById(R.id.drawer_name);
+        textView_drawer_name = (TextView) findViewById(R.id.drawer_name);
         textView_drawer_name.setText(member.getName());
 
         View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -215,7 +217,15 @@ public class ChangeNameActivity extends AppCompatActivity {
         button_finish.setOnClickListener(onClickListener);
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        member = ((Member) SPtoObject.loadObject(mPrefs, "member", Member.class));
+        textView_drawer_name = (TextView) findViewById(R.id.drawer_name);
+        if(textView_drawer_name!=null) {
+            textView_drawer_name.setText(member.getName());
+        }
+    }
 
     private class ChangeNameTask extends PostTask{
         @Override

@@ -33,6 +33,8 @@ public class MypageActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
 
+    TextView textView_drawer_name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -244,5 +246,14 @@ public class MypageActivity extends AppCompatActivity {
             drawerLayout.closeDrawer(Gravity.RIGHT);
         }
         member = ((Member) SPtoObject.loadObject(mPrefs, "member", Member.class));
+        textView_drawer_name = (TextView) findViewById(R.id.drawer_name);
+        if(textView_drawer_name!=null) {
+            textView_drawer_name.setText(member.getName());
+
+        }
+
+        if(textView_name!=null) {
+            textView_name.setText(member.getName());
+        }
     }
 }

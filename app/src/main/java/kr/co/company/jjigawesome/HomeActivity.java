@@ -55,6 +55,8 @@ public class HomeActivity extends AppCompatActivity {
     TextView list2Name;
     ImageView[] progressBar2;
     RelativeLayout relativeLayout_count;
+
+    TextView textView_drawer_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -368,6 +370,11 @@ public class HomeActivity extends AppCompatActivity {
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_home);
         if(drawerLayout.isDrawerOpen(Gravity.RIGHT)){
             drawerLayout.closeDrawer(Gravity.RIGHT);
+        }
+        member = ((Member) SPtoObject.loadObject(mPrefs, "member", Member.class));
+        textView_drawer_name = (TextView) findViewById(R.id.drawer_name);
+        if(textView_drawer_name!=null) {
+            textView_drawer_name.setText(member.getName());
         }
     }
     protected  void onRestart() {

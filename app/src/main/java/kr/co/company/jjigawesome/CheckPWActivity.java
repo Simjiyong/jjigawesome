@@ -36,6 +36,8 @@ public class CheckPWActivity extends AppCompatActivity {
     Member member;
 
 
+    TextView textView_drawer_name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -218,7 +220,15 @@ public class CheckPWActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        member = ((Member) SPtoObject.loadObject(mPrefs, "member", Member.class));
+        textView_drawer_name = (TextView) findViewById(R.id.drawer_name);
+        if(textView_drawer_name!=null) {
+            textView_drawer_name.setText(member.getName());
+        }
+    }
 
     private class CheckPWTask extends PostTask{
         @Override

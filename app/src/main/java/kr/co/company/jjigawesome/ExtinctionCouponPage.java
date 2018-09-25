@@ -71,12 +71,6 @@ public class ExtinctionCouponPage extends android.support.v4.app.Fragment {
         return v;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        member = ((Member) SPtoObject.loadObject(mPrefs, "member", Member.class));
-    }
-
     private void setRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);

@@ -55,6 +55,7 @@ public class MyStampActivity extends AppCompatActivity {
     Button button_finish;
     int tmpPosition;
 
+    TextView textView_drawer_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -257,6 +258,11 @@ public class MyStampActivity extends AppCompatActivity {
             drawerLayout.closeDrawer(Gravity.RIGHT);
         }
         textView_coupon_num.setText(coupons.size() + "개");
+        member = ((Member) SPtoObject.loadObject(mPrefs, "member", Member.class));
+        textView_drawer_name = (TextView) findViewById(R.id.drawer_name);
+        if(textView_drawer_name!=null) {
+            textView_drawer_name.setText(member.getName());
+        }
     }
 
 
