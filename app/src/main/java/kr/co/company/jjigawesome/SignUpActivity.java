@@ -288,7 +288,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-            url = "http://18.218.187.138:3000/find/auth";
+            url = "http://18.218.187.138:3000/find/auth/register";
 
             Post post = new Post(url, json);
             String response = null;
