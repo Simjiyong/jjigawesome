@@ -254,26 +254,54 @@ public class SignUpActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            try{
+            try {
                 Log.d("response", s);
-                response = gson.fromJson(s,Response.class);
+                response = gson.fromJson(s, Response.class);
 
-                    if (response.getStatus().equals("ok")) {
-                        Toast.makeText(getApplicationContext(), "회원가입이 성공 했습니다.", Toast.LENGTH_SHORT).show();
-                        finish();
-                    } else {
-                        this.cancel(true);
-                        final MyDialog myDialog = new MyDialog(SignUpActivity.this);
-                        myDialog.setTextViewText("이메일이 중복되었습니다.");
-                        myDialog.getButton_confirm().setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                myDialog.dismiss();
-                            }
-                        });
-                        myDialog.show();
-                    }
-
+                if (response.getStatus().equals("ok")) {
+                    Toast.makeText(getApplicationContext(), "회원가입이 성공 했습니다.", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else if (response.getStatus().equals("ERROR_EMAIL")) {
+                    this.cancel(true);
+                    final MyDialog myDialog = new MyDialog(SignUpActivity.this);
+                    myDialog.setTextViewText("이메일이 중복되었습니다.");
+                    myDialog.getButton_confirm().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            myDialog.dismiss();
+                        }
+                    });
+                    myDialog.show();
+                    isConfirm = false;
+                    button_confirm.setBackground(getDrawable(R.drawable.btn_phone_nor));
+                } else if (response.getStatus().equals("ERROR_ID")) {
+                    this.cancel(true);
+                    final MyDialog myDialog = new MyDialog(SignUpActivity.this);
+                    myDialog.setTextViewText("아이디가 중복되었습니다.");
+                    myDialog.getButton_confirm().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            myDialog.dismiss();
+                        }
+                    });
+                    myDialog.show();
+                    isConfirm = false;
+                    button_confirm.setBackground(getDrawable(R.drawable.btn_phone_nor));
+                }
+                else {
+                    this.cancel(true);
+                    final MyDialog myDialog = new MyDialog(SignUpActivity.this);
+                    myDialog.setTextViewText("회원가입을 실패했습니다.");
+                    myDialog.getButton_confirm().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            myDialog.dismiss();
+                        }
+                    });
+                    myDialog.show();
+                    isConfirm = false;
+                    button_confirm.setBackground(getDrawable(R.drawable.btn_phone_nor));
+                }
             } catch (NullPointerException e){
                 Toast.makeText(getApplicationContext(), "오류! 서버로부터 응답 받지 못함", Toast.LENGTH_SHORT).show();
             } catch (Exception e){
