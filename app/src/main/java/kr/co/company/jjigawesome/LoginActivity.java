@@ -56,6 +56,8 @@ public class LoginActivity extends AppCompatActivity {
     LinearLayout linearLayout_allView;
     LinearLayout linearLayout_smallView;
 
+    Animation animation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -221,7 +223,13 @@ public class LoginActivity extends AppCompatActivity {
     private void showAllView(){
         imageView_logo2.setVisibility(View.GONE);
         linearLayout_allView.setVisibility(View.VISIBLE);
-        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.alpha);
+        animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.alpha);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         linearLayout_allView.startAnimation(animation);
         //animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.alpha);
         linearLayout_smallView.startAnimation(animation);
