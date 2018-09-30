@@ -98,6 +98,7 @@ public class CouponDetailActivity extends AppCompatActivity {
 
 
         Row data = (Row) getIntent().getParcelableExtra("data");
+
         couponImage = (ImageView) findViewById(R.id.detail_coupon_image);
         couponName = (TextView) findViewById(R.id.detail_coupon_name);
         couponAddr = (TextView) findViewById(R.id.detail_coupon_addr);
@@ -107,15 +108,21 @@ public class CouponDetailActivity extends AppCompatActivity {
         couponPhne = (TextView) findViewById(R.id.detail_coupon_phoneNum);
         couponInst = (TextView) findViewById(R.id.detail_coupon_intro);
 
-        Glide.with(this).load(data.getMAIN_IMG()).into(couponImage);
-        couponImage.setScaleType(ImageView.ScaleType.FIT_XY);
-        couponName.setText(data.getFAC_NAME());
-        couponAddr.setText(data.getADDR());
-        couponOpenHour.setText(data.getOPENHOUR());
-        couponCloseDay.setText(data.getCLOSEDAY());
-        couponHomepage.setText(data.getHOMEPAGE());
-        couponPhne.setText(data.getPHNE());
-        couponInst.setText(data.getFAC_DESC());
+        if(data !=null && data.getMAIN_IMG() != null) {
+            Glide.with(this).load(data.getMAIN_IMG()).into(couponImage);
+            couponImage.setScaleType(ImageView.ScaleType.FIT_XY);
+            couponName.setText(data.getFAC_NAME());
+            couponAddr.setText(data.getADDR());
+            couponOpenHour.setText(data.getOPENHOUR());
+            couponCloseDay.setText(data.getCLOSEDAY());
+            couponHomepage.setText(data.getHOMEPAGE());
+            couponPhne.setText(data.getPHNE());
+            couponInst.setText(data.getFAC_DESC());
+        }
+        else{
+            Log.e("error", "그림과 data가 null이 아닐때");
+            finish();
+        }
 
         Button closeButton = (Button) findViewById(R.id.button_popup_close);
         closeButton.setOnClickListener(new View.OnClickListener() {
